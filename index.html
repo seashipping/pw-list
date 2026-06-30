@@ -20,7 +20,7 @@ body{font-family:Arial,sans-serif;background:#1a1a2e;color:#eee;font-size:15px;}
 .login-box .sub{color:#aaa;font-size:0.78rem;margin-bottom:20px;}
 .lf{margin-bottom:14px;text-align:left;}
 .lf label{display:block;color:#aaa;font-size:0.82rem;margin-bottom:5px;}
-.lf .inp-wrap{position:relative;}
+.inp-wrap{position:relative;}
 .lf input{width:100%;padding:11px 14px;border-radius:8px;border:2px solid #2a2a4a;background:#0f3460;color:#eee;font-size:1rem;}
 .lf input:focus{outline:none;border-color:#e94560;}
 .eye-btn{position:absolute;right:10px;top:50%;transform:translateY(-50%);background:none;border:none;color:#aaa;font-size:1.1rem;cursor:pointer;padding:4px;}
@@ -185,15 +185,15 @@ header{background:linear-gradient(135deg,#16213e,#0f3460);border-bottom:2px soli
 <!-- CHANGE CREDS MODAL -->
 <div class="modal-bg" id="creds-modal" style="display:none">
   <div class="modal">
-    <h3>🔑 Login পরিবর্তন</h3>
+    <h3>🔑 পাসওয়ার্ড পরিবর্তন করুন</h3>
     <label>বর্তমান Password</label>
-    <input type="password" id="c-old" placeholder="বর্তমান password" autocomplete="new-password"/>
+    <div class="inp-wrap"><input type="password" id="c-old" placeholder="বর্তমান password" autocomplete="new-password" style="padding-right:44px;"/><button class="eye-btn" onclick="toggleEyeFor('c-old',this)" type="button">👁️</button></div>
     <label>নতুন Username (ঐচ্ছিক)</label>
     <input type="text" id="c-user" placeholder="নতুন username" autocomplete="off"/>
     <label>নতুন Password</label>
-    <input type="password" id="c-new" placeholder="কমপক্ষে ৪ অক্ষর" autocomplete="new-password"/>
+    <div class="inp-wrap"><input type="password" id="c-new" placeholder="কমপক্ষে ৪ অক্ষর" autocomplete="new-password" style="padding-right:44px;"/><button class="eye-btn" onclick="toggleEyeFor('c-new',this)" type="button">👁️</button></div>
     <label>নতুন Password আবার</label>
-    <input type="password" id="c-new2" placeholder="confirm" autocomplete="new-password"/>
+    <div class="inp-wrap"><input type="password" id="c-new2" placeholder="confirm" autocomplete="new-password" style="padding-right:44px;"/><button class="eye-btn" onclick="toggleEyeFor('c-new2',this)" type="button">👁️</button></div>
     <div class="modal-err" id="creds-err"></div>
     <div class="modal-btns">
       <button class="btn-ok" onclick="doChangeCreds()">✅ পরিবর্তন</button>
@@ -305,6 +305,14 @@ function toggleEye(){
     const b=document.getElementById("eye-btn");
     if(i.type==="password"){i.type="text";b.textContent="🙈";}
     else{i.type="password";b.textContent="👁️";}
+  }catch(e){}
+}
+
+function toggleEyeFor(id,btn){
+  try{
+    const i=document.getElementById(id);
+    if(i.type==="password"){i.type="text";btn.textContent="🙈";}
+    else{i.type="password";btn.textContent="👁️";}
   }catch(e){}
 }
 
