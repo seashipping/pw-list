@@ -164,7 +164,7 @@ header{background:linear-gradient(135deg,#16213e,#0f3460);border-bottom:2px soli
 <!-- ADD MODAL -->
 <div class="modal-bg" id="add-modal" style="display:none">
   <div class="modal">
-    <h3>➕ নতুন ইউজার-পাসওয়ার্ড এ্যাড করুন</h3>
+    <h3>➕ নতুন কোম্পানি এ্যাড করুন</h3>
     <label>🏢 Company Name</label>
     <input type="text" id="inp-company" placeholder="Company Name" autocomplete="off" onkeydown="if(event.key==='Enter')document.getElementById('inp-user').focus()"/>
     <label>👤 User Name</label>
@@ -185,10 +185,10 @@ header{background:linear-gradient(135deg,#16213e,#0f3460);border-bottom:2px soli
 <!-- CHANGE CREDS MODAL -->
 <div class="modal-bg" id="creds-modal" style="display:none">
   <div class="modal">
-    <h3>🔑 পাসওয়ার্ড  পরিবর্তন করুন </h3>
+    <h3>🔑 Login পরিবর্তন</h3>
     <label>বর্তমান Password</label>
     <input type="password" id="c-old" placeholder="বর্তমান password" autocomplete="new-password"/>
-    <label>নতুন Username</label>
+    <label>নতুন Username (ঐচ্ছিক)</label>
     <input type="text" id="c-user" placeholder="নতুন username" autocomplete="off"/>
     <label>নতুন Password</label>
     <input type="password" id="c-new" placeholder="কমপক্ষে ৪ অক্ষর" autocomplete="new-password"/>
@@ -244,7 +244,7 @@ header{background:linear-gradient(135deg,#16213e,#0f3460);border-bottom:2px soli
     </header>
     <div class="toolbar">
       <div class="t-btns">
-        <button class="btn-add" onclick="openAddModal()">➕ নতুন ইউজার-পাসওয়ার্ড এ্যাড করুন</button>
+        <button class="btn-add" onclick="openAddModal()">➕ নতুন কোম্পানি এ্যাড করুন</button>
         <button class="btn-save" onclick="saveToSheets()">💾 Save</button>
         <button class="btn-reload" onclick="loadFromSheets()">🔄 Reload</button>
       </div>
@@ -342,13 +342,14 @@ function doChangeCreds(){
   const e=document.getElementById("creds-err");
   const c=getCreds();
   if(op!==c.pass){e.textContent="❌ বর্তমান password ভুল!";return;}
-  if(!nu){e.textContent="❌ নতুন username দিন!";return;}
   if(np.length<4){e.textContent="❌ কমপক্ষে ৪ অক্ষর!";return;}
   if(np!==np2){e.textContent="❌ Password মিলছে না!";return;}
-  localStorage.setItem("appUser",nu);localStorage.setItem("appPass",np);
+  const finalUser=nu||c.user;
+  localStorage.setItem("appUser",finalUser);localStorage.setItem("appPass",np);
+  document.getElementById("l-user").value=finalUser;
   closeModal("creds-modal");
   ["c-old","c-user","c-new","c-new2"].forEach(id=>document.getElementById(id).value="");
-  toast("✅ পাসওয়ার্ড  পরিবর্তন  হয়েছে!");
+  toast("✅ Password পরিবর্তন হয়েছে!");
 }
 
 function closeModal(id){document.getElementById(id).style.display="none";}
