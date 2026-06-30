@@ -183,7 +183,7 @@ header{background:linear-gradient(135deg,#16213e,#0f3460);border-bottom:2px soli
     <label>🔑 Password</label>
     <input type="text" id="inp-pw" placeholder="Password" autocomplete="new-password" onkeydown="if(event.key==='Enter')document.getElementById('inp-note').focus()"/>
     <label>📝 Note / Mobile No.</label>
-    <input type="text" id="inp-note" placeholder="Note / Mobile No. (ঐচ্ছিক)" autocomplete="off" onkeydown="if(event.key==='Enter')addAndSave()"/>
+    <input type="text" id="inp-note" placeholder="Note / Mobile No. (Optional)" autocomplete="off" onkeydown="if(event.key==='Enter')addAndSave()"/>
     <div class="modal-err" id="add-err"></div>
     <div class="modal-btns">
       <button class="btn-ok" onclick="addAndSave()">💾 Save করুন</button>
@@ -199,7 +199,7 @@ header{background:linear-gradient(135deg,#16213e,#0f3460);border-bottom:2px soli
     <h3>🔑 পাসওয়ার্ড পরিবর্তন করুন</h3>
     <label>বর্তমান Password</label>
     <div class="inp-wrap"><input type="password" id="c-old" placeholder="বর্তমান password" autocomplete="new-password" style="padding-right:44px;"/><button class="eye-btn" onclick="toggleEyeFor('c-old',this)" type="button">👁️</button></div>
-    <label>নতুন Username (ঐচ্ছিক)</label>
+    <label>নতুন Username (Optinal)</label>
     <input type="text" id="c-user" placeholder="নতুন username" autocomplete="off"/>
     <label>নতুন Password</label>
     <div class="inp-wrap"><input type="password" id="c-new" placeholder="কমপক্ষে ৪ অক্ষর" autocomplete="new-password" style="padding-right:44px;"/><button class="eye-btn" onclick="toggleEyeFor('c-new',this)" type="button">👁️</button></div>
@@ -218,7 +218,7 @@ header{background:linear-gradient(135deg,#16213e,#0f3460);border-bottom:2px soli
   <div class="modal">
     <h3>📥 CSV Import (Replace)</h3>
     <p style="color:#cfd8e3;font-size:.85rem;margin-bottom:8px;">ফরম্যাট: #, Company, Username, Password, Note</p>
-    <p style="color:#FFC000;font-size:.82rem;margin-bottom:12px;">⚠️ Import করলে আগের সব data মুছে নতুন data replace হবে!</p>
+    <p style="color:#FFFF00;font-size:.82rem;margin-bottom:12px;">⚠️ Import করলে আগের সব Data মুছে নতুন Data Replace হবে!</p>
     <input type="file" id="csv-file" accept=".csv" style="color:#eee;width:100%;margin-bottom:10px;"/>
     <div class="modal-err" id="import-err"></div>
     <div class="modal-btns">
