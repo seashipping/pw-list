@@ -478,7 +478,7 @@ function renderDesktop(filtered){
     const i=r._i;
     const tr=document.createElement("tr");
     tr.innerHTML=`
-      <td class="sn">${fi+1}</td>
+      <td class="sn">${i+1}</td>
       <td><input class="co-input" value="${esc(r.company)}" oninput="editField(${i},'company',this.value)" autocomplete="off"/></td>
       <td><div class="cell-flex">
         <input value="${esc(r.user)}" oninput="editField(${i},'user',this.value)" autocomplete="off"/>
@@ -505,7 +505,7 @@ function renderMobile(filtered){
     const card=document.createElement("div");
     card.className="card";
     card.innerHTML=`
-      <div class="card-company">${fi+1}. ${esc(r.company)}</div>
+      <div class="card-company">${i+1}. ${esc(r.company)}</div>
       <div class="card-row">
         <label>👤</label>
         <input value="${esc(r.user)}" oninput="editField(${i},'user',this.value)" autocomplete="off"/>
