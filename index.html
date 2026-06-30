@@ -19,14 +19,15 @@ body{font-family:Arial,sans-serif;background:#1a1a2e;color:#eee;font-size:15px;}
 .login-box h2{color:#e94560;font-size:1.4rem;margin-bottom:4px;}
 .login-box .sub{color:#aaa;font-size:0.78rem;margin-bottom:20px;}
 .lf{margin-bottom:14px;text-align:left;}
-.lf label{display:block;color:#aaa;font-size:0.82rem;margin-bottom:5px;}
+.lf label{display:block;color:#cfd8e3;font-size:0.85rem;font-weight:bold;margin-bottom:6px;}
 .inp-wrap{position:relative;}
 .lf input{width:100%;padding:11px 14px;border-radius:8px;border:2px solid #2a2a4a;background:#0f3460;color:#eee;font-size:1rem;}
 .lf input:focus{outline:none;border-color:#e94560;}
 .eye-btn{position:absolute;right:10px;top:50%;transform:translateY(-50%);background:none;border:none;color:#aaa;font-size:1.1rem;cursor:pointer;padding:4px;}
 #login-err{color:#e94560;font-size:0.83rem;min-height:18px;margin-bottom:8px;}
-.btn-login{width:100%;padding:12px;background:#e94560;color:#fff;border:none;border-radius:8px;font-size:1rem;font-weight:bold;cursor:pointer;}
-.login-footer{margin-top:14px;font-size:0.78rem;font-weight:bold;color:#f1c40f;line-height:1.6;}
+.btn-login{width:100%;padding:13px;background:linear-gradient(90deg,#c026d3,#2dd4ff);color:#fff;border:none;border-radius:30px;font-size:1.05rem;font-weight:bold;cursor:pointer;letter-spacing:0.5px;box-shadow:0 0 14px #2dd4ff77,0 0 14px #c026d377;text-shadow:0 1px 3px #000;}
+.btn-login:hover{box-shadow:0 0 22px #2dd4ffaa,0 0 22px #c026d3aa;}
+.login-footer{margin-top:18px;font-size:0.8rem;font-weight:bold;line-height:1.7;color:#fff;letter-spacing:0.3px;border:1px solid #2dd4ff66;border-radius:14px;padding:10px 14px;box-shadow:0 0 16px #2dd4ff33;}
 
 /* APP */
 #app{display:none;flex-direction:column;height:100vh;overflow:hidden;}
@@ -34,34 +35,38 @@ body{font-family:Arial,sans-serif;background:#1a1a2e;color:#eee;font-size:15px;}
 
 /* HEADER */
 header{background:linear-gradient(135deg,#16213e,#0f3460);border-bottom:2px solid #e94560;padding:10px 14px;}
-.header-top{display:flex;align-items:flex-start;justify-content:space-between;flex-wrap:wrap;gap:6px;margin-bottom:6px;}
+.header-top{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:6px;margin-bottom:6px;}
 .header-left h1{font-size:1.1rem;color:#e94560;font-weight:bold;}
 .byline{font-size:0.75rem;color:#aaa;}
 .header-right{display:flex;gap:5px;flex-wrap:wrap;}
-.icon-btn{background:#0f3460;border:1px solid #2a2a4a;color:#eee;border-radius:7px;padding:6px 10px;cursor:pointer;font-size:0.78rem;white-space:nowrap;}
-.icon-btn:hover{border-color:#e94560;color:#e94560;}
-.header-note{font-size:0.78rem;color:#f39c12;padding:4px 0 2px;}
-#quicklinks{display:flex;gap:6px;flex-wrap:wrap;padding:4px 0 2px;}
-#quicklinks a{color:#7ec8e3;font-size:0.78rem;text-decoration:none;padding:3px 10px;border:1px solid #2a3a5a;border-radius:12px;white-space:nowrap;}
-#quicklinks a:hover{background:#e94560;color:#fff;}
+.icon-btn{background:#0a0a1a;border:1px solid #2dd4ff88;color:#7ec8e3;border-radius:20px;padding:6px 14px;cursor:pointer;font-size:0.78rem;white-space:nowrap;box-shadow:0 0 6px #2dd4ff33;}
+.icon-btn:hover{border-color:#2dd4ff;color:#2dd4ff;box-shadow:0 0 12px #2dd4ff77;}
+.header-note{font-size:0.95rem;color:#2ecc71;text-align:center;font-weight:bold;padding:0 8px;}
+#quicklinks{display:flex;gap:8px;flex-wrap:wrap;padding:6px 0 4px;}
+#quicklinks .link-wrap{position:relative;display:inline-flex;align-items:center;}
+#quicklinks a{color:#7ec8e3;font-size:0.92rem;font-weight:bold;text-decoration:none;padding:6px 16px;border:1px solid #c026d388;border-radius:18px;white-space:nowrap;background:#0a0a1a;box-shadow:0 0 6px #c026d333;}
+#quicklinks a:hover{background:linear-gradient(90deg,#c026d3,#2dd4ff);color:#fff;box-shadow:0 0 14px #2dd4ff99;}
+.link-del{display:none;background:#e94560;color:#fff;border:none;border-radius:50%;width:18px;height:18px;font-size:0.7rem;line-height:1;cursor:pointer;position:absolute;top:-6px;right:-6px;}
+#quicklinks.edit-mode .link-del{display:block;}
+#quicklinks.edit-mode a{pointer-events:none;opacity:0.85;}
 
 /* TOOLBAR */
 .toolbar{background:#16213e;padding:8px 12px;display:flex;gap:6px;border-bottom:1px solid #2a2a4a;}
 .t-btns{display:flex;gap:6px;width:100%;}
-.t-btns button{flex:1;padding:9px 6px;font-size:0.9rem;font-weight:bold;border:none;border-radius:7px;cursor:pointer;}
-.btn-add{background:#e94560;color:#fff;}
-.btn-save{background:#27ae60;color:#fff;}
-.btn-reload{background:#2980b9;color:#fff;}
+.t-btns button{flex:1;padding:9px 6px;font-size:0.9rem;font-weight:bold;border:none;border-radius:20px;cursor:pointer;}
+.btn-add{background:linear-gradient(90deg,#c026d3,#ff2d9c);color:#fff;box-shadow:0 0 12px #c026d366;}
+.btn-save{background:linear-gradient(90deg,#27ae60,#2dd4ff);color:#fff;box-shadow:0 0 12px #2dd4ff66;}
+.btn-reload{background:linear-gradient(90deg,#2980b9,#c026d3);color:#fff;box-shadow:0 0 12px #c026d366;}
 
 /* STATUS */
-#status{padding:6px 14px;font-size:0.85rem;background:#1a1a2e;color:#aaa;border-bottom:1px solid #2a2a4a;}
-#status.ok{color:#2ecc71;}#status.err{color:#e74c3c;}#status.loading{color:#f39c12;}
+#status{padding:8px 14px;font-size:0.9rem;background:#1a1a2e;color:#cfd8e3;border-bottom:1px solid #2dd4ff33;}
+#status.ok{color:#2dd4ff;font-weight:bold;}#status.err{color:#ff5e7e;font-weight:bold;}#status.loading{color:#ffd84d;font-weight:bold;}
 
 /* SEARCH */
 .search-bar{padding:8px 12px;background:#16213e;border-bottom:1px solid #2a2a4a;display:flex;gap:6px;}
-.search-bar input{flex:1;padding:9px 12px;border:1px solid #2a2a4a;border-radius:7px;background:#0f3460;color:#eee;font-size:0.95rem;}
+.search-bar input{flex:1;padding:9px 14px;border:1px solid #2dd4ff55;border-radius:20px;background:#0f3460;color:#eee;font-size:0.95rem;}
 .search-bar input:focus{outline:none;border-color:#e94560;}
-.search-bar button{background:#0f3460;border:1px solid #2a2a4a;color:#eee;border-radius:7px;padding:8px 12px;font-size:0.85rem;cursor:pointer;}
+.search-bar button{background:linear-gradient(90deg,#e94560,#ff8a00);border:none;color:#fff;border-radius:20px;padding:8px 16px;font-size:0.85rem;font-weight:bold;cursor:pointer;box-shadow:0 0 8px #e9456055;}
 
 /* SCROLLABLE AREA */
 #tbody-wrap{flex:1;overflow-y:auto;overflow-x:auto;-webkit-overflow-scrolling:touch;min-height:0;}
@@ -74,51 +79,51 @@ header{background:linear-gradient(135deg,#16213e,#0f3460);border-bottom:2px soli
 #desk-table colgroup col:nth-child(4){width:19%;}
 #desk-table colgroup col:nth-child(5){width:17%;}
 #desk-table colgroup col:nth-child(6){width:65px;}
-#desk-table thead th{padding:8px 8px;text-align:left;color:#e94560;font-size:0.88rem;background:#0f3460;border-bottom:2px solid #e94560;border-right:1px solid #1a3a6a;white-space:nowrap;}
+#desk-table thead th{padding:8px 8px;text-align:left;color:#fff;font-size:0.9rem;font-weight:bold;background:#0f3460;border-bottom:2px solid #2dd4ff;border-right:1px solid #1a3a6a;white-space:nowrap;}
 #desk-table thead th:last-child{border-right:none;text-align:center;}
 #desk-table tbody tr{border-bottom:1px solid #2a2a4a;}
 #desk-table tbody tr:hover{background:#760542;}
 #desk-table tbody td{padding:7px 8px;border-right:1px solid #1e2a4a;vertical-align:middle;overflow:hidden;}
 #desk-table tbody td:last-child{border-right:none;text-align:center;}
 .cell-flex{display:flex;align-items:center;gap:4px;}
-.cell-flex input{flex:1;min-width:0;background:transparent;border:none;color:#2ecc71;font-size:0.88rem;font-family:Arial,sans-serif;padding:2px 3px;outline:none;}
+.cell-flex input{flex:1;min-width:0;background:transparent;border:none;color:#00fbfe;font-size:0.88rem;font-family:Arial,sans-serif;padding:2px 3px;outline:none;}
 .cell-flex input:focus{background:#0f3460;border-radius:3px;}
 .cell-flex input.mono{font-family:monospace;}
-.co-input{width:100%;background:transparent;border:none;color:#2ecc71;font-size:0.88rem;font-weight:bold;font-family:Arial,sans-serif;padding:2px 3px;outline:none;}
+.co-input{width:100%;background:transparent;border:none;color:#00fbfe;font-size:0.9rem;font-weight:bold;font-family:Arial,sans-serif;padding:2px 3px;outline:none;}
 .co-input:focus{background:#0f3460;border-radius:3px;}
-.cpbtn{background:#0f3460;border:1px solid #3a5a8a;color:#7ec8e3;padding:3px 6px;font-size:0.78rem;border-radius:4px;cursor:pointer;flex-shrink:0;}
-.cpbtn:hover{border-color:#e94560;color:#e94560;}
-.delbtn{background:none;border:1px solid #e94560;color:#e94560;padding:4px 8px;font-size:0.82rem;border-radius:5px;cursor:pointer;}
-.delbtn:hover{background:#e94560;color:#fff;}
-.sn{color:#2ecc71;font-size:0.82rem;text-align:center;font-weight:bold;}
+.cpbtn{background:#0a1a3a;border:1px solid #2dd4ff66;color:#2dd4ff;padding:3px 7px;font-size:0.78rem;border-radius:8px;cursor:pointer;flex-shrink:0;}
+.cpbtn:hover{box-shadow:0 0 6px #2dd4ff77;}
+.delbtn{background:linear-gradient(90deg,#e94560,#ff2d9c);border:none;color:#fff;padding:4px 10px;font-size:0.82rem;border-radius:10px;cursor:pointer;box-shadow:0 0 6px #e9456066;}
+.delbtn:hover{box-shadow:0 0 12px #ff2d9caa;}
+.sn{color:#fff;font-size:0.86rem;text-align:center;font-weight:normal;}
 
 /* MOBILE CARDS */
 #mobile-list{display:none;padding:6px;}
 .card{background:#16213e;border:1px solid #2a2a4a;border-radius:8px;padding:10px 12px;margin-bottom:8px;}
-.card-company{font-weight:bold;font-size:1rem;color:#2ecc71;margin-bottom:8px;word-break:break-word;}
+.card-company{font-weight:bold;font-size:1rem;color:#00fbfe;margin-bottom:8px;word-break:break-word;}
 .card-row{display:flex;align-items:center;gap:6px;margin-bottom:6px;}
 .card-row label{color:#aaa;font-size:0.78rem;min-width:22px;}
-.card-row input{flex:1;background:#0f3460;border:none;border-radius:5px;color:#2ecc71;font-size:0.9rem;padding:6px 8px;outline:none;}
+.card-row input{flex:1;background:#0f3460;border:none;border-radius:5px;color:#00fbfe;font-size:0.9rem;padding:6px 8px;outline:none;}
 .card-row input:focus{border:1px solid #e94560;}
 .card-row input.mono{font-family:monospace;}
-.card-copy{background:#0f3460;border:1px solid #3a5a8a;color:#7ec8e3;padding:7px 12px;font-size:0.85rem;border-radius:6px;cursor:pointer;white-space:nowrap;touch-action:manipulation;}
-.card-del{background:none;border:1px solid #e94560;color:#e94560;padding:7px 10px;font-size:0.85rem;border-radius:5px;cursor:pointer;margin-top:4px;width:100%;touch-action:manipulation;}
+.card-copy{background:#0a1a3a;border:1px solid #2dd4ff66;color:#2dd4ff;padding:7px 12px;font-size:0.85rem;border-radius:10px;cursor:pointer;white-space:nowrap;touch-action:manipulation;}
+.card-del{background:linear-gradient(90deg,#e94560,#ff2d9c);border:none;color:#fff;padding:7px 10px;font-size:0.85rem;border-radius:10px;cursor:pointer;margin-top:4px;width:100%;touch-action:manipulation;box-shadow:0 0 6px #e9456066;}
 
 /* EMPTY */
 .empty-msg{text-align:center;padding:40px;color:#555;}
 
 /* MODAL */
 .modal-bg{position:fixed;inset:0;background:#000b;display:flex;align-items:center;justify-content:center;z-index:8888;padding:16px;}
-.modal{background:#16213e;border:2px solid #e94560;border-radius:14px;padding:24px;max-width:380px;width:100%;max-height:90vh;overflow-y:auto;}
-.modal h3{color:#e94560;margin-bottom:14px;font-size:1rem;text-align:center;}
+.modal{background:#0a0a1a;border:1px solid #2dd4ff;border-radius:16px;padding:24px;max-width:380px;width:100%;max-height:90vh;overflow-y:auto;box-shadow:0 0 24px #2dd4ff55,0 0 24px #c026d333;}
+.modal h3{background:linear-gradient(90deg,#c026d3,#2dd4ff);-webkit-background-clip:text;background-clip:text;color:transparent;margin-bottom:14px;font-size:1.05rem;font-weight:900;text-align:center;letter-spacing:0.3px;}
 .modal label{display:block;text-align:left;color:#aaa;font-size:0.8rem;margin-bottom:4px;margin-top:10px;}
-.modal input{width:100%;padding:10px 12px;border-radius:7px;border:1px solid #2a2a4a;background:#0f3460;color:#eee;font-size:0.9rem;outline:none;}
-.modal input:focus{border-color:#e94560;}
+.modal input{width:100%;padding:10px 12px;border-radius:10px;border:1px solid #2dd4ff55;background:#0f3460;color:#eee;font-size:0.9rem;outline:none;}
+.modal input:focus{border-color:#2dd4ff;box-shadow:0 0 8px #2dd4ff66;}
 .modal-err{color:#e94560;font-size:0.82rem;min-height:18px;margin-top:8px;}
 .modal-btns{display:flex;gap:8px;margin-top:14px;}
-.modal-btns button{flex:1;padding:10px;border-radius:7px;font-weight:bold;border:none;cursor:pointer;font-size:0.9rem;}
-.btn-ok{background:#27ae60;color:#fff;}
-.btn-cancel{background:#555;color:#fff;}
+.modal-btns button{flex:1;padding:10px;border-radius:20px;font-weight:bold;border:none;cursor:pointer;font-size:0.9rem;}
+.btn-ok{background:linear-gradient(90deg,#27ae60,#2dd4ff);color:#fff;box-shadow:0 0 10px #2dd4ff55;}
+.btn-cancel{background:linear-gradient(90deg,#ff2d6a,#ff8a00);color:#fff;box-shadow:0 0 10px #ff2d6a55;}
 
 /* RESPONSIVE */
 @media(max-width:767px){
@@ -141,9 +146,12 @@ header{background:linear-gradient(135deg,#16213e,#0f3460);border-bottom:2px soli
 <!-- LOGIN -->
 <div id="login-screen">
   <div class="login-box">
-    <div class="login-icon">🗂️</div>
-    <h2>USER PW LIST V.1</h2>
-    <div class="sub">Created by Idris Mansoor</div>
+    <div class="login-icon" style="filter:drop-shadow(0 0 10px #c026d3);">🗂️</div>
+    <div style="position:relative;display:inline-block;padding:14px 28px;margin-bottom:6px;">
+      <div style="position:absolute;inset:0;border:1px solid #2dd4ff;border-radius:50%/40%;box-shadow:0 0 12px #2dd4ff,inset 0 0 12px #2dd4ff44;"></div>
+      <h2 style="background:linear-gradient(90deg,#c026d3,#2dd4ff);-webkit-background-clip:text;background-clip:text;color:transparent;text-shadow:0 0 18px #c026d3aa;font-size:1.5rem;letter-spacing:1px;font-weight:900;margin:0;position:relative;">USER PW LIST V.1</h2>
+    </div>
+    <div class="sub" style="color:#2dd4ff;text-shadow:0 0 8px #2dd4ff88;">Created by Idris Mansoor</div>
     <div class="lf">
       <label>👤 Username</label>
       <input type="text" id="l-user" value="seashipping" readonly autocomplete="off" onkeydown="if(event.key==='Enter')doLogin()" style="background:#0a2a4a;color:#2ecc71;font-weight:bold;cursor:default;"/>
@@ -157,7 +165,7 @@ header{background:linear-gradient(135deg,#16213e,#0f3460);border-bottom:2px soli
     </div>
     <div id="login-err"></div>
     <button class="btn-login" onclick="doLogin()">🔓 প্রবেশ করুন</button>
-    <div class="login-footer">Only S E A SHIPPING Employee Used.<br>Released  - July 2026</div>
+    <div class="login-footer">Only S E A SHIPPING Employee Used.<br>Start Date - July 2026</div>
   </div>
 </div>
 
@@ -205,13 +213,31 @@ header{background:linear-gradient(135deg,#16213e,#0f3460);border-bottom:2px soli
 <!-- IMPORT MODAL -->
 <div class="modal-bg" id="import-modal" style="display:none">
   <div class="modal">
-    <h3>📥 CSV Import</h3>
-    <p style="color:#aaa;font-size:.82rem;margin-bottom:12px;">ফরম্যাট: #, Company, Username, Password, Note</p>
+    <h3>📥 CSV Import (Replace)</h3>
+    <p style="color:#cfd8e3;font-size:.85rem;margin-bottom:8px;">ফরম্যাট: #, Company, Username, Password, Note</p>
+    <p style="color:#e74c3c;font-size:.82rem;margin-bottom:12px;">⚠️ Import করলে আগের সব data মুছে নতুন data replace হবে!</p>
     <input type="file" id="csv-file" accept=".csv" style="color:#eee;width:100%;margin-bottom:10px;"/>
     <div class="modal-err" id="import-err"></div>
     <div class="modal-btns">
-      <button class="btn-ok" onclick="doImportCSV()">📥 Import</button>
+      <button class="btn-ok" onclick="doImportCSV()">📥 Replace & Import</button>
       <button class="btn-cancel" onclick="closeModal('import-modal')">❌ বাতিল</button>
+    </div>
+  </div>
+</div>
+
+<!-- ADD/EDIT LINK MODAL -->
+<div class="modal-bg" id="link-modal" style="display:none">
+  <div class="modal">
+    <h3 id="link-modal-title">🔗 নতুন Link যোগ করুন</h3>
+    <input type="hidden" id="link-edit-id"/>
+    <label>📝 Label (যেমন: TOS Gulftainer)</label>
+    <input type="text" id="link-label" placeholder="Label লিখুন" autocomplete="off"/>
+    <label>🔗 URL</label>
+    <input type="text" id="link-url" placeholder="https://..." autocomplete="off"/>
+    <div class="modal-err" id="link-err"></div>
+    <div class="modal-btns">
+      <button class="btn-ok" onclick="saveLink()">💾 Save করুন</button>
+      <button class="btn-cancel" onclick="closeModal('link-modal')">❌ বাতিল</button>
     </div>
   </div>
 </div>
@@ -221,9 +247,14 @@ header{background:linear-gradient(135deg,#16213e,#0f3460);border-bottom:2px soli
   <div id="sticky-top">
     <header>
       <div class="header-top">
-        <div class="header-left">
-          <h1>🗂️ USER PW LIST V.1</h1>
-          <div class="byline">Created by <b style="color:#2ecc71;">Idris Mansoor</b></div>
+        <div class="header-left" style="text-align:left;">
+          <div style="display:inline-flex;align-items:center;gap:10px;background:#0a0a1a;border:1px solid #2dd4ff;border-radius:10px;padding:6px 18px;box-shadow:0 0 10px #2dd4ff55;">
+            <span style="font-size:1.4rem;filter:drop-shadow(0 0 6px #c026d3);">🗂️</span>
+            <div style="text-align:left;">
+              <div style="background:linear-gradient(90deg,#c026d3,#2dd4ff);-webkit-background-clip:text;background-clip:text;color:transparent;font-size:1.05rem;font-weight:900;letter-spacing:0.5px;line-height:1.1;">USER PW LIST V.1</div>
+              <div style="color:#2dd4ff;font-size:0.75rem;line-height:1.1;text-shadow:0 0 4px #2dd4ff88;">Created by Idris Mansoor</div>
+            </div>
+          </div>
         </div>
         <div class="header-right">
           <button class="icon-btn" onclick="document.getElementById('creds-modal').style.display='flex'">🔑 Change PW</button>
@@ -232,14 +263,10 @@ header{background:linear-gradient(135deg,#16213e,#0f3460);border-bottom:2px soli
           <button class="icon-btn" onclick="exportCSV()">📤 Export</button>
         </div>
       </div>
-      <div class="header-note">📝 নোট: যেকোনো password এ্যাড করুন এবং Save করুন — Google Sheet এ যোগ হবে।</div>
-      <div id="quicklinks">
-        <a href="https://www.gulftainer.com/container-tracking/" target="_blank">📦 Container Tracking</a>
-        <a href="https://tos.gulftainer.com/" target="_blank">🚢 TOS Gulftainer</a>
-        <a href="https://eservices.gulftainer.com/a/e-token-generator/login" target="_blank">🎫 E-Token</a>
-        <a href="https://customer-registration.gulftainer.com/home" target="_blank">📋 Customer Reg.</a>
-        <a href="https://zfze.zajel.com/auth/login" target="_blank">📮 Zajel</a>
-        <a href="https://sso.dm.gov.ae/oxauth/authorize.htm?ui_locales=en&scope=openid+profile+email+dubai_municipality+dm_roles&acr_values=dm_external&response_type=code&redirect_uri=https%3A%2F%2Fhub.dm.gov.ae%2Fopenid%2Fappcallback&state=0807edf7d85e5d&nonce=n-0S6_WzA2Mj&client_id=9d541103-48bd-45ec-b813-99caf59d4717&challenge=2f02" target="_blank">🏛️ DM Gov</a>
+      <div id="quicklinks"></div>
+      <div style="display:flex;gap:8px;padding:2px 0 4px;">
+        <button class="icon-btn" onclick="openAddLinkModal()">➕ Add Link</button>
+        <button class="icon-btn" onclick="toggleEditLinks()">✏️ Edit Link</button>
       </div>
     </header>
     <div class="toolbar">
@@ -287,6 +314,90 @@ const API_URL="https://script.google.com/macros/s/AKfycbzP0NQm1C8-kltfq5BEzkGtP5
 const DEFAULT_USER="seashipping", DEFAULT_PASS="admin@2026";
 let rows=[];
 
+const DEFAULT_LINKS=[
+  {label:"📦 Container Tracking",url:"https://www.gulftainer.com/container-tracking/"},
+  {label:"🚢 TOS Gulftainer",url:"https://tos.gulftainer.com/"},
+  {label:"🎫 E-Token",url:"https://eservices.gulftainer.com/a/e-token-generator/login"},
+  {label:"📋 Customer Reg.",url:"https://customer-registration.gulftainer.com/home"},
+  {label:"📮 Zajel",url:"https://zfze.zajel.com/auth/login"},
+  {label:"🏛️ DM Gov",url:"https://sso.dm.gov.ae/oxauth/authorize.htm?ui_locales=en&scope=openid+profile+email+dubai_municipality+dm_roles&acr_values=dm_external&response_type=code&redirect_uri=https%3A%2F%2Fhub.dm.gov.ae%2Fopenid%2Fappcallback&state=0807edf7d85e5d&nonce=n-0S6_WzA2Mj&client_id=9d541103-48bd-45ec-b813-99caf59d4717&challenge=2f02"}
+];
+let quickLinks=[];
+let linkEditMode=false;
+
+function loadLinks(){
+  try{
+    const saved=localStorage.getItem("quickLinks");
+    quickLinks=saved?JSON.parse(saved):DEFAULT_LINKS.slice();
+  }catch(e){quickLinks=DEFAULT_LINKS.slice();}
+  renderLinks();
+}
+
+function saveLinks(){localStorage.setItem("quickLinks",JSON.stringify(quickLinks));}
+
+function renderLinks(){
+  const c=document.getElementById("quicklinks");
+  c.innerHTML="";
+  if(linkEditMode)c.classList.add("edit-mode");else c.classList.remove("edit-mode");
+  quickLinks.forEach((l,idx)=>{
+    const wrap=document.createElement("div");
+    wrap.className="link-wrap";
+    const a=document.createElement("a");
+    a.href=l.url;a.target="_blank";a.textContent=l.label;
+    a.onclick=function(ev){if(linkEditMode){ev.preventDefault();openAddLinkModal(idx);}};
+    wrap.appendChild(a);
+    const del=document.createElement("button");
+    del.className="link-del";del.textContent="✕";
+    del.onclick=function(){deleteLink(idx);};
+    wrap.appendChild(del);
+    c.appendChild(wrap);
+  });
+}
+
+function toggleEditLinks(){
+  linkEditMode=!linkEditMode;
+  renderLinks();
+  toast(linkEditMode?"✏️ Edit মোড চালু — লিংকে ক্লিক করে edit করুন, ✕ চাপলে delete হবে":"✅ Edit মোড বন্ধ");
+}
+
+function openAddLinkModal(editIdx){
+  document.getElementById("link-err").textContent="";
+  if(typeof editIdx==="number"){
+    document.getElementById("link-modal-title").textContent="✏️ Link পরিবর্তন করুন";
+    document.getElementById("link-edit-id").value=editIdx;
+    document.getElementById("link-label").value=quickLinks[editIdx].label;
+    document.getElementById("link-url").value=quickLinks[editIdx].url;
+  }else{
+    document.getElementById("link-modal-title").textContent="🔗 নতুন Link যোগ করুন";
+    document.getElementById("link-edit-id").value="";
+    document.getElementById("link-label").value="";
+    document.getElementById("link-url").value="";
+  }
+  document.getElementById("link-modal").style.display="flex";
+}
+
+function saveLink(){
+  const idVal=document.getElementById("link-edit-id").value;
+  const label=document.getElementById("link-label").value.trim();
+  const url=document.getElementById("link-url").value.trim();
+  const err=document.getElementById("link-err");
+  if(!label||!url){err.textContent="❌ Label ও URL দিন!";return;}
+  if(idVal!==""){
+    quickLinks[parseInt(idVal)]={label,url};
+  }else{
+    quickLinks.push({label,url});
+  }
+  saveLinks();renderLinks();closeModal("link-modal");
+  toast("✅ Link save হয়েছে!");
+}
+
+function deleteLink(idx){
+  if(!confirm("এই link টি মুছবেন?"))return;
+  quickLinks.splice(idx,1);
+  saveLinks();renderLinks();
+  toast("🗑️ Link মুছে গেছে!");
+}
+
 function getCreds(){return{user:localStorage.getItem("appUser")||DEFAULT_USER,pass:localStorage.getItem("appPass")||DEFAULT_PASS};}
 
 // Always reset to default if stored credentials don't match plain text format
@@ -325,6 +436,7 @@ function doLogin(){
       document.getElementById("login-screen").style.display="none";
       document.getElementById("app").style.display="flex";
       loadFromSheets();
+      loadLinks();
     }else{
       document.getElementById("login-err").textContent="❌ Username বা Password ভুল!";
       document.getElementById("l-pass").value="";
@@ -448,6 +560,7 @@ function exportCSV(){
 function doImportCSV(){
   const file=document.getElementById("csv-file").files[0];
   if(!file){document.getElementById("import-err").textContent="❌ ফাইল বেছে নিন!";return;}
+  if(!confirm("⚠️ আগের সব data মুছে নতুন CSV দিয়ে replace হবে। নিশ্চিত?"))return;
   const reader=new FileReader();
   reader.onload=function(e){
     const lines=e.target.result.split("\n").map(l=>l.trim()).filter(l=>l);
@@ -462,7 +575,7 @@ function doImportCSV(){
     localStorage.setItem("tosKhoBackup",JSON.stringify(rows));
     renderAll();closeModal("import-modal");
     document.getElementById("csv-file").value="";
-    setStatus("✅ "+n+" টি import হয়েছে। 💾 Save করুন।","ok");toast("📥 "+n+" টি import!");
+    setStatus("✅ "+n+" টি import হয়েছে (পুরনো data replace)। 💾 Save করুন।","ok");toast("📥 "+n+" টি replace import!");
   };
   reader.readAsText(file,"UTF-8");
 }
