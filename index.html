@@ -146,7 +146,7 @@ header{background:linear-gradient(135deg,#16213e,#0f3460);border-bottom:2px soli
     <div class="sub">Created by Idris Mansoor</div>
     <div class="lf">
       <label>👤 Username</label>
-      <input type="text" id="l-user" placeholder="Username লিখুন" autocomplete="off" onkeydown="if(event.key==='Enter')doLogin()"/>
+      <input type="text" id="l-user" value="seashipping" readonly autocomplete="off" onkeydown="if(event.key==='Enter')doLogin()" style="background:#0a2a4a;color:#2ecc71;font-weight:bold;cursor:default;"/>
     </div>
     <div class="lf">
       <label>🔑 Password</label>
@@ -205,13 +205,12 @@ header{background:linear-gradient(135deg,#16213e,#0f3460);border-bottom:2px soli
 <!-- IMPORT MODAL -->
 <div class="modal-bg" id="import-modal" style="display:none">
   <div class="modal">
-    <h3>📥 CSV Import (Replace)</h3>
-    <p style="color:#aaa;font-size:.82rem;margin-bottom:6px;">ফরম্যাট: #, Company, Username, Password, Note</p>
-    <p style="color:#e74c3c;font-size:.82rem;margin-bottom:12px;">⚠️ Import করলে আগের সব data মুছে নতুন data replace হবে!</p>
+    <h3>📥 CSV Import</h3>
+    <p style="color:#aaa;font-size:.82rem;margin-bottom:12px;">ফরম্যাট: #, Company, Username, Password, Note</p>
     <input type="file" id="csv-file" accept=".csv" style="color:#eee;width:100%;margin-bottom:10px;"/>
     <div class="modal-err" id="import-err"></div>
     <div class="modal-btns">
-      <button class="btn-ok" onclick="doImportCSV()">📥 Replace & Import</button>
+      <button class="btn-ok" onclick="doImportCSV()">📥 Import</button>
       <button class="btn-cancel" onclick="closeModal('import-modal')">❌ বাতিল</button>
     </div>
   </div>
@@ -285,7 +284,7 @@ header{background:linear-gradient(135deg,#16213e,#0f3460);border-bottom:2px soli
 
 <script>
 const API_URL="https://script.google.com/macros/s/AKfycbzP0NQm1C8-kltfq5BEzkGtP5Htv54sGx4XqDNGOxJFGxZqJUBqYvQOeYZTpVW9BMaY0A/exec";
-const DEFAULT_USER="mainadmin", DEFAULT_PASS="admin@2026";
+const DEFAULT_USER="seashipping", DEFAULT_PASS="admin@2026";
 let rows=[];
 
 function getCreds(){return{user:localStorage.getItem("appUser")||DEFAULT_USER,pass:localStorage.getItem("appPass")||DEFAULT_PASS};}
@@ -440,7 +439,6 @@ function exportCSV(){
 function doImportCSV(){
   const file=document.getElementById("csv-file").files[0];
   if(!file){document.getElementById("import-err").textContent="❌ ফাইল বেছে নিন!";return;}
-  if(!confirm("⚠️ আগের সব data মুছে নতুন CSV দিয়ে replace হবে। নিশ্চিত?"))return;
   const reader=new FileReader();
   reader.onload=function(e){
     const lines=e.target.result.split("\n").map(l=>l.trim()).filter(l=>l);
@@ -452,9 +450,10 @@ function doImportCSV(){
       if(cols.length<2)return;
       rows.push({company:cols[1]||cols[0]||"",user:cols[2]||"",password:cols[3]||"",note:cols[4]||""});n++;
     });
+    localStorage.setItem("tosKhoBackup",JSON.stringify(rows));
     renderAll();closeModal("import-modal");
     document.getElementById("csv-file").value="";
-    setStatus("✅ "+n+" টি import হয়েছে (পুরনো data replace)। 💾 Save করুন।","ok");toast("📥 "+n+" টি replace import!");
+    setStatus("✅ "+n+" টি import হয়েছে। 💾 Save করুন।","ok");toast("📥 "+n+" টি import!");
   };
   reader.readAsText(file,"UTF-8");
 }
