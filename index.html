@@ -46,9 +46,12 @@ header{background:linear-gradient(135deg,#16213e,#0f3460);border-bottom:2px soli
 #quicklinks .link-wrap{position:relative;display:inline-flex;align-items:center;}
 #quicklinks a{color:#7ec8e3;font-size:0.92rem;font-weight:bold;text-decoration:none;padding:6px 16px;border:1px solid #c026d388;border-radius:18px;white-space:nowrap;background:#0a0a1a;box-shadow:0 0 6px #c026d333;}
 #quicklinks a:hover{background:linear-gradient(90deg,#c026d3,#2dd4ff);color:#fff;box-shadow:0 0 14px #2dd4ff99;}
-.link-del{display:none;background:#e94560;color:#fff;border:none;border-radius:50%;width:18px;height:18px;font-size:0.7rem;line-height:1;cursor:pointer;position:absolute;top:-6px;right:-6px;}
-#quicklinks.edit-mode .link-del{display:block;}
-#quicklinks.edit-mode a{opacity:0.85;cursor:pointer;}
+.link-edit{display:none;background:#2dd4ff;color:#06283e;border:none;border-radius:50%;width:20px;height:20px;font-size:0.7rem;line-height:1;cursor:pointer;position:absolute;top:-7px;right:-7px;z-index:2;font-weight:bold;box-shadow:0 0 6px #2dd4ff99;}
+#quicklinks.edit-mode .link-edit{display:block;}
+#quicklinks.edit-mode a{opacity:0.85;cursor:default;}
+.modal-btns-3{display:flex;gap:8px;margin-top:14px;}
+.modal-btns-3 button{flex:1;padding:10px;border-radius:20px;font-weight:bold;border:none;cursor:pointer;font-size:0.85rem;}
+.btn-del{background:linear-gradient(90deg,#e94560,#ff2d9c);color:#fff;box-shadow:0 0 10px #e9456055;}
 
 /* TOOLBAR */
 .toolbar{background:#16213e;padding:8px 12px;display:flex;gap:6px;border-bottom:1px solid #2a2a4a;}
@@ -172,7 +175,7 @@ header{background:linear-gradient(135deg,#16213e,#0f3460);border-bottom:2px soli
 <!-- ADD MODAL -->
 <div class="modal-bg" id="add-modal" style="display:none">
   <div class="modal">
-    <h3>➕ নতুন ইউজার পাসওয়ার্ড এ্যাড করুন</h3>
+    <h3>➕ নতুন ইউজার পাসওয়ার্ড এ্যাড করুন</h3>
     <label>🏢 Company Name</label>
     <input type="text" id="inp-company" placeholder="Company Name" autocomplete="off" onkeydown="if(event.key==='Enter')document.getElementById('inp-user').focus()"/>
     <label>👤 User Name</label>
@@ -235,6 +238,9 @@ header{background:linear-gradient(135deg,#16213e,#0f3460);border-bottom:2px soli
     <label>🔗 URL</label>
     <input type="text" id="link-url" placeholder="https://..." autocomplete="off"/>
     <div class="modal-err" id="link-err"></div>
+    <div class="modal-btns-3" id="link-modal-del-wrap" style="display:none">
+      <button class="btn-del" onclick="deleteLinkFromModal()">🗑️ Delete করুন</button>
+    </div>
     <div class="modal-btns">
       <button class="btn-ok" onclick="saveLink()">💾 Save করুন</button>
       <button class="btn-cancel" onclick="closeModal('link-modal')">❌ বাতিল</button>
@@ -342,14 +348,18 @@ function renderLinks(){
   quickLinks.forEach((l,idx)=>{
     const wrap=document.createElement("div");
     wrap.className="link-wrap";
+
     const a=document.createElement("a");
     a.href=l.url;a.target="_blank";a.textContent=l.label;
-    a.onclick=function(ev){if(linkEditMode){ev.preventDefault();openAddLinkModal(idx);}};
+    a.onclick=function(ev){ if(linkEditMode){ ev.preventDefault(); openAddLinkModal(idx); } };
     wrap.appendChild(a);
-    const del=document.createElement("button");
-    del.className="link-del";del.textContent="✕";
-    del.onclick=function(){deleteLink(idx);};
-    wrap.appendChild(del);
+
+    const editBtn=document.createElement("button");
+    editBtn.className="link-edit";editBtn.textContent="✎";editBtn.type="button";
+    editBtn.title="Edit";
+    editBtn.onclick=function(ev){ ev.preventDefault(); ev.stopPropagation(); openAddLinkModal(idx); };
+    wrap.appendChild(editBtn);
+
     c.appendChild(wrap);
   });
 }
@@ -357,7 +367,7 @@ function renderLinks(){
 function toggleEditLinks(){
   linkEditMode=!linkEditMode;
   renderLinks();
-  toast(linkEditMode?"✏️ Edit মোড চালু — লিংকে ক্লিক করে edit করুন, ✕ চাপলে delete হবে":"✅ Edit মোড বন্ধ");
+  toast(linkEditMode?"✏️ Edit মোড চালু — লিংকে বা ✎ চাপলে Edit/Delete করতে পারবেন":"✅ Edit মোড বন্ধ");
 }
 
 function openAddLinkModal(editIdx){
@@ -367,13 +377,24 @@ function openAddLinkModal(editIdx){
     document.getElementById("link-edit-id").value=editIdx;
     document.getElementById("link-label").value=quickLinks[editIdx].label;
     document.getElementById("link-url").value=quickLinks[editIdx].url;
+    document.getElementById("link-modal-del-wrap").style.display="flex";
   }else{
     document.getElementById("link-modal-title").textContent="🔗 নতুন Link যোগ করুন";
     document.getElementById("link-edit-id").value="";
     document.getElementById("link-label").value="";
     document.getElementById("link-url").value="";
+    document.getElementById("link-modal-del-wrap").style.display="none";
   }
   document.getElementById("link-modal").style.display="flex";
+}
+
+function deleteLinkFromModal(){
+  const idVal=document.getElementById("link-edit-id").value;
+  if(idVal==="")return;
+  if(!confirm("এই link টি মুছবেন?"))return;
+  quickLinks.splice(parseInt(idVal),1);
+  saveLinks();renderLinks();closeModal("link-modal");
+  toast("🗑️ Link মুছে গেছে!");
 }
 
 function saveLink(){
