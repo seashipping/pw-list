@@ -118,6 +118,7 @@ header{background:linear-gradient(135deg,#16213e,#0f3460);border-bottom:2px soli
 #toast{position:fixed;bottom:20px;left:50%;transform:translateX(-50%);background:#222;color:#fff;padding:9px 20px;border-radius:20px;font-size:0.85rem;opacity:0;transition:opacity .3s;pointer-events:none;z-index:9999;}
 #toast.show{opacity:1;}
 </style>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
 </head>
 <body>
 
@@ -191,12 +192,15 @@ header{background:linear-gradient(135deg,#16213e,#0f3460);border-bottom:2px soli
 <!-- IMPORT MODAL -->
 <div class="modal-bg" id="import-modal" style="display:none">
   <div class="modal">
-    <h3>📥 CSV Import (Replace)</h3>
-    <p style="color:#cfd8e3;font-size:.85rem;margin-bottom:4px;">📋 Password Data (ফরম্যাট: #, Company, Username, Password, Note)</p>
-    <input type="file" id="csv-file" accept=".csv" style="color:#eee;width:100%;margin-bottom:10px;"/>
-    <p style="color:#cfd8e3;font-size:.85rem;margin-bottom:4px;margin-top:6px;">🔗 Links CSV (ফরম্যাট: Label, URL) — ঐচ্ছিক</p>
+    <h3>📥 Import (Replace)</h3>
+    <p style="color:#cfd8e3;font-size:.85rem;margin-bottom:4px;">📊 Excel ফাইল (.xlsx) — সব Sheet একসাথে</p>
+    <input type="file" id="xlsx-file" accept=".xlsx,.xls" style="color:#eee;width:100%;margin-bottom:10px;"/>
+    <p style="color:#aaa;font-size:.78rem;margin-bottom:4px;margin-top:4px;">অথবা আলাদা CSV ফাইল:</p>
+    <p style="color:#cfd8e3;font-size:.82rem;margin-bottom:2px;">📋 Password CSV</p>
+    <input type="file" id="csv-file" accept=".csv" style="color:#eee;width:100%;margin-bottom:8px;"/>
+    <p style="color:#cfd8e3;font-size:.82rem;margin-bottom:2px;">🔗 Links CSV</p>
     <input type="file" id="csv-links-file" accept=".csv" style="color:#eee;width:100%;margin-bottom:10px;"/>
-    <p style="color:#FFFF00;font-size:.82rem;margin-bottom:12px;">⚠️ Import করলে আগের সব Data মুছে নতুন Data Replace হবে!</p>
+    <p style="color:#FFFF00;font-size:.82rem;margin-bottom:12px;">⚠️ Import করলে আগের সব Data replace হবে!</p>
     <div class="modal-err" id="import-err"></div>
     <div class="import-btns">
       <button class="btn-import-ok" onclick="doImportCSV()">📥 ডাটা ইনপুট করুন</button>
@@ -560,34 +564,136 @@ function clearSearch(){document.getElementById("search").value="";renderAll();}
 function exportCSV(){
   if(!rows.length&&!quickLinks.length){toast("⚠️ কোনো data নেই!");return;}
 
-  // ── Password data CSV ──
-  const csv=rows.length?["#,Company,Username,Password,Note",
-    ...rows.map((r,i)=>[i+1,`"${r.company}"`,`"${r.user}"`,`"${r.password}"`,`"${r.note}"`].join(","))].join("\n"):"#,Company,Username,Password,Note";
+  try{
+    const wb=XLSX.utils.book_new();
 
-  // ── Links CSV ──
-  const lcsv=quickLinks.length?["Label,URL",
-    ...quickLinks.map(l=>`"${l.label}","${l.url}"`)].join("\n"):"Label,URL";
+    // ── Sheet1: Password data ──
+    const pwData=[["#","Company","Username","Password","Note"],
+      ...rows.map((r,i)=>[i+1,r.company,r.user,r.password,r.note])];
+    const ws1=XLSX.utils.aoa_to_sheet(pwData);
+    XLSX.utils.book_append_sheet(wb,ws1,"Password List");
 
-  // দুটো একসাথে download
-  const dl=(content,name)=>{
+    // ── Sheet2: Links ──
+    const lkData=[["Label","URL"],
+      ...quickLinks.map(l=>[l.label,l.url])];
+    const ws2=XLSX.utils.aoa_to_sheet(lkData);
+    XLSX.utils.book_append_sheet(wb,ws2,"Links");
+
+    // ── Download ──
+    XLSX.writeFile(wb,"user-pw-list-v1.xlsx");
+    toast("📤 Export হয়েছে! একটি Excel ফাইলে সব Sheet ✅");
+  }catch(err){
+    // Fallback: CSV if SheetJS not loaded
+    const csv=["#,Company,Username,Password,Note",
+      ...rows.map((r,i)=>[i+1,`"${r.company}"`,`"${r.user}"`,`"${r.password}"`,`"${r.note}"`].join(","))].join("\n");
     const a=document.createElement("a");
-    a.href=URL.createObjectURL(new Blob(["\uFEFF"+content],{type:"text/csv;charset=utf-8;"}));
-    a.download=name;document.body.appendChild(a);a.click();
-    setTimeout(()=>{URL.revokeObjectURL(a.href);document.body.removeChild(a);},500);
-  };
-  dl(csv,"user-pw-list-v1.csv");
-  setTimeout(()=>dl(lcsv,"user-pw-links.csv"),300);
-  toast("📤 Export হয়েছে! PW List + Links দুটো ফাইল ✅");
+    a.href=URL.createObjectURL(new Blob(["\uFEFF"+csv],{type:"text/csv;charset=utf-8;"}));
+    a.download="user-pw-list-v1.csv";document.body.appendChild(a);a.click();
+    document.body.removeChild(a);
+    toast("📤 CSV Export হয়েছে!");
+  }
 }
 
 function doImportCSV(){
-  const file=document.getElementById("csv-file").files[0];
+  const xlsxFile=document.getElementById("xlsx-file").files[0];
+  const csvFile=document.getElementById("csv-file").files[0];
   const linksFile=document.getElementById("csv-links-file").files[0];
-  if(!file&&!linksFile){document.getElementById("import-err").textContent="❌ কমপক্ষে একটি ফাইল বেছে নিন!";return;}
-  if(!confirm("⚠️ আগের সব data মুছে নতুন CSV দিয়ে replace হবে। নিশ্চিত?"))return;
+  const errEl=document.getElementById("import-err");
+  errEl.textContent="";
+
+  if(!xlsxFile&&!csvFile&&!linksFile){
+    errEl.textContent="❌ কমপক্ষে একটি ফাইল বেছে নিন!";return;
+  }
+
+  // ── File type validation ──
+  if(xlsxFile){
+    const ext=xlsxFile.name.split(".").pop().toLowerCase();
+    if(!["xlsx","xls"].includes(ext)){
+      errEl.textContent="❌ শুধু .xlsx বা .xls ফাইল গ্রহণযোগ্য! আপনি দিয়েছেন: ."+ext;return;
+    }
+  }
+  if(csvFile){
+    const ext=csvFile.name.split(".").pop().toLowerCase();
+    if(ext!=="csv"){
+      errEl.textContent="❌ Password field এ শুধু .csv ফাইল গ্রহণযোগ্য! আপনি দিয়েছেন: ."+ext;return;
+    }
+    // CSV content validation — প্রথম লাইনে # বা Company থাকতে হবে
+    const reader=new FileReader();
+    reader.onload=function(e){
+      const firstLine=e.target.result.split("\n")[0].toLowerCase();
+      if(!firstLine.includes("#")&&!firstLine.includes("company")&&!firstLine.includes("username")){
+        errEl.textContent="❌ ভুল ফাইল! Password CSV এর প্রথম লাইনে #, Company, Username থাকতে হবে।";
+        document.getElementById("csv-file").value="";return;
+      }
+      // Count rows for preview
+      const lines=e.target.result.split("\n").filter(l=>l.trim()).length-1;
+      if(!confirm("✅ ফাইল যাচাই হয়েছে!\n📋 Password data: "+lines+" টি entry\n\n⚠️ আগের data replace হবে। নিশ্চিত?"))return;
+      _doActualImport(xlsxFile,csvFile,linksFile);
+    };
+    reader.readAsText(csvFile,"UTF-8");
+    return;
+  }
+  if(linksFile){
+    const ext=linksFile.name.split(".").pop().toLowerCase();
+    if(ext!=="csv"){
+      errEl.textContent="❌ Links field এ শুধু .csv ফাইল গ্রহণযোগ্য! আপনি দিয়েছেন: ."+ext;return;
+    }
+  }
+
+  // xlsx or links only — go directly with confirm
+  if(xlsxFile){
+    if(!confirm("⚠️ Excel ফাইল import করলে আগের সব data replace হবে। নিশ্চিত?"))return;
+  }else{
+    if(!confirm("⚠️ আগের data replace হবে। নিশ্চিত?"))return;
+  }
+  _doActualImport(xlsxFile,csvFile,linksFile);
+}
+
+function _doActualImport(xlsxFile,csvFile,linksFile){
+  // ── Excel (.xlsx) import ──
+  if(xlsxFile){
+    const reader=new FileReader();
+    reader.onload=function(e){
+      try{
+        const wb=XLSX.read(e.target.result,{type:"binary"});
+        const ws1=wb.Sheets[wb.SheetNames[0]];
+        const data=XLSX.utils.sheet_to_json(ws1,{header:1});
+        rows=[];let n=0;
+        data.forEach((row,idx)=>{
+          if(idx===0)return;
+          if(!row[1]&&!row[2])return;
+          rows.push({company:String(row[1]||""),user:String(row[2]||""),password:String(row[3]||""),note:String(row[4]||"")});n++;
+        });
+        localStorage.setItem("tosKhoBackup",JSON.stringify(rows));
+        renderAll();
+        const lsName=wb.SheetNames.find(n=>n.toLowerCase().includes("link"));
+        if(lsName){
+          const ws2=wb.Sheets[lsName];
+          const ld=XLSX.utils.sheet_to_json(ws2,{header:1});
+          quickLinks=[];let m=0;
+          ld.forEach((row,idx)=>{
+            if(idx===0)return;
+            if(!row[0]||!row[1])return;
+            quickLinks.push({label:String(row[0]),url:String(row[1])});m++;
+          });
+          saveLinks();renderLinks();
+          toast("📥 "+n+" PW + "+m+" Links import সফল! ✅");
+        }else{
+          toast("📥 "+n+" টি PW import সফল! ✅");
+        }
+        document.getElementById("xlsx-file").value="";
+        setStatus("✅ Excel import সফল — "+n+" entry। 💾 Save করুন।","ok");
+      }catch(err){
+        document.getElementById("import-err").textContent="❌ Excel read error: "+err.message;
+      }
+    };
+    reader.readAsBinaryString(xlsxFile);
+    closeModal("import-modal");
+    return;
+  }
 
   // ── Password CSV import ──
-  if(file){
+  if(csvFile){
     const reader=new FileReader();
     reader.onload=function(e){
       const lines=e.target.result.split("\n").map(l=>l.trim()).filter(l=>l);
@@ -604,7 +710,7 @@ function doImportCSV(){
       setStatus("✅ "+n+" টি password import হয়েছে। 💾 Save করুন।","ok");
       toast("📥 "+n+" টি password import সফল!");
     };
-    reader.readAsText(file,"UTF-8");
+    reader.readAsText(csvFile,"UTF-8");
   }
 
   // ── Links CSV import ──
