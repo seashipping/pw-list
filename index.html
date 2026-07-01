@@ -192,9 +192,11 @@ header{background:linear-gradient(135deg,#16213e,#0f3460);border-bottom:2px soli
 <div class="modal-bg" id="import-modal" style="display:none">
   <div class="modal">
     <h3>📥 CSV Import (Replace)</h3>
-    <p style="color:#cfd8e3;font-size:.85rem;margin-bottom:8px;">ফরম্যাট: #, Company, Username, Password, Note</p>
-    <p style="color:#FFFF00;font-size:.82rem;margin-bottom:12px;">⚠️ Import করলে আগের সব Data মুছে নতুন Data Replace হবে!</p>
+    <p style="color:#cfd8e3;font-size:.85rem;margin-bottom:4px;">📋 Password Data (ফরম্যাট: #, Company, Username, Password, Note)</p>
     <input type="file" id="csv-file" accept=".csv" style="color:#eee;width:100%;margin-bottom:10px;"/>
+    <p style="color:#cfd8e3;font-size:.85rem;margin-bottom:4px;margin-top:6px;">🔗 Links CSV (ফরম্যাট: Label, URL) — ঐচ্ছিক</p>
+    <input type="file" id="csv-links-file" accept=".csv" style="color:#eee;width:100%;margin-bottom:10px;"/>
+    <p style="color:#FFFF00;font-size:.82rem;margin-bottom:12px;">⚠️ Import করলে আগের সব Data মুছে নতুন Data Replace হবে!</p>
     <div class="modal-err" id="import-err"></div>
     <div class="import-btns">
       <button class="btn-import-ok" onclick="doImportCSV()">📥 ডাটা ইনপুট করুন</button>
@@ -556,34 +558,75 @@ function fallbackCopy(t){
 function clearSearch(){document.getElementById("search").value="";renderAll();}
 
 function exportCSV(){
-  if(!rows.length){toast("⚠️ কোনো data নেই!");return;}
-  const csv=["#,Company,Username,Password,Note",
-    ...rows.map((r,i)=>[i+1,`"${r.company}"`,`"${r.user}"`,`"${r.password}"`,`"${r.note}"`].join(","))].join("\n");
-  const a=document.createElement("a");
-  a.href=URL.createObjectURL(new Blob(["\uFEFF"+csv],{type:"text/csv;charset=utf-8;"}));
-  a.download="user-pw-list-v1.csv";a.click();toast("📤 Export হয়েছে!");
+  if(!rows.length&&!quickLinks.length){toast("⚠️ কোনো data নেই!");return;}
+
+  // ── Password data CSV ──
+  const csv=rows.length?["#,Company,Username,Password,Note",
+    ...rows.map((r,i)=>[i+1,`"${r.company}"`,`"${r.user}"`,`"${r.password}"`,`"${r.note}"`].join(","))].join("\n"):"#,Company,Username,Password,Note";
+
+  // ── Links CSV ──
+  const lcsv=quickLinks.length?["Label,URL",
+    ...quickLinks.map(l=>`"${l.label}","${l.url}"`)].join("\n"):"Label,URL";
+
+  // দুটো একসাথে download
+  const dl=(content,name)=>{
+    const a=document.createElement("a");
+    a.href=URL.createObjectURL(new Blob(["\uFEFF"+content],{type:"text/csv;charset=utf-8;"}));
+    a.download=name;document.body.appendChild(a);a.click();
+    setTimeout(()=>{URL.revokeObjectURL(a.href);document.body.removeChild(a);},500);
+  };
+  dl(csv,"user-pw-list-v1.csv");
+  setTimeout(()=>dl(lcsv,"user-pw-links.csv"),300);
+  toast("📤 Export হয়েছে! PW List + Links দুটো ফাইল ✅");
 }
 
 function doImportCSV(){
   const file=document.getElementById("csv-file").files[0];
-  if(!file){document.getElementById("import-err").textContent="❌ ফাইল বেছে নিন!";return;}
+  const linksFile=document.getElementById("csv-links-file").files[0];
+  if(!file&&!linksFile){document.getElementById("import-err").textContent="❌ কমপক্ষে একটি ফাইল বেছে নিন!";return;}
   if(!confirm("⚠️ আগের সব data মুছে নতুন CSV দিয়ে replace হবে। নিশ্চিত?"))return;
-  const reader=new FileReader();
-  reader.onload=function(e){
-    const lines=e.target.result.split("\n").map(l=>l.trim()).filter(l=>l);
-    rows=[];let n=0;
-    lines.forEach((line,idx)=>{
-      if(idx===0&&(line.toLowerCase().startsWith("#")||line.toLowerCase().includes("company")))return;
-      const cols=line.split(",").map(c=>c.replace(/^"|"$/g,"").trim());
-      if(cols.length<2)return;
-      rows.push({company:cols[1]||cols[0]||"",user:cols[2]||"",password:cols[3]||"",note:cols[4]||""});n++;
-    });
-    localStorage.setItem("tosKhoBackup",JSON.stringify(rows));
-    renderAll();closeModal("import-modal");
-    document.getElementById("csv-file").value="";
-    setStatus("✅ "+n+" টি import হয়েছে। 💾 Save করুন।","ok");toast("📥 "+n+" টি import সফল!");
-  };
-  reader.readAsText(file,"UTF-8");
+
+  // ── Password CSV import ──
+  if(file){
+    const reader=new FileReader();
+    reader.onload=function(e){
+      const lines=e.target.result.split("\n").map(l=>l.trim()).filter(l=>l);
+      rows=[];let n=0;
+      lines.forEach((line,idx)=>{
+        if(idx===0&&(line.toLowerCase().startsWith("#")||line.toLowerCase().includes("company")))return;
+        const cols=line.split(",").map(c=>c.replace(/^"|"$/g,"").trim());
+        if(cols.length<2)return;
+        rows.push({company:cols[1]||cols[0]||"",user:cols[2]||"",password:cols[3]||"",note:cols[4]||""});n++;
+      });
+      localStorage.setItem("tosKhoBackup",JSON.stringify(rows));
+      renderAll();
+      document.getElementById("csv-file").value="";
+      setStatus("✅ "+n+" টি password import হয়েছে। 💾 Save করুন।","ok");
+      toast("📥 "+n+" টি password import সফল!");
+    };
+    reader.readAsText(file,"UTF-8");
+  }
+
+  // ── Links CSV import ──
+  if(linksFile){
+    const lr=new FileReader();
+    lr.onload=function(e){
+      const lines=e.target.result.split("\n").map(l=>l.trim()).filter(l=>l);
+      quickLinks=[];let m=0;
+      lines.forEach((line,idx)=>{
+        if(idx===0&&(line.toLowerCase().startsWith("label")||line.toLowerCase().includes("url")))return;
+        const cols=line.split(",").map(c=>c.replace(/^"|"$/g,"").trim());
+        if(cols.length<2)return;
+        quickLinks.push({label:cols[0]||"",url:cols[1]||""});m++;
+      });
+      saveLinks();renderLinks();
+      document.getElementById("csv-links-file").value="";
+      toast("🔗 "+m+" টি link import সফল!");
+    };
+    lr.readAsText(linksFile,"UTF-8");
+  }
+
+  closeModal("import-modal");
 }
 
 function getFiltered(){
