@@ -11,13 +11,8 @@
 *{box-sizing:border-box;margin:0;padding:0;}
 html,body{height:100%;}
 body{font-family:Arial,sans-serif;background:#1a1a2e;color:#eee;font-size:15px;}
-
-/* LOGIN */
 #login-screen{position:fixed;inset:0;background:#1a1a2e;display:flex;align-items:center;justify-content:center;z-index:9999;overflow-y:auto;}
 .login-box{background:#16213e;border:2px solid #e94560;border-radius:16px;padding:36px 28px;text-align:center;max-width:380px;width:92%;margin:auto;}
-.login-icon{font-size:2.8rem;margin-bottom:8px;}
-.login-box h2{color:#e94560;font-size:1.4rem;margin-bottom:4px;}
-.login-box .sub{color:#aaa;font-size:0.78rem;margin-bottom:20px;}
 .lf{margin-bottom:14px;text-align:left;}
 .lf label{display:block;color:#cfd8e3;font-size:0.85rem;font-weight:bold;margin-bottom:6px;}
 .inp-wrap{position:relative;}
@@ -25,56 +20,38 @@ body{font-family:Arial,sans-serif;background:#1a1a2e;color:#eee;font-size:15px;}
 .lf input:focus{outline:none;border-color:#e94560;}
 .eye-btn{position:absolute;right:10px;top:50%;transform:translateY(-50%);background:none;border:none;color:#aaa;font-size:1.1rem;cursor:pointer;padding:4px;}
 #login-err{color:#e94560;font-size:0.83rem;min-height:18px;margin-bottom:8px;}
-.btn-login{width:100%;padding:13px;background:linear-gradient(90deg,#c026d3,#2dd4ff);color:#fff;border:none;border-radius:30px;font-size:1.05rem;font-weight:bold;cursor:pointer;letter-spacing:0.5px;box-shadow:0 0 14px #2dd4ff77,0 0 14px #c026d377;text-shadow:0 1px 3px #000;}
+.btn-login{width:100%;padding:13px;background:linear-gradient(90deg,#c026d3,#2dd4ff);color:#fff;border:none;border-radius:30px;font-size:1.05rem;font-weight:bold;cursor:pointer;letter-spacing:0.5px;box-shadow:0 0 14px #2dd4ff77,0 0 14px #c026d377;}
 .btn-login:hover{box-shadow:0 0 22px #2dd4ffaa,0 0 22px #c026d3aa;}
-.login-footer{margin-top:18px;font-size:0.8rem;font-weight:bold;line-height:1.7;color:#fff;letter-spacing:0.3px;border:1px solid #2dd4ff66;border-radius:14px;padding:10px 14px;box-shadow:0 0 16px #2dd4ff33;}
-
-/* APP */
+.login-footer{margin-top:18px;font-size:0.8rem;font-weight:bold;line-height:1.7;color:#fff;border:1px solid #2dd4ff66;border-radius:14px;padding:10px 14px;box-shadow:0 0 16px #2dd4ff33;}
 #app{display:none;flex-direction:column;height:100vh;overflow:hidden;}
 #sticky-top{flex-shrink:0;}
-
-/* HEADER */
 header{background:linear-gradient(135deg,#16213e,#0f3460);border-bottom:2px solid #e94560;padding:10px 14px;}
 .header-top{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:6px;margin-bottom:6px;}
-.header-left h1{font-size:1.1rem;color:#e94560;font-weight:bold;}
-.byline{font-size:0.75rem;color:#aaa;}
 .header-right{display:flex;gap:5px;flex-wrap:wrap;}
 .icon-btn{background:#0a0a1a;border:1px solid #2dd4ff88;color:#7ec8e3;border-radius:20px;padding:6px 14px;cursor:pointer;font-size:0.78rem;white-space:nowrap;box-shadow:0 0 6px #2dd4ff33;}
 .icon-btn:hover{border-color:#2dd4ff;color:#2dd4ff;box-shadow:0 0 12px #2dd4ff77;}
-.header-note{font-size:0.95rem;color:#2ecc71;text-align:center;font-weight:bold;padding:0 8px;}
 #quicklinks{display:flex;gap:8px;flex-wrap:wrap;padding:6px 0 4px;}
 #quicklinks .link-wrap{position:relative;display:inline-flex;align-items:center;}
 #quicklinks a{color:#7ec8e3;font-size:0.92rem;font-weight:bold;text-decoration:none;padding:6px 16px;border:1px solid #c026d388;border-radius:18px;white-space:nowrap;background:#0a0a1a;box-shadow:0 0 6px #c026d333;}
 #quicklinks a:hover{background:linear-gradient(90deg,#c026d3,#2dd4ff);color:#fff;box-shadow:0 0 14px #2dd4ff99;}
-.link-edit{display:none;background:#2dd4ff;color:#06283e;border:none;border-radius:50%;width:20px;height:20px;font-size:0.7rem;line-height:1;cursor:pointer;position:absolute;top:-7px;right:-7px;z-index:2;font-weight:bold;box-shadow:0 0 6px #2dd4ff99;}
+.link-edit{display:none;background:#2dd4ff;color:#06283e;border:none;border-radius:50%;width:20px;height:20px;font-size:0.7rem;line-height:20px;text-align:center;cursor:pointer;position:absolute;top:-7px;right:-7px;z-index:2;font-weight:bold;box-shadow:0 0 6px #2dd4ff99;}
 #quicklinks.edit-mode .link-edit{display:block;}
 #quicklinks.edit-mode a{opacity:0.85;cursor:default;}
-.modal-btns-3{display:flex;gap:8px;margin-top:14px;}
-.modal-btns-3 button{flex:1;padding:10px;border-radius:20px;font-weight:bold;border:none;cursor:pointer;font-size:0.85rem;}
-.btn-del{background:linear-gradient(90deg,#e94560,#ff2d9c);color:#fff;box-shadow:0 0 10px #e9456055;}
-
-/* TOOLBAR */
 .toolbar{background:#16213e;padding:8px 12px;display:flex;gap:6px;border-bottom:1px solid #2a2a4a;}
 .t-btns{display:flex;gap:6px;width:100%;}
 .t-btns button{flex:1;padding:9px 6px;font-size:0.9rem;font-weight:bold;border:none;border-radius:20px;cursor:pointer;}
 .btn-add{background:linear-gradient(90deg,#c026d3,#ff2d9c);color:#fff;box-shadow:0 0 12px #c026d366;}
 .btn-save{background:linear-gradient(90deg,#27ae60,#2dd4ff);color:#fff;box-shadow:0 0 12px #2dd4ff66;}
 .btn-reload{background:linear-gradient(90deg,#2980b9,#c026d3);color:#fff;box-shadow:0 0 12px #c026d366;}
-
-/* STATUS */
 #status{padding:8px 14px;font-size:0.9rem;background:#1a1a2e;color:#cfd8e3;border-bottom:1px solid #2dd4ff33;}
-#status.ok{color:#2dd4ff;font-weight:bold;}#status.err{color:#ff5e7e;font-weight:bold;}#status.loading{color:#ffd84d;font-weight:bold;}
-
-/* SEARCH */
+#status.ok{color:#2dd4ff;font-weight:bold;}
+#status.err{color:#ff5e7e;font-weight:bold;}
+#status.loading{color:#ffd84d;font-weight:bold;}
 .search-bar{padding:8px 12px;background:#16213e;border-bottom:1px solid #2a2a4a;display:flex;gap:6px;}
 .search-bar input{flex:1;padding:9px 14px;border:1px solid #2dd4ff55;border-radius:20px;background:#0f3460;color:#eee;font-size:0.95rem;}
 .search-bar input:focus{outline:none;border-color:#e94560;}
 .search-bar button{background:linear-gradient(90deg,#e94560,#ff8a00);border:none;color:#fff;border-radius:20px;padding:8px 16px;font-size:0.85rem;font-weight:bold;cursor:pointer;box-shadow:0 0 8px #e9456055;}
-
-/* SCROLLABLE AREA */
 #tbody-wrap{flex:1;overflow-y:auto;overflow-x:auto;-webkit-overflow-scrolling:touch;min-height:0;}
-
-/* DESKTOP TABLE */
 #desk-table{width:100%;border-collapse:collapse;font-size:0.9rem;table-layout:fixed;}
 #desk-table colgroup col:nth-child(1){width:40px;}
 #desk-table colgroup col:nth-child(2){width:28%;}
@@ -82,7 +59,7 @@ header{background:linear-gradient(135deg,#16213e,#0f3460);border-bottom:2px soli
 #desk-table colgroup col:nth-child(4){width:19%;}
 #desk-table colgroup col:nth-child(5){width:17%;}
 #desk-table colgroup col:nth-child(6){width:65px;}
-#desk-table thead th{padding:8px 8px;text-align:left;color:#fff;font-size:0.9rem;font-weight:bold;background:#0f3460;border-bottom:2px solid #2dd4ff;border-right:1px solid #1a3a6a;white-space:nowrap;}
+#desk-table thead th{padding:8px;text-align:left;color:#fff;font-size:0.9rem;font-weight:bold;background:#0f3460;border-bottom:2px solid #2dd4ff;border-right:1px solid #1a3a6a;white-space:nowrap;}
 #desk-table thead th:last-child{border-right:none;text-align:center;}
 #desk-table tbody tr{border-bottom:1px solid #2a2a4a;}
 #desk-table tbody tr:hover{background:#760542;}
@@ -99,8 +76,6 @@ header{background:linear-gradient(135deg,#16213e,#0f3460);border-bottom:2px soli
 .delbtn{background:linear-gradient(90deg,#e94560,#ff2d9c);border:none;color:#fff;padding:4px 10px;font-size:0.82rem;border-radius:10px;cursor:pointer;box-shadow:0 0 6px #e9456066;}
 .delbtn:hover{box-shadow:0 0 12px #ff2d9caa;}
 .sn{color:#fff;font-size:0.86rem;text-align:center;font-weight:normal;}
-
-/* MOBILE CARDS */
 #mobile-list{display:none;padding:6px;}
 .card{background:#16213e;border:1px solid #2a2a4a;border-radius:8px;padding:10px 12px;margin-bottom:8px;}
 .card-company{font-weight:bold;font-size:1rem;color:#00fbfe;margin-bottom:8px;word-break:break-word;}
@@ -111,14 +86,10 @@ header{background:linear-gradient(135deg,#16213e,#0f3460);border-bottom:2px soli
 .card-row input.mono{font-family:monospace;}
 .card-copy{background:#0a1a3a;border:1px solid #2dd4ff66;color:#2dd4ff;padding:7px 12px;font-size:0.85rem;border-radius:10px;cursor:pointer;white-space:nowrap;touch-action:manipulation;}
 .card-del{background:linear-gradient(90deg,#e94560,#ff2d9c);border:none;color:#fff;padding:7px 10px;font-size:0.85rem;border-radius:10px;cursor:pointer;margin-top:4px;width:100%;touch-action:manipulation;box-shadow:0 0 6px #e9456066;}
-
-/* EMPTY */
 .empty-msg{text-align:center;padding:40px;color:#555;}
-
-/* MODAL */
 .modal-bg{position:fixed;inset:0;background:#000b;display:flex;align-items:center;justify-content:center;z-index:8888;padding:16px;}
 .modal{background:#0a0a1a;border:1px solid #2dd4ff;border-radius:16px;padding:24px;max-width:380px;width:100%;max-height:90vh;overflow-y:auto;box-shadow:0 0 24px #2dd4ff55,0 0 24px #c026d333;}
-.modal h3{background:linear-gradient(90deg,#c026d3,#2dd4ff);-webkit-background-clip:text;background-clip:text;color:transparent;margin-bottom:14px;font-size:1.05rem;font-weight:900;text-align:center;letter-spacing:0.3px;}
+.modal h3{background:linear-gradient(90deg,#c026d3,#2dd4ff);-webkit-background-clip:text;background-clip:text;color:transparent;margin-bottom:14px;font-size:1.05rem;font-weight:900;text-align:center;}
 .modal label{display:block;text-align:left;color:#aaa;font-size:0.8rem;margin-bottom:4px;margin-top:10px;}
 .modal input{width:100%;padding:10px 12px;border-radius:10px;border:1px solid #2dd4ff55;background:#0f3460;color:#eee;font-size:0.9rem;outline:none;}
 .modal input:focus{border-color:#2dd4ff;box-shadow:0 0 8px #2dd4ff66;}
@@ -127,8 +98,14 @@ header{background:linear-gradient(135deg,#16213e,#0f3460);border-bottom:2px soli
 .modal-btns button{flex:1;padding:10px;border-radius:20px;font-weight:bold;border:none;cursor:pointer;font-size:0.9rem;}
 .btn-ok{background:linear-gradient(90deg,#27ae60,#2dd4ff);color:#fff;box-shadow:0 0 10px #2dd4ff55;}
 .btn-cancel{background:linear-gradient(90deg,#ff2d6a,#ff8a00);color:#fff;box-shadow:0 0 10px #ff2d6a55;}
-
-/* RESPONSIVE */
+.btn-del{background:linear-gradient(90deg,#e94560,#ff2d9c);color:#fff;box-shadow:0 0 10px #e9456055;}
+.modal-btns-3{display:flex;gap:8px;margin-top:14px;}
+.modal-btns-3 button{flex:1;padding:10px;border-radius:20px;font-weight:bold;border:none;cursor:pointer;font-size:0.85rem;}
+/* Import small green buttons */
+.import-btns{display:flex;gap:8px;margin-top:14px;}
+.import-btns button{flex:1;padding:7px 10px;border-radius:14px;font-weight:bold;border:none;cursor:pointer;font-size:0.8rem;}
+.btn-import-ok{background:linear-gradient(90deg,#1a9e4a,#27ae60);color:#fff;box-shadow:0 0 8px #27ae6055;}
+.btn-import-cancel{background:linear-gradient(90deg,#27ae60,#0d7a3a);color:#fff;box-shadow:0 0 8px #1a9e4a55;}
 @media(max-width:767px){
   #desk-table{display:none;}
   #mobile-list{display:block;}
@@ -138,8 +115,6 @@ header{background:linear-gradient(135deg,#16213e,#0f3460);border-bottom:2px soli
   #desk-table{display:table;}
   #mobile-list{display:none;}
 }
-
-/* TOAST */
 #toast{position:fixed;bottom:20px;left:50%;transform:translateX(-50%);background:#222;color:#fff;padding:9px 20px;border-radius:20px;font-size:0.85rem;opacity:0;transition:opacity .3s;pointer-events:none;z-index:9999;}
 #toast.show{opacity:1;}
 </style>
@@ -149,12 +124,12 @@ header{background:linear-gradient(135deg,#16213e,#0f3460);border-bottom:2px soli
 <!-- LOGIN -->
 <div id="login-screen">
   <div class="login-box">
-    <div class="login-icon" style="filter:drop-shadow(0 0 10px #c026d3);">🗂️</div>
+    <div style="font-size:2.8rem;margin-bottom:8px;filter:drop-shadow(0 0 10px #c026d3);">🗂️</div>
     <div style="position:relative;display:inline-block;padding:14px 28px;margin-bottom:6px;">
       <div style="position:absolute;inset:0;border:1px solid #2dd4ff;border-radius:50%/40%;box-shadow:0 0 12px #2dd4ff,inset 0 0 12px #2dd4ff44;"></div>
-      <h2 style="background:linear-gradient(90deg,#c026d3,#2dd4ff);-webkit-background-clip:text;background-clip:text;color:transparent;text-shadow:0 0 18px #c026d3aa;font-size:1.5rem;letter-spacing:1px;font-weight:900;margin:0;position:relative;">USER PW LIST V.1</h2>
+      <h2 style="background:linear-gradient(90deg,#c026d3,#2dd4ff);-webkit-background-clip:text;background-clip:text;color:transparent;font-size:1.5rem;letter-spacing:1px;font-weight:900;margin:0;position:relative;">USER PW LIST V.1</h2>
     </div>
-    <div class="sub" style="color:#2dd4ff;text-shadow:0 0 8px #2dd4ff88;">Created by Idris Mansoor</div>
+    <div style="color:#2dd4ff;font-size:0.78rem;margin-bottom:20px;text-shadow:0 0 8px #2dd4ff88;">Created by Idris Mansoor</div>
     <div class="lf">
       <label>👤 Username</label>
       <input type="text" id="l-user" value="seashipping" readonly autocomplete="off" onkeydown="if(event.key==='Enter')doLogin()" style="background:#0a2a4a;color:#2ecc71;font-weight:bold;cursor:default;"/>
@@ -168,7 +143,7 @@ header{background:linear-gradient(135deg,#16213e,#0f3460);border-bottom:2px soli
     </div>
     <div id="login-err"></div>
     <button class="btn-login" onclick="doLogin()">🔓 প্রবেশ করুন</button>
-    <div class="login-footer">Only S E A SHIPPING Employee Used.<br>Released -July 2026</div>
+    <div class="login-footer">Only S E A SHIPPING Employee Used.<br>Released — July 2026</div>
   </div>
 </div>
 
@@ -199,7 +174,7 @@ header{background:linear-gradient(135deg,#16213e,#0f3460);border-bottom:2px soli
     <h3>🔑 পাসওয়ার্ড পরিবর্তন করুন</h3>
     <label>বর্তমান Password</label>
     <div class="inp-wrap"><input type="password" id="c-old" placeholder="বর্তমান password" autocomplete="new-password" style="padding-right:44px;"/><button class="eye-btn" onclick="toggleEyeFor('c-old',this)" type="button">👁️</button></div>
-    <label>নতুন Username (Optinal)</label>
+    <label>নতুন Username (Optional)</label>
     <input type="text" id="c-user" placeholder="নতুন username" autocomplete="off"/>
     <label>নতুন Password</label>
     <div class="inp-wrap"><input type="password" id="c-new" placeholder="কমপক্ষে ৪ অক্ষর" autocomplete="new-password" style="padding-right:44px;"/><button class="eye-btn" onclick="toggleEyeFor('c-new',this)" type="button">👁️</button></div>
@@ -221,9 +196,9 @@ header{background:linear-gradient(135deg,#16213e,#0f3460);border-bottom:2px soli
     <p style="color:#FFFF00;font-size:.82rem;margin-bottom:12px;">⚠️ Import করলে আগের সব Data মুছে নতুন Data Replace হবে!</p>
     <input type="file" id="csv-file" accept=".csv" style="color:#eee;width:100%;margin-bottom:10px;"/>
     <div class="modal-err" id="import-err"></div>
-    <div class="modal-btns">
-      <button class="btn-ok" onclick="doImportCSV()">📥 ডাটা ইনপুট করুন</button>
-      <button class="btn-cancel" onclick="closeModal('import-modal')">❌ বাতিল</button>
+    <div class="import-btns">
+      <button class="btn-import-ok" onclick="doImportCSV()">📥 ডাটা ইনপুট করুন</button>
+      <button class="btn-import-cancel" onclick="closeModal('import-modal')">✖ বাতিল</button>
     </div>
   </div>
 </div>
@@ -253,10 +228,10 @@ header{background:linear-gradient(135deg,#16213e,#0f3460);border-bottom:2px soli
   <div id="sticky-top">
     <header>
       <div class="header-top">
-        <div class="header-left" style="text-align:left;">
+        <div class="header-left">
           <div style="display:inline-flex;align-items:center;gap:10px;background:#0a0a1a;border:1px solid #2dd4ff;border-radius:10px;padding:6px 18px;box-shadow:0 0 10px #2dd4ff55;">
             <span style="font-size:1.4rem;filter:drop-shadow(0 0 6px #c026d3);">🗂️</span>
-            <div style="text-align:left;">
+            <div>
               <div style="background:linear-gradient(90deg,#c026d3,#2dd4ff);-webkit-background-clip:text;background-clip:text;color:transparent;font-size:1.05rem;font-weight:900;letter-spacing:0.5px;line-height:1.1;">USER PW LIST V.1</div>
               <div style="color:#2dd4ff;font-size:0.75rem;line-height:1.1;text-shadow:0 0 4px #2dd4ff88;">Created by Idris Mansoor</div>
             </div>
@@ -288,26 +263,19 @@ header{background:linear-gradient(135deg,#16213e,#0f3460);border-bottom:2px soli
       <button onclick="clearSearch()">✖ Clear</button>
     </div>
   </div>
-
   <div id="tbody-wrap">
-    <!-- DESKTOP TABLE -->
     <table id="desk-table">
-      <colgroup>
-        <col/><col/><col/><col/><col/><col/>
-      </colgroup>
+      <colgroup><col/><col/><col/><col/><col/><col/></colgroup>
       <thead>
         <tr>
           <th style="width:40px;text-align:center">#</th>
-          <th>Company Name</th>
-          <th>User Name</th>
-          <th>Password</th>
+          <th>Company Name</th><th>User Name</th><th>Password</th>
           <th>Note / Mobile No.</th>
           <th style="width:65px;text-align:center">Delete</th>
         </tr>
       </thead>
       <tbody id="desk-tbody"></tbody>
     </table>
-    <!-- MOBILE CARDS -->
     <div id="mobile-list"></div>
     <div id="empty-msg" class="empty-msg" style="display:none">কোনো entry নেই।</div>
   </div>
@@ -326,20 +294,50 @@ const DEFAULT_LINKS=[
   {label:"🎫 E-Token",url:"https://eservices.gulftainer.com/a/e-token-generator/login"},
   {label:"📋 Customer Reg.",url:"https://customer-registration.gulftainer.com/home"},
   {label:"📮 Zajel",url:"https://zfze.zajel.com/auth/login"},
-  {label:"🏛️ DM Gov",url:"https://sso.dm.gov.ae/oxauth/authorize.htm?ui_locales=en&scope=openid+profile+email+dubai_municipality+dm_roles&acr_values=dm_external&response_type=code&redirect_uri=https%3A%2F%2Fhub.dm.gov.ae%2Fopenid%2Fappcallback&state=0807edf7d85e5d&nonce=n-0S6_WzA2Mj&client_id=9d541103-48bd-45ec-b813-99caf59d4717&challenge=2f02"}
+  {label:"🏛️ DM Gov",url:"https://hub.dm.gov.ae/"},
+  {label:"🚪 GATE PASS DUBAI-PCFC",url:"https://gatepasses.pcfc.ae/"},
+  {label:"🏢 MOFA LOGIN",url:"https://www.mofa.gov.ae/"},
+  {label:"📝 MOFA REG EDAS 2.0",url:"https://edas.mofa.gov.ae/"},
+  {label:"💰 VAT PAYMENT",url:"https://tax.gov.ae/"},
+  {label:"📄 EXEMPTION",url:"https://mirsal.ae/"},
+  {label:"🚢 CMA-CGM",url:"https://www.cma-cgm.com/"},
+  {label:"🚢 ODEX-HAPPAG",url:"https://www.hapag-lloyd.com/"}
 ];
 let quickLinks=[];
 let linkEditMode=false;
 
-function loadLinks(){
+// ── Links: localStorage cache (Google Sheets থেকে আসে) ──
+function loadLinksLocal(){
   try{
-    const saved=localStorage.getItem("quickLinks");
-    quickLinks=saved?JSON.parse(saved):DEFAULT_LINKS.slice();
+    const s=localStorage.getItem("quickLinks_v3");
+    quickLinks=s?JSON.parse(s):DEFAULT_LINKS.slice();
   }catch(e){quickLinks=DEFAULT_LINKS.slice();}
   renderLinks();
 }
 
-function saveLinks(){localStorage.setItem("quickLinks",JSON.stringify(quickLinks));}
+function saveLinksCacheLocal(){
+  localStorage.setItem("quickLinks_v3",JSON.stringify(quickLinks));
+}
+
+// ── Links: Google Sheets এ Save ──
+async function saveLinksToSheets(){
+  saveLinksCacheLocal();
+  try{
+    const res=await fetch(API_URL,{
+      method:"POST",redirect:"follow",
+      headers:{"Content-Type":"text/plain"},
+      body:JSON.stringify({action:"saveLinks",links:quickLinks})
+    });
+    const data=await res.json();
+    if(data.status==="ok"){
+      toast("🔗 Links Google Sheets এ save হয়েছে!");
+    }else{
+      toast("⚠️ Links local এ save হয়েছে");
+    }
+  }catch(e){
+    toast("⚠️ Links local এ save হয়েছে");
+  }
+}
 
 function renderLinks(){
   const c=document.getElementById("quicklinks");
@@ -348,18 +346,14 @@ function renderLinks(){
   quickLinks.forEach((l,idx)=>{
     const wrap=document.createElement("div");
     wrap.className="link-wrap";
-
     const a=document.createElement("a");
     a.href=l.url;a.target="_blank";a.textContent=l.label;
-    a.onclick=function(ev){ if(linkEditMode){ ev.preventDefault(); openAddLinkModal(idx); } };
+    a.onclick=function(ev){if(linkEditMode){ev.preventDefault();openAddLinkModal(idx);}};
     wrap.appendChild(a);
-
-    const editBtn=document.createElement("button");
-    editBtn.className="link-edit";editBtn.textContent="✎";editBtn.type="button";
-    editBtn.title="Edit";
-    editBtn.onclick=function(ev){ ev.preventDefault(); ev.stopPropagation(); openAddLinkModal(idx); };
-    wrap.appendChild(editBtn);
-
+    const eb=document.createElement("button");
+    eb.className="link-edit";eb.textContent="✎";eb.type="button";eb.title="Edit";
+    eb.onclick=function(ev){ev.preventDefault();ev.stopPropagation();openAddLinkModal(idx);};
+    wrap.appendChild(eb);
     c.appendChild(wrap);
   });
 }
@@ -367,7 +361,7 @@ function renderLinks(){
 function toggleEditLinks(){
   linkEditMode=!linkEditMode;
   renderLinks();
-  toast(linkEditMode?"✏️ Edit মোড চালু — লিংকে বা ✎ চাপলে Edit/Delete করতে পারবেন":"✅ Edit মোড বন্ধ");
+  toast(linkEditMode?"✏️ Edit মোড — লিংকে বা ✎ চাপলে edit হবে":"✅ Edit মোড বন্ধ");
 }
 
 function openAddLinkModal(editIdx){
@@ -393,59 +387,40 @@ function deleteLinkFromModal(){
   if(idVal==="")return;
   if(!confirm("এই link টি মুছবেন?"))return;
   quickLinks.splice(parseInt(idVal),1);
-  saveLinks();renderLinks();closeModal("link-modal");
-  toast("🗑️ Link মুছে গেছে!");
+  renderLinks();closeModal("link-modal");
+  saveLinksToSheets();
 }
 
-function saveLink(){
+async function saveLink(){
   const idVal=document.getElementById("link-edit-id").value;
   const label=document.getElementById("link-label").value.trim();
   const url=document.getElementById("link-url").value.trim();
   const err=document.getElementById("link-err");
   if(!label||!url){err.textContent="❌ Label ও URL দিন!";return;}
-  if(idVal!==""){
-    quickLinks[parseInt(idVal)]={label,url};
-  }else{
-    quickLinks.push({label,url});
-  }
-  saveLinks();renderLinks();closeModal("link-modal");
-  toast("✅ Link save হয়েছে!");
+  if(idVal!==""){quickLinks[parseInt(idVal)]={label,url};}
+  else{quickLinks.push({label,url});}
+  renderLinks();closeModal("link-modal");
+  await saveLinksToSheets();
 }
 
-function deleteLink(idx){
-  if(!confirm("এই link টি মুছবেন?"))return;
-  quickLinks.splice(idx,1);
-  saveLinks();renderLinks();
-  toast("🗑️ Link মুছে গেছে!");
-}
-
+// ── Auth ──
 function getCreds(){return{user:localStorage.getItem("appUser")||DEFAULT_USER,pass:localStorage.getItem("appPass")||DEFAULT_PASS};}
-
-// Always reset to default if stored credentials don't match plain text format
 (function(){
-  const p = localStorage.getItem("appPass");
-  // If password looks btoa-encoded (old format), clear it
-  if(p && p !== DEFAULT_PASS && (p.includes("=") || p.length > 30)){
-    localStorage.removeItem("appUser");
-    localStorage.removeItem("appPass");
+  const p=localStorage.getItem("appPass");
+  if(p&&p!==DEFAULT_PASS&&(p.includes("=")||p.length>30)){
+    localStorage.removeItem("appUser");localStorage.removeItem("appPass");
   }
 })();
 
 function toggleEye(){
-  try{
-    const i=document.getElementById("l-pass");
-    const b=document.getElementById("eye-btn");
-    if(i.type==="password"){i.type="text";b.textContent="🙈";}
-    else{i.type="password";b.textContent="👁️";}
-  }catch(e){}
+  const i=document.getElementById("l-pass"),b=document.getElementById("eye-btn");
+  if(i.type==="password"){i.type="text";b.textContent="🙈";}
+  else{i.type="password";b.textContent="👁️";}
 }
-
 function toggleEyeFor(id,btn){
-  try{
-    const i=document.getElementById(id);
-    if(i.type==="password"){i.type="text";btn.textContent="🙈";}
-    else{i.type="password";btn.textContent="👁️";}
-  }catch(e){}
+  const i=document.getElementById(id);
+  if(i.type==="password"){i.type="text";btn.textContent="🙈";}
+  else{i.type="password";btn.textContent="👁️";}
 }
 
 function doLogin(){
@@ -457,14 +432,11 @@ function doLogin(){
       document.getElementById("login-screen").style.display="none";
       document.getElementById("app").style.display="flex";
       loadFromSheets();
-      loadLinks();
     }else{
       document.getElementById("login-err").textContent="❌ Username বা Password ভুল!";
       document.getElementById("l-pass").value="";
     }
-  }catch(e){
-    document.getElementById("login-err").textContent="❌ Error: "+e.message;
-  }
+  }catch(e){document.getElementById("login-err").textContent="❌ Error: "+e.message;}
 }
 
 function doLogout(){
@@ -509,24 +481,39 @@ async function addAndSave(){
   rows.push({company:c,user:u,password:p,note:n});
   ["inp-company","inp-user","inp-pw","inp-note"].forEach(id=>document.getElementById(id).value="");
   document.getElementById("add-err").textContent="";
-  closeModal("add-modal");
-  renderAll();
+  closeModal("add-modal");renderAll();
   await saveToSheets();
 }
 
+// ── Load from Sheets: rows + links একসাথে ──
 async function loadFromSheets(){
   setStatus("⏳ লোড হচ্ছে...","loading");
+  loadLinksLocal(); // প্রথমে local cache দেখাও
   try{
     const res=await fetch(API_URL,{redirect:"follow"});
     const data=await res.json();
     if(data.status==="ok"){
-      rows=data.rows;localStorage.setItem("tosKhoBackup",JSON.stringify(rows));
-      setStatus("✅ "+rows.length+" টি entry load হয়েছে — Google Sheets সংযুক্ত","ok");
+      rows=data.rows||[];
+      localStorage.setItem("tosKhoBackup",JSON.stringify(rows));
+
+      // Sheets এ links থাকলে সেটা ব্যবহার করো
+      if(data.links&&data.links.length>0){
+        quickLinks=data.links;
+        saveLinksCacheLocal();
+        renderLinks();
+        setStatus("✅ "+rows.length+" entry + Links — Google Sheets সংযুক্ত ✔","ok");
+      }else{
+        // Sheets এ links নেই → DEFAULT লোড করো এবং Sheets এ সেভ করো
+        loadLinksLocal();
+        setStatus("✅ "+rows.length+" টি entry load হয়েছে — Google Sheets সংযুক্ত","ok");
+        // প্রথমবার links Sheets এ push করো
+        await saveLinksToSheets();
+      }
     }else throw new Error();
   }catch(e){
     const b=localStorage.getItem("tosKhoBackup");
-    if(b){rows=JSON.parse(b);setStatus("⚠️ Local backup: "+rows.length+" entry","err");}
-    else{rows=[];setStatus("⚠️ সংযোগ ব্যর্থ","err");}
+    if(b){rows=JSON.parse(b);setStatus("⚠️ Offline mode: "+rows.length+" entry (local backup)","err");}
+    else{rows=[];setStatus("⚠️ সংযোগ ব্যর্থ — data নেই","err");}
   }
   renderAll();
 }
@@ -551,7 +538,6 @@ function deleteRow(i){
   if(!confirm("মুছবেন?"))return;
   rows.splice(i,1);renderAll();setStatus("🗑️ মুছে গেছে। 💾 Save করুন।","ok");
 }
-
 function editField(i,f,v){rows[i][f]=v;}
 
 function copyText(t){
@@ -585,8 +571,7 @@ function doImportCSV(){
   const reader=new FileReader();
   reader.onload=function(e){
     const lines=e.target.result.split("\n").map(l=>l.trim()).filter(l=>l);
-    rows=[];
-    let n=0;
+    rows=[];let n=0;
     lines.forEach((line,idx)=>{
       if(idx===0&&(line.toLowerCase().startsWith("#")||line.toLowerCase().includes("company")))return;
       const cols=line.split(",").map(c=>c.replace(/^"|"$/g,"").trim());
@@ -596,7 +581,7 @@ function doImportCSV(){
     localStorage.setItem("tosKhoBackup",JSON.stringify(rows));
     renderAll();closeModal("import-modal");
     document.getElementById("csv-file").value="";
-    setStatus("✅ "+n+" টি import হয়েছে (পুরনো data replace)। 💾 Save করুন।","ok");toast("📥 "+n+" টি replace import!");
+    setStatus("✅ "+n+" টি import হয়েছে। 💾 Save করুন।","ok");toast("📥 "+n+" টি import সফল!");
   };
   reader.readAsText(file,"UTF-8");
 }
@@ -608,62 +593,37 @@ function getFiltered(){
 }
 
 function renderAll(){
-  const filtered=getFiltered();
-  document.getElementById("empty-msg").style.display=filtered.length===0?"block":"none";
-  renderDesktop(filtered);
-  renderMobile(filtered);
+  const f=getFiltered();
+  document.getElementById("empty-msg").style.display=f.length===0?"block":"none";
+  renderDesktop(f);renderMobile(f);
 }
 
 function renderDesktop(filtered){
-  const tbody=document.getElementById("desk-tbody");
-  tbody.innerHTML="";
-  filtered.forEach((r,fi)=>{
+  const tbody=document.getElementById("desk-tbody");tbody.innerHTML="";
+  filtered.forEach(r=>{
     const i=r._i;
     const tr=document.createElement("tr");
     tr.innerHTML=`
       <td class="sn">${i+1}</td>
       <td><input class="co-input" value="${esc(r.company)}" oninput="editField(${i},'company',this.value)" autocomplete="off"/></td>
-      <td><div class="cell-flex">
-        <input value="${esc(r.user)}" oninput="editField(${i},'user',this.value)" autocomplete="off"/>
-        <button class="cpbtn" onclick="copyText('${esc(r.user)}')">📋</button>
-      </div></td>
-      <td><div class="cell-flex">
-        <input class="mono" value="${esc(r.password)}" oninput="editField(${i},'password',this.value)" autocomplete="off"/>
-        <button class="cpbtn" onclick="copyText('${esc(r.password)}')">📋</button>
-      </div></td>
-      <td><div class="cell-flex">
-        <input value="${esc(r.note)}" oninput="editField(${i},'note',this.value)" autocomplete="off"/>
-        <button class="cpbtn" onclick="copyText('${esc(r.note)}')">📋</button>
-      </div></td>
+      <td><div class="cell-flex"><input value="${esc(r.user)}" oninput="editField(${i},'user',this.value)" autocomplete="off"/><button class="cpbtn" onclick="copyText('${esc(r.user)}')">📋</button></div></td>
+      <td><div class="cell-flex"><input class="mono" value="${esc(r.password)}" oninput="editField(${i},'password',this.value)" autocomplete="off"/><button class="cpbtn" onclick="copyText('${esc(r.password)}')">📋</button></div></td>
+      <td><div class="cell-flex"><input value="${esc(r.note)}" oninput="editField(${i},'note',this.value)" autocomplete="off"/><button class="cpbtn" onclick="copyText('${esc(r.note)}')">📋</button></div></td>
       <td><button class="delbtn" onclick="deleteRow(${i})">🗑️</button></td>`;
     tbody.appendChild(tr);
   });
 }
 
 function renderMobile(filtered){
-  const list=document.getElementById("mobile-list");
-  list.innerHTML="";
-  filtered.forEach((r,fi)=>{
+  const list=document.getElementById("mobile-list");list.innerHTML="";
+  filtered.forEach(r=>{
     const i=r._i;
-    const card=document.createElement("div");
-    card.className="card";
+    const card=document.createElement("div");card.className="card";
     card.innerHTML=`
       <div class="card-company">${i+1}. ${esc(r.company)}</div>
-      <div class="card-row">
-        <label>👤</label>
-        <input value="${esc(r.user)}" oninput="editField(${i},'user',this.value)" autocomplete="off"/>
-        <button class="card-copy" onclick="copyText('${esc(r.user)}')">📋 Copy</button>
-      </div>
-      <div class="card-row">
-        <label>🔑</label>
-        <input class="mono" value="${esc(r.password)}" oninput="editField(${i},'password',this.value)" autocomplete="off"/>
-        <button class="card-copy" onclick="copyText('${esc(r.password)}')">📋 Copy</button>
-      </div>
-      <div class="card-row">
-        <label>📝</label>
-        <input value="${esc(r.note)}" oninput="editField(${i},'note',this.value)" autocomplete="off"/>
-        <button class="card-copy" onclick="copyText('${esc(r.note)}')">📋 Copy</button>
-      </div>
+      <div class="card-row"><label>👤</label><input value="${esc(r.user)}" oninput="editField(${i},'user',this.value)" autocomplete="off"/><button class="card-copy" onclick="copyText('${esc(r.user)}')">📋 Copy</button></div>
+      <div class="card-row"><label>🔑</label><input class="mono" value="${esc(r.password)}" oninput="editField(${i},'password',this.value)" autocomplete="off"/><button class="card-copy" onclick="copyText('${esc(r.password)}')">📋 Copy</button></div>
+      <div class="card-row"><label>📝</label><input value="${esc(r.note)}" oninput="editField(${i},'note',this.value)" autocomplete="off"/><button class="card-copy" onclick="copyText('${esc(r.note)}')">📋 Copy</button></div>
       <button class="card-del" onclick="deleteRow(${i})">🗑️ Delete</button>`;
     list.appendChild(card);
   });
