@@ -779,7 +779,7 @@ function doLogin(){
     if(u===c.user&&p===c.pass){
       document.getElementById("login-screen").style.display="none";
       document.getElementById("app").style.display="flex";
-      loadFromSheets();loadDmRows();renderDmAll();
+      loadFromSheets();
     }else{
       document.getElementById("login-err").textContent="❌ Username বা Password ভুল!";
       document.getElementById("l-pass").value="";
@@ -829,7 +829,7 @@ async function loadFromSheets(){
   setStatus("⏳ লোড হচ্ছে...","loading");
   loadLinksLocal();
   try{
-    const res=await fetch(API_URL,{redirect:"follow"});
+    const res=await fetch(API_URL+"?t="+Date.now(),{redirect:"follow",cache:"no-store"});
     const data=await res.json();
     if(data.status==="ok"){
       rows=data.rows||[];localStorage.setItem("tosKhoBackup",JSON.stringify(rows));
@@ -847,14 +847,21 @@ async function loadFromSheets(){
         loadImportRows();
         await saveImportToSheets();
       }
+      if(data.dmBarcodes&&data.dmBarcodes.length>0){
+        dmRows=data.dmBarcodes;saveDmRows();
+      }else{
+        loadDmRows();
+        await saveDmToSheets();
+      }
     }else throw new Error();
   }catch(e){
     const b=localStorage.getItem("tosKhoBackup");
     if(b){rows=JSON.parse(b);setStatus("⚠️ Offline: "+rows.length+" entry (local backup)","err");}
     else{rows=[];setStatus("⚠️ সংযোগ ব্যর্থ","err");}
     loadImportRows();
+    loadDmRows();
   }
-  renderAll();renderImportAll();
+  renderAll();renderImportAll();renderDmAll();
 }
 
 async function saveToSheets(){
@@ -873,6 +880,7 @@ async function saveToSheets(){
 async function saveEverything(){
   await saveToSheets();
   await saveImportToSheets();
+  await saveDmToSheets();
 }
 
 function deleteRow(i){if(!confirm("মুছবেন?"))return;rows.splice(i,1);renderAll();setStatus("🗑️ মুছে গেছে। 💾 Save করুন।","ok");}
@@ -1016,6 +1024,14 @@ function renderMobile(filtered){
 let dmRows=[];
 function loadDmRows(){try{const s=localStorage.getItem("dmRows_v1");dmRows=s?JSON.parse(s):[];}catch(e){dmRows=[];}}
 function saveDmRows(){localStorage.setItem("dmRows_v1",JSON.stringify(dmRows));}
+async function saveDmToSheets(){
+  saveDmRows();
+  try{
+    const res=await fetch(API_URL,{method:"POST",redirect:"follow",headers:{"Content-Type":"text/plain"},body:JSON.stringify({action:"saveDmBarcodes",dmBarcodes:dmRows})});
+    const data=await res.json();
+    toast(data.status==="ok"?"📦 DM Barcode save হয়েছে!":"⚠️ DM Barcode local এ save হয়েছে");
+  }catch(e){toast("⚠️ DM Barcode local এ save হয়েছে (offline)");}
+}
 function addDmBarcode(){
   const product=document.getElementById("dm-product").value.trim();
   const size=document.getElementById("dm-size").value.trim();
@@ -1024,11 +1040,12 @@ function addDmBarcode(){
   const barcode=document.getElementById("dm-barcode").value.trim();
   const err=document.getElementById("dm-add-err");
   if(!product&&!barcode){err.textContent="❌ Product বা Barcode দিন!";return;}
-  dmRows.push({product,size,brand,origin,barcode});saveDmRows();
+  dmRows.push({product,size,brand,origin,barcode});
   ["dm-product","dm-size","dm-brand","dm-origin","dm-barcode"].forEach(id=>document.getElementById(id).value="");
   err.textContent="";closeModal("dm-add-modal");renderDmAll();toast("✅ DM Barcode যোগ হয়েছে!");
+  saveDmToSheets();
 }
-function deleteDmRow(i){if(!confirm("মুছবেন?"))return;dmRows.splice(i,1);saveDmRows();renderDmAll();toast("🗑️ মুছে গেছে!");}
+function deleteDmRow(i){if(!confirm("মুছবেন?"))return;dmRows.splice(i,1);renderDmAll();toast("🗑️ মুছে গেছে!");saveDmToSheets();}
 function editDmField(i,f,v){dmRows[i][f]=v;saveDmRows();}
 function clearDmSearch(){document.getElementById("search-dm-input").value="";renderDmAll();}
 function getDmFiltered(){
