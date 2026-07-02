@@ -11,6 +11,8 @@
 *{box-sizing:border-box;margin:0;padding:0;}
 html,body{height:100%;}
 body{font-family:Arial,sans-serif;background:#1a1a2e;color:#eee;font-size:15px;}
+
+/* ── LOGIN ── */
 #login-screen{position:fixed;inset:0;background:#1a1a2e;display:flex;align-items:center;justify-content:center;z-index:9999;overflow-y:auto;}
 .login-box{background:#16213e;border:2px solid #e94560;border-radius:16px;padding:36px 28px;text-align:center;max-width:380px;width:92%;margin:auto;}
 .lf{margin-bottom:14px;text-align:left;}
@@ -20,109 +22,271 @@ body{font-family:Arial,sans-serif;background:#1a1a2e;color:#eee;font-size:15px;}
 .lf input:focus{outline:none;border-color:#e94560;}
 .eye-btn{position:absolute;right:10px;top:50%;transform:translateY(-50%);background:none;border:none;color:#aaa;font-size:1.1rem;cursor:pointer;padding:4px;}
 #login-err{color:#e94560;font-size:0.83rem;min-height:18px;margin-bottom:8px;}
-.btn-login{width:100%;padding:13px;background:linear-gradient(90deg,#c026d3,#2dd4ff);color:#fff;border:none;border-radius:30px;font-size:1.05rem;font-weight:bold;cursor:pointer;letter-spacing:0.5px;box-shadow:0 0 14px #2dd4ff77,0 0 14px #c026d377;}
-.btn-login:hover{box-shadow:0 0 22px #2dd4ffaa,0 0 22px #c026d3aa;}
-.login-footer{margin-top:18px;font-size:0.8rem;font-weight:bold;line-height:1.7;color:#fff;border:1px solid #2dd4ff66;border-radius:14px;padding:10px 14px;box-shadow:0 0 16px #2dd4ff33;}
+.btn-login{width:100%;padding:13px;background:linear-gradient(90deg,#c026d3,#2dd4ff);color:#fff;border:none;border-radius:30px;font-size:1.05rem;font-weight:bold;cursor:pointer;box-shadow:0 0 14px #2dd4ff77,0 0 14px #c026d377;}
+.login-footer{margin-top:18px;font-size:0.8rem;font-weight:bold;line-height:1.7;color:#fff;border:1px solid #2dd4ff66;border-radius:14px;padding:10px 14px;}
+
+/* ── APP SHELL ── */
 #app{display:none;flex-direction:column;height:100vh;overflow:hidden;}
 #sticky-top{flex-shrink:0;}
-header{background:linear-gradient(135deg,#16213e,#0f3460);border-bottom:2px solid #e94560;padding:10px 14px;}
-.header-top{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:6px;margin-bottom:6px;}
-.header-right{display:flex;gap:5px;flex-wrap:wrap;}
-.icon-btn{background:#0a0a1a;border:1px solid #2dd4ff88;color:#7ec8e3;border-radius:20px;padding:6px 14px;cursor:pointer;font-size:0.78rem;white-space:nowrap;box-shadow:0 0 6px #2dd4ff33;}
-.icon-btn:hover{border-color:#2dd4ff;color:#2dd4ff;box-shadow:0 0 12px #2dd4ff77;}
-#quicklinks{display:flex;gap:8px;flex-wrap:wrap;padding:6px 0 4px;}
-#quicklinks .link-wrap{position:relative;display:inline-flex;align-items:center;}
-#quicklinks a{color:#7ec8e3;font-size:0.92rem;font-weight:bold;text-decoration:none;padding:6px 16px;border:1px solid #c026d388;border-radius:18px;white-space:nowrap;background:#0a0a1a;box-shadow:0 0 6px #c026d333;}
-#quicklinks a:hover{background:linear-gradient(90deg,#c026d3,#2dd4ff);color:#fff;box-shadow:0 0 14px #2dd4ff99;}
-.link-edit{display:none;background:#2dd4ff;color:#06283e;border:none;border-radius:50%;width:20px;height:20px;font-size:0.7rem;line-height:20px;text-align:center;cursor:pointer;position:absolute;top:-7px;right:-7px;z-index:2;font-weight:bold;box-shadow:0 0 6px #2dd4ff99;}
-#quicklinks.edit-mode .link-edit{display:block;}
-#quicklinks.edit-mode a{opacity:0.85;cursor:default;}
-.toolbar{background:#16213e;padding:8px 12px;display:flex;gap:6px;border-bottom:1px solid #2a2a4a;}
-.t-btns{display:flex;gap:6px;width:100%;}
-.t-btns button{flex:1;padding:9px 6px;font-size:0.9rem;font-weight:bold;border:none;border-radius:20px;cursor:pointer;}
-.btn-add{background:linear-gradient(90deg,#c026d3,#ff2d9c);color:#fff;box-shadow:0 0 12px #c026d366;}
-.btn-save{background:linear-gradient(90deg,#27ae60,#2dd4ff);color:#fff;box-shadow:0 0 12px #2dd4ff66;}
-.btn-reload{background:linear-gradient(90deg,#2980b9,#c026d3);color:#fff;box-shadow:0 0 12px #c026d366;}
-#status{padding:8px 14px;font-size:0.9rem;background:#1a1a2e;color:#cfd8e3;border-bottom:1px solid #2dd4ff33;}
+
+/* ── HEADER ── */
+header{background:linear-gradient(135deg,#16213e,#0f3460);border-bottom:2px solid #e94560;padding:8px 12px;}
+.header-top{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:4px;margin-bottom:6px;}
+.header-right{display:flex;gap:4px;flex-wrap:wrap;align-items:center;}
+.header-center{display:flex;gap:6px;flex-wrap:nowrap;align-items:center;justify-content:center;flex:1;}
+
+/* Small icon buttons in header */
+.icon-btn{background:#0a0a1a;border:1px solid #2dd4ff88;color:#7ec8e3;border-radius:16px;padding:5px 10px;cursor:pointer;font-size:0.72rem;white-space:nowrap;box-shadow:0 0 4px #2dd4ff22;}
+.icon-btn:hover{border-color:#2dd4ff;color:#2dd4ff;box-shadow:0 0 8px #2dd4ff77;}
+
+/* ── HEADER LINKS ROW ── */
+.header-links-row{display:flex;align-items:center;gap:6px;flex-wrap:nowrap;overflow:hidden;}
+
+/* Pinned links (max 5, shown in header) */
+#pinned-links{display:flex;gap:5px;flex-wrap:nowrap;overflow:hidden;min-width:0;flex:1;}
+#pinned-links a{
+  color:#7ec8e3;font-size:0.78rem;font-weight:bold;text-decoration:none;
+  padding:5px 10px;border:1px solid #c026d388;border-radius:14px;
+  white-space:nowrap;background:#0a0a1a;box-shadow:0 0 4px #c026d322;
+  flex-shrink:0;
+}
+#pinned-links a:hover{background:linear-gradient(90deg,#c026d3,#2dd4ff);color:#fff;}
+
+/* Search results in header area (overlays, does not shift other header items) */
+.link-search-inner{position:relative;display:flex;align-items:center;gap:6px;flex-shrink:0;}
+#link-search-results{
+  display:none;gap:5px;flex-wrap:nowrap;overflow-x:auto;
+  position:absolute;left:100%;top:50%;transform:translateY(-50%);
+  margin-left:8px;max-width:520px;
+  opacity:0;transition:opacity .25s ease;z-index:20;
+  background:#0a0a20;padding:2px 4px;border-radius:14px;
+}
+#link-search-results.show{opacity:1;}
+#link-search-results a{
+  color:#ffd84d;font-size:0.78rem;font-weight:bold;text-decoration:none;
+  padding:5px 10px;border:1px solid #ffd84d88;border-radius:14px;
+  white-space:nowrap;background:#1a1200;box-shadow:0 0 4px #ffd84d22;
+  flex-shrink:0;
+}
+#link-search-results a:hover{background:#ffd84d;color:#000;}
+#link-search-results .no-result{color:#aaa;font-size:0.75rem;padding:5px 8px;}
+
+/* Link search input (in header) */
+#link-srch-wrap{display:flex;align-items:center;gap:3px;flex-shrink:0;}
+#link-srch{padding:5px 10px;border:1px solid #2dd4ff55;border-radius:14px;background:#0f3460;color:#eee;font-size:0.75rem;width:110px;outline:none;}
+#link-srch:focus{border-color:#c026d3;}
+#link-srch::placeholder{color:#666;}
+.srch-clear{background:none;border:none;color:#666;cursor:pointer;font-size:0.7rem;padding:2px 4px;}
+.srch-clear:hover{color:#e94560;}
+
+/* Show Links button */
+.btn-show-links{background:linear-gradient(90deg,#c026d3,#7c3aed);color:#fff;border:none;border-radius:14px;padding:5px 10px;cursor:pointer;font-size:0.72rem;font-weight:bold;white-space:nowrap;box-shadow:0 0 6px #c026d355;flex-shrink:0;}
+.btn-show-links:hover{box-shadow:0 0 12px #c026d3aa;}
+.btn-show-links.open{background:linear-gradient(90deg,#7c3aed,#2dd4ff);}
+
+/* ── LINKS PANEL (collapsible, below header) ── */
+#links-panel{
+  display:none;
+  background:#0a0a20;
+  border-bottom:2px solid #c026d3;
+  max-height:55vh;
+  overflow-y:auto;
+  -webkit-overflow-scrolling:touch;
+}
+#links-panel.open{display:block;}
+
+.links-panel-hdr{
+  display:flex;align-items:center;gap:6px;flex-wrap:wrap;
+  padding:8px 12px;background:#0f0f2e;border-bottom:1px solid #2a1a4a;
+  position:sticky;top:0;z-index:2;
+}
+.links-panel-hdr span{color:#c026d3;font-size:0.8rem;font-weight:bold;flex:1;}
+.lp-btn{border:none;border-radius:14px;padding:5px 11px;font-size:0.72rem;font-weight:bold;cursor:pointer;}
+.lp-btn-add{background:linear-gradient(90deg,#27ae60,#2dd4ff);color:#fff;}
+.lp-btn-edit{background:linear-gradient(90deg,#c026d3,#7c3aed);color:#fff;}
+.lp-btn-close{background:#2a2a4a;color:#aaa;}
+.lp-btn-close:hover{background:#e94560;color:#fff;}
+
+/* Links list inside panel */
+#links-list{padding:6px 10px;}
+.link-item{
+  display:flex;align-items:center;gap:8px;
+  padding:8px 10px;border-radius:8px;margin-bottom:4px;
+  background:#0f0f28;border:1px solid #2a1a4a;
+  transition:background 0.15s;
+}
+.link-item:hover{background:#1a0a3a;}
+.link-item-num{color:#555;font-size:0.72rem;min-width:18px;text-align:right;}
+.link-item a{
+  color:#7ec8e3;font-size:0.88rem;font-weight:bold;text-decoration:none;
+  flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;
+}
+.link-item a:hover{color:#2dd4ff;}
+.link-item-open{font-size:0.7rem;color:#555;padding:3px 6px;border:1px solid #2a2a4a;border-radius:8px;background:#0a0a1a;text-decoration:none;flex-shrink:0;}
+.link-item-open:hover{border-color:#2dd4ff;color:#2dd4ff;}
+.link-item-edit{display:none;background:#2dd4ff;color:#06283e;border:none;border-radius:50%;width:20px;height:20px;font-size:0.7rem;line-height:20px;text-align:center;cursor:pointer;font-weight:bold;flex-shrink:0;}
+#links-panel.edit-mode .link-item-edit{display:block;}
+#links-panel.edit-mode .link-item{border-color:#c026d355;}
+.lp-empty{text-align:center;padding:24px;color:#555;font-size:0.85rem;}
+
+/* ── TOOLBAR (smaller buttons) ── */
+.toolbar{background:#16213e;padding:6px 10px;display:flex;gap:5px;border-bottom:1px solid #2a2a4a;}
+.t-btns{display:flex;gap:5px;width:100%;}
+.t-btns button{flex:1;padding:7px 4px;font-size:0.8rem;font-weight:bold;border:none;border-radius:16px;cursor:pointer;}
+.btn-add{background:linear-gradient(90deg,#c026d3,#ff2d9c);color:#fff;box-shadow:0 0 8px #c026d344;}
+.btn-save{background:linear-gradient(90deg,#27ae60,#2dd4ff);color:#fff;box-shadow:0 0 8px #2dd4ff44;}
+.btn-reload{background:linear-gradient(90deg,#2980b9,#c026d3);color:#fff;box-shadow:0 0 8px #c026d344;}
+
+/* ── STATUS ── */
+#status{padding:6px 12px;font-size:0.82rem;background:#1a1a2e;color:#cfd8e3;border-bottom:1px solid #2dd4ff22;}
 #status.ok{color:#2dd4ff;font-weight:bold;}
 #status.err{color:#ff5e7e;font-weight:bold;}
 #status.loading{color:#ffd84d;font-weight:bold;}
-.search-bar{padding:8px 12px;background:#16213e;border-bottom:1px solid #2a2a4a;display:flex;gap:6px;}
-.search-bar input{flex:1;padding:9px 14px;border:1px solid #2dd4ff55;border-radius:20px;background:#0f3460;color:#eee;font-size:0.95rem;}
+
+/* ── TABS ── */
+.tab-bar{display:flex;gap:0;background:#0a0a1a;border-bottom:2px solid #2a2a4a;}
+.tab-btn{flex:1;padding:8px 6px;font-size:0.82rem;font-weight:bold;border:none;cursor:pointer;background:transparent;color:#7ec8e3;border-bottom:3px solid transparent;}
+.tab-btn.active{color:#fff;border-bottom:3px solid #e94560;background:#16213e;}
+.tab-btn:hover:not(.active){background:#1a2a4a;}
+
+/* ── SEARCH BARS ── */
+.search-bar{padding:7px 10px;background:#16213e;border-bottom:1px solid #2a2a4a;display:flex;gap:6px;}
+.search-bar input{flex:1;padding:8px 12px;border:1px solid #2dd4ff55;border-radius:18px;background:#0f3460;color:#eee;font-size:0.88rem;}
 .search-bar input:focus{outline:none;border-color:#e94560;}
-.search-bar button{background:linear-gradient(90deg,#e94560,#ff8a00);border:none;color:#fff;border-radius:20px;padding:8px 16px;font-size:0.85rem;font-weight:bold;cursor:pointer;box-shadow:0 0 8px #e9456055;}
+.search-bar button{background:linear-gradient(90deg,#e94560,#ff8a00);border:none;color:#fff;border-radius:18px;padding:7px 14px;font-size:0.8rem;font-weight:bold;cursor:pointer;}
+
+/* ── TABLE ── */
 #tbody-wrap{flex:1;overflow-y:auto;overflow-x:auto;-webkit-overflow-scrolling:touch;min-height:0;}
 #desk-table{width:100%;border-collapse:collapse;font-size:0.9rem;table-layout:fixed;}
 #desk-table colgroup col:nth-child(1){width:40px;}
-#desk-table colgroup col:nth-child(2){width:26%;}
-#desk-table colgroup col:nth-child(3){width:14%;}
-#desk-table colgroup col:nth-child(4){width:16%;}
-#desk-table colgroup col:nth-child(5){width:13%;}
-#desk-table colgroup col:nth-child(6){width:13%;}
-#desk-table colgroup col:nth-child(7){width:60px;}
-#desk-table thead th{padding:8px;text-align:left;color:#fff;font-size:0.9rem;font-weight:bold;background:#0f3460;border-bottom:2px solid #2dd4ff;border-right:1px solid #1a3a6a;white-space:nowrap;}
+#desk-table colgroup col:nth-child(2){width:28%;}
+#desk-table colgroup col:nth-child(3){width:17%;}
+#desk-table colgroup col:nth-child(4){width:19%;}
+#desk-table colgroup col:nth-child(5){width:17%;}
+#desk-table colgroup col:nth-child(6){width:65px;}
+#desk-table thead th{padding:8px;text-align:left;color:#fff;font-size:0.88rem;font-weight:bold;background:#0f3460;border-bottom:2px solid #2dd4ff;border-right:1px solid #1a3a6a;white-space:nowrap;}
 #desk-table thead th:last-child{border-right:none;text-align:center;}
 #desk-table tbody tr{border-bottom:1px solid #2a2a4a;}
 #desk-table tbody tr:hover{background:#760542;}
-#desk-table tbody td{padding:7px 8px;border-right:1px solid #1e2a4a;vertical-align:middle;overflow:hidden;}
+#desk-table tbody td{padding:6px 8px;border-right:1px solid #1e2a4a;vertical-align:middle;overflow:hidden;}
 #desk-table tbody td:last-child{border-right:none;text-align:center;}
 .cell-flex{display:flex;align-items:center;gap:4px;}
-.cell-flex input{flex:1;min-width:0;background:transparent;border:none;color:#00fbfe;font-size:0.88rem;font-family:Arial,sans-serif;padding:2px 3px;outline:none;}
+.cell-flex input{flex:1;min-width:0;background:transparent;border:none;color:#00fbfe;font-size:0.85rem;font-family:Arial,sans-serif;padding:2px 3px;outline:none;}
 .cell-flex input:focus{background:#0f3460;border-radius:3px;}
 .cell-flex input.mono{font-family:monospace;}
-.co-input{width:100%;background:transparent;border:none;color:#00fbfe;font-size:0.9rem;font-weight:bold;font-family:Arial,sans-serif;padding:2px 3px;outline:none;}
+.co-input{width:100%;background:transparent;border:none;color:#00fbfe;font-size:0.88rem;font-weight:bold;font-family:Arial,sans-serif;padding:2px 3px;outline:none;}
 .co-input:focus{background:#0f3460;border-radius:3px;}
-.cpbtn{background:#0a1a3a;border:1px solid #2dd4ff66;color:#2dd4ff;padding:3px 7px;font-size:0.78rem;border-radius:8px;cursor:pointer;flex-shrink:0;}
-.cpbtn:hover{box-shadow:0 0 6px #2dd4ff77;}
-.delbtn{background:linear-gradient(90deg,#e94560,#ff2d9c);border:none;color:#fff;padding:4px 10px;font-size:0.82rem;border-radius:10px;cursor:pointer;box-shadow:0 0 6px #e9456066;}
-.delbtn:hover{box-shadow:0 0 12px #ff2d9caa;}
-.sn{color:#fff;font-size:0.86rem;text-align:center;font-weight:normal;}
+.cpbtn{background:#0a1a3a;border:1px solid #2dd4ff66;color:#2dd4ff;padding:3px 6px;font-size:0.72rem;border-radius:6px;cursor:pointer;flex-shrink:0;}
+.cpbtn:hover{box-shadow:0 0 4px #2dd4ff77;}
+.delbtn{background:linear-gradient(90deg,#e94560,#ff2d9c);border:none;color:#fff;padding:4px 8px;font-size:0.78rem;border-radius:8px;cursor:pointer;}
+.sn{color:#fff;font-size:0.82rem;text-align:center;}
+
+/* ── MOBILE CARDS ── */
 #mobile-list{display:none;padding:6px;}
 .card{background:#16213e;border:1px solid #2a2a4a;border-radius:8px;padding:10px 12px;margin-bottom:8px;}
-.card-company{font-weight:bold;font-size:1rem;color:#00fbfe;margin-bottom:8px;word-break:break-word;}
+.card-company{font-weight:bold;font-size:0.95rem;color:#00fbfe;margin-bottom:6px;word-break:break-word;}
 .card-row{display:flex;align-items:center;gap:6px;margin-bottom:6px;}
-.card-row label{color:#aaa;font-size:0.78rem;min-width:22px;}
-.card-row input{flex:1;background:#0f3460;border:none;border-radius:5px;color:#00fbfe;font-size:0.9rem;padding:6px 8px;outline:none;}
+.card-row label{color:#aaa;font-size:0.75rem;min-width:22px;}
+.card-row input{flex:1;background:#0f3460;border:none;border-radius:5px;color:#00fbfe;font-size:0.88rem;padding:5px 8px;outline:none;}
 .card-row input:focus{border:1px solid #e94560;}
 .card-row input.mono{font-family:monospace;}
-.card-copy{background:#0a1a3a;border:1px solid #2dd4ff66;color:#2dd4ff;padding:7px 12px;font-size:0.85rem;border-radius:10px;cursor:pointer;white-space:nowrap;touch-action:manipulation;}
-.card-del{background:linear-gradient(90deg,#e94560,#ff2d9c);border:none;color:#fff;padding:7px 10px;font-size:0.85rem;border-radius:10px;cursor:pointer;margin-top:4px;width:100%;touch-action:manipulation;box-shadow:0 0 6px #e9456066;}
-.empty-msg{text-align:center;padding:40px;color:#555;}
+.card-copy{background:#0a1a3a;border:1px solid #2dd4ff66;color:#2dd4ff;padding:6px 10px;font-size:0.8rem;border-radius:8px;cursor:pointer;white-space:nowrap;}
+.card-del{background:linear-gradient(90deg,#e94560,#ff2d9c);border:none;color:#fff;padding:5px 14px;font-size:0.78rem;border-radius:8px;cursor:pointer;margin-top:4px;}
+
+/* ── DM BARCODE ── */
+#dm-section{display:none;flex:1;flex-direction:column;align-items:stretch;align-content:flex-start;overflow-y:auto;overflow-x:auto;min-height:0;}
+#dm-section.active{display:flex;flex-direction:column;}
+#import-section{display:none;flex:1;flex-direction:column;align-items:stretch;align-content:flex-start;overflow-y:auto;overflow-x:auto;min-height:0;}
+#import-section.active{display:flex;flex-direction:column;}
+#dm-table,#imp-table{flex-shrink:0;}
+#dm-table{width:100%;border-collapse:collapse;font-size:0.88rem;table-layout:auto;}
+#dm-table thead th{padding:8px;text-align:left;color:#fff;font-size:0.82rem;font-weight:bold;background:#0a3a2a;border-bottom:2px solid #2ecc71;border-right:1px solid #1a3a2a;white-space:nowrap;}
+#dm-table thead th:last-child{border-right:none;text-align:center;}
+#dm-table tbody tr{border-bottom:1px solid #1a2a1a;}
+#dm-table tbody tr:hover{background:#0a2a1a;}
+#dm-table tbody td{padding:6px 8px;border-right:1px solid #1a2a1a;vertical-align:middle;color:#2ecc71;}
+#dm-table tbody td:last-child{border-right:none;text-align:center;}
+.dm-input{width:100%;background:transparent;border:none;color:#2ecc71;font-size:0.82rem;font-family:Arial,sans-serif;padding:2px 3px;outline:none;}
+.dm-input:focus{background:#0a2a0a;border-radius:3px;}
+.dm-barcode-val{font-family:monospace;font-size:0.8rem;color:#00fbfe;}
+#dm-mobile-list{display:none;padding:6px;}
+.dm-card{background:#0a1a0a;border:1px solid #2ecc7166;border-radius:8px;padding:10px 12px;margin-bottom:8px;}
+.dm-card-title{font-weight:bold;font-size:0.9rem;color:#2ecc71;margin-bottom:6px;}
+.dm-card-barcode{font-family:monospace;font-size:0.85rem;color:#00fbfe;background:#0a2a0a;border-radius:5px;padding:5px 8px;margin-bottom:5px;word-break:break-all;cursor:pointer;}
+.dm-card-row{font-size:0.78rem;color:#aaa;margin-bottom:3px;}
+
+/* ── IMPORT CODE (gold theme, mirrors DM Barcode) ── */
+#imp-table{width:100%;border-collapse:collapse;font-size:0.88rem;table-layout:auto;}
+#imp-table thead th{padding:8px;text-align:left;color:#fff;font-size:0.82rem;font-weight:bold;background:#3a2a0a;border-bottom:2px solid #ffd84d;border-right:1px solid #3a2a1a;white-space:nowrap;}
+#imp-table thead th:last-child{border-right:none;text-align:center;}
+#imp-table tbody tr{border-bottom:1px solid #2a1a0a;}
+#imp-table tbody tr:hover{background:#2a1a0a;}
+#imp-table tbody td{padding:6px 8px;border-right:1px solid #2a1a0a;vertical-align:middle;color:#ffd84d;}
+#imp-table tbody td:last-child{border-right:none;text-align:center;}
+.imp-input{width:100%;background:transparent;border:none;color:#ffd84d;font-size:0.82rem;font-family:Arial,sans-serif;padding:2px 3px;outline:none;}
+.imp-input:focus{background:#2a1a00;border-radius:3px;}
+#imp-mobile-list{display:none;padding:6px;}
+.imp-card{background:#1a1400;border:1px solid #ffd84d66;border-radius:8px;padding:10px 12px;margin-bottom:8px;}
+.imp-card-title{font-weight:bold;font-size:0.9rem;color:#ffd84d;margin-bottom:6px;}
+.imp-card-code{font-family:monospace;font-size:0.85rem;color:#00fbfe;background:#2a1a00;border-radius:5px;padding:5px 8px;margin-bottom:5px;word-break:break-all;cursor:pointer;}
+.imp-card-row{font-size:0.78rem;color:#aaa;margin-bottom:3px;}
+
+/* ── EMPTY ── */
+.empty-msg{text-align:center;padding:30px;color:#555;}
+
+/* ── MODAL ── */
 .modal-bg{position:fixed;inset:0;background:#000b;display:flex;align-items:center;justify-content:center;z-index:8888;padding:16px;}
-.modal{background:#0a0a1a;border:1px solid #2dd4ff;border-radius:16px;padding:24px;max-width:380px;width:100%;max-height:90vh;overflow-y:auto;box-shadow:0 0 24px #2dd4ff55,0 0 24px #c026d333;}
-.modal h3{background:linear-gradient(90deg,#c026d3,#2dd4ff);-webkit-background-clip:text;background-clip:text;color:transparent;margin-bottom:14px;font-size:1.05rem;font-weight:900;text-align:center;}
-.modal label{display:block;text-align:left;color:#aaa;font-size:0.8rem;margin-bottom:4px;margin-top:10px;}
-.modal input{width:100%;padding:10px 12px;border-radius:10px;border:1px solid #2dd4ff55;background:#0f3460;color:#eee;font-size:0.9rem;outline:none;}
-.modal input:focus{border-color:#2dd4ff;box-shadow:0 0 8px #2dd4ff66;}
-.modal-err{color:#e94560;font-size:0.82rem;min-height:18px;margin-top:8px;}
-.modal-btns{display:flex;gap:8px;margin-top:14px;}
-.modal-btns button{flex:1;padding:10px;border-radius:20px;font-weight:bold;border:none;cursor:pointer;font-size:0.9rem;}
-.btn-ok{background:linear-gradient(90deg,#27ae60,#2dd4ff);color:#fff;box-shadow:0 0 10px #2dd4ff55;}
-.btn-cancel{background:linear-gradient(90deg,#ff2d6a,#ff8a00);color:#fff;box-shadow:0 0 10px #ff2d6a55;}
-.btn-del{background:linear-gradient(90deg,#e94560,#ff2d9c);color:#fff;box-shadow:0 0 10px #e9456055;}
-.modal-btns-3{display:flex;gap:8px;margin-top:14px;}
-.modal-btns-3 button{flex:1;padding:10px;border-radius:20px;font-weight:bold;border:none;cursor:pointer;font-size:0.85rem;}
-/* Import small green buttons */
-.import-btns{display:flex;gap:8px;margin-top:14px;}
-.import-btns button{flex:1;padding:7px 10px;border-radius:14px;font-weight:bold;border:none;cursor:pointer;font-size:0.8rem;}
-.btn-import-ok{background:linear-gradient(90deg,#1a9e4a,#27ae60);color:#fff;box-shadow:0 0 8px #27ae6055;}
-.btn-import-cancel{background:linear-gradient(90deg,#27ae60,#0d7a3a);color:#fff;box-shadow:0 0 8px #1a9e4a55;}
+.modal{background:#0a0a1a;border:1px solid #2dd4ff;border-radius:16px;padding:22px;max-width:380px;width:100%;max-height:90vh;overflow-y:auto;box-shadow:0 0 24px #2dd4ff55;}
+.modal h3{background:linear-gradient(90deg,#c026d3,#2dd4ff);-webkit-background-clip:text;background-clip:text;color:transparent;margin-bottom:12px;font-size:1rem;font-weight:900;text-align:center;}
+.modal label{display:block;text-align:left;color:#aaa;font-size:0.78rem;margin-bottom:3px;margin-top:9px;}
+.modal input{width:100%;padding:9px 11px;border-radius:9px;border:1px solid #2dd4ff55;background:#0f3460;color:#eee;font-size:0.88rem;outline:none;}
+.modal input:focus{border-color:#2dd4ff;box-shadow:0 0 6px #2dd4ff44;}
+.modal-err{color:#e94560;font-size:0.8rem;min-height:16px;margin-top:6px;}
+.modal-btns{display:flex;gap:8px;margin-top:12px;}
+.modal-btns button{flex:1;padding:9px;border-radius:18px;font-weight:bold;border:none;cursor:pointer;font-size:0.85rem;}
+.btn-ok{background:linear-gradient(90deg,#27ae60,#2dd4ff);color:#fff;}
+.btn-cancel{background:linear-gradient(90deg,#ff2d6a,#ff8a00);color:#fff;}
+.btn-del{background:linear-gradient(90deg,#e94560,#ff2d9c);color:#fff;}
+.modal-btns-3{display:flex;gap:8px;margin-top:12px;}
+.modal-btns-3 button{flex:1;padding:9px;border-radius:18px;font-weight:bold;border:none;cursor:pointer;font-size:0.82rem;}
+.import-btns{display:flex;gap:8px;margin-top:12px;}
+.import-btns button{flex:1;padding:7px 8px;border-radius:12px;font-weight:bold;border:none;cursor:pointer;font-size:0.78rem;}
+.btn-import-ok{background:linear-gradient(90deg,#1a9e4a,#27ae60);color:#fff;}
+.btn-import-cancel{background:linear-gradient(90deg,#27ae60,#0d7a3a);color:#fff;}
+
+/* ── RESPONSIVE ── */
 @media(max-width:767px){
+  header{padding:6px 8px;}
+  #link-srch{width:80px;}
+  #link-srch:focus{}
+  #pinned-links a{padding:4px 8px;font-size:0.72rem;}
   #desk-table{display:none;}
   #mobile-list{display:block;}
-  .t-btns button{padding:12px 4px;font-size:0.85rem;}
+  #dm-table{display:none;}
+  #dm-mobile-list{display:block;}
+  #imp-table{display:none;}
+  #imp-mobile-list{display:block;}
+  .t-btns button{padding:8px 3px;font-size:0.75rem;}
+  .toolbar{padding:5px 8px;}
 }
 @media(min-width:768px){
   #desk-table{display:table;}
   #mobile-list{display:none;}
+  #dm-table{display:table;}
+  #dm-mobile-list{display:none;}
+  #imp-table{display:table;}
+  #imp-mobile-list{display:none;}
 }
-#toast{position:fixed;bottom:20px;left:50%;transform:translateX(-50%);background:#222;color:#fff;padding:9px 20px;border-radius:20px;font-size:0.85rem;opacity:0;transition:opacity .3s;pointer-events:none;z-index:9999;}
+
+/* ── TOAST ── */
+#toast{position:fixed;bottom:20px;left:50%;transform:translateX(-50%);background:#222;color:#fff;padding:8px 18px;border-radius:18px;font-size:0.82rem;opacity:0;transition:opacity .3s;pointer-events:none;z-index:9999;}
 #toast.show{opacity:1;}
 </style>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
 </head>
 <body>
 
-<!-- LOGIN -->
+<!-- ══ LOGIN ══ -->
 <div id="login-screen">
   <div class="login-box">
     <div style="font-size:2.8rem;margin-bottom:8px;filter:drop-shadow(0 0 10px #c026d3);">🗂️</div>
@@ -130,7 +294,7 @@ header{background:linear-gradient(135deg,#16213e,#0f3460);border-bottom:2px soli
       <div style="position:absolute;inset:0;border:1px solid #2dd4ff;border-radius:50%/40%;box-shadow:0 0 12px #2dd4ff,inset 0 0 12px #2dd4ff44;"></div>
       <h2 style="background:linear-gradient(90deg,#c026d3,#2dd4ff);-webkit-background-clip:text;background-clip:text;color:transparent;font-size:1.5rem;letter-spacing:1px;font-weight:900;margin:0;position:relative;">USER PW LIST V.1</h2>
     </div>
-    <div style="color:#2dd4ff;font-size:0.78rem;margin-bottom:20px;text-shadow:0 0 8px #2dd4ff88;">Created by Idris Mansoor</div>
+    <div style="color:#2dd4ff;font-size:0.78rem;margin-bottom:20px;">Created by Idris Mansoor</div>
     <div class="lf">
       <label>👤 Username</label>
       <input type="text" id="l-user" value="seashipping" readonly autocomplete="off" onkeydown="if(event.key==='Enter')doLogin()" style="background:#0a2a4a;color:#2ecc71;font-weight:bold;cursor:default;"/>
@@ -148,10 +312,50 @@ header{background:linear-gradient(135deg,#16213e,#0f3460);border-bottom:2px soli
   </div>
 </div>
 
-<!-- ADD MODAL -->
+<!-- ══ DM BARCODE MODAL ══ -->
+<div class="modal-bg" id="dm-add-modal" style="display:none">
+  <div class="modal">
+    <h3>📦 DM Barcode যোগ করুন</h3>
+    <label>🐟 Product Name</label>
+    <input type="text" id="dm-product" placeholder="Product Name" autocomplete="off" onkeydown="if(event.key==='Enter')document.getElementById('dm-size').focus()"/>
+    <label>⚖️ Size / Weight</label>
+    <input type="text" id="dm-size" placeholder="e.g. 700/1000G (20KG)" autocomplete="off" onkeydown="if(event.key==='Enter')document.getElementById('dm-brand').focus()"/>
+    <label>🏷️ Brand</label>
+    <input type="text" id="dm-brand" placeholder="e.g. NO BRAND" autocomplete="off" onkeydown="if(event.key==='Enter')document.getElementById('dm-origin').focus()"/>
+    <label>🌍 Origin</label>
+    <input type="text" id="dm-origin" placeholder="e.g. THAILAND" autocomplete="off" onkeydown="if(event.key==='Enter')document.getElementById('dm-barcode').focus()"/>
+    <label>📊 DM Barcode</label>
+    <input type="text" id="dm-barcode" placeholder="e.g. DM580305..." autocomplete="off" onkeydown="if(event.key==='Enter')addDmBarcode()"/>
+    <div class="modal-err" id="dm-add-err"></div>
+    <div class="modal-btns">
+      <button class="btn-ok" onclick="addDmBarcode()">💾 Save করুন</button>
+      <button class="btn-cancel" onclick="closeModal('dm-add-modal')">❌ বাতিল</button>
+    </div>
+    <p style="color:#888;font-size:0.72rem;margin-top:8px;text-align:center;">💡 Enter চাপলে পরের field এ যাবে</p>
+  </div>
+</div>
+
+<!-- ══ ADD IMPORT CODE MODAL ══ -->
+<div class="modal-bg" id="import-add-modal" style="display:none">
+  <div class="modal">
+    <h3>🔢 Import Code যোগ করুন</h3>
+    <label>🏢 Company / Item Name</label>
+    <input type="text" id="imp-company" placeholder="Company / Item Name" autocomplete="off" onkeydown="if(event.key==='Enter')document.getElementById('imp-code').focus()"/>
+    <label>🔢 Import Code</label>
+    <input type="text" id="imp-code" placeholder="e.g. IMP-2026-001" autocomplete="off" onkeydown="if(event.key==='Enter')document.getElementById('imp-note').focus()"/>
+    <label>📝 Note</label>
+    <input type="text" id="imp-note" placeholder="Note (optional)" autocomplete="off" onkeydown="if(event.key==='Enter')addImportCode()"/>
+    <div class="modal-err" id="imp-add-err"></div>
+    <div class="modal-btns">
+      <button class="btn-ok" onclick="addImportCode()">💾 Save করুন</button>
+      <button class="btn-cancel" onclick="closeModal('import-add-modal')">❌ বাতিল</button>
+    </div>
+    <p style="color:#888;font-size:0.72rem;margin-top:8px;text-align:center;">💡 Enter চাপলে পরের field এ যাবে</p>
+  </div>
+</div>
 <div class="modal-bg" id="add-modal" style="display:none">
   <div class="modal">
-    <h3>➕ নতুন ইউজার পাসওয়ার্ড এ্যাড করুন</h3>
+    <h3>➕ নতুন ইউজার পাসওয়ার্ড</h3>
     <label>🏢 Company Name</label>
     <input type="text" id="inp-company" placeholder="Company Name" autocomplete="off" onkeydown="if(event.key==='Enter')document.getElementById('inp-user').focus()"/>
     <label>👤 User Name</label>
@@ -159,24 +363,20 @@ header{background:linear-gradient(135deg,#16213e,#0f3460);border-bottom:2px soli
     <label>🔑 Password</label>
     <input type="text" id="inp-pw" placeholder="Password" autocomplete="new-password" onkeydown="if(event.key==='Enter')document.getElementById('inp-note').focus()"/>
     <label>📝 Note / Mobile No.</label>
-    <input type="text" id="inp-note" placeholder="Note / Mobile No. (Optional)" autocomplete="off" onkeydown="if(event.key==='Enter')document.getElementById('inp-shj').focus()"/>
-    <label>🔢 SHJ IMP CODE</label>
-    <input type="text" id="inp-shj" placeholder="Sharjah Import Code (Optional)" autocomplete="off" onkeydown="if(event.key==='Enter')document.getElementById('inp-dxb').focus()"/>
-    <label>🔢 DXB IMP CODE</label>
-    <input type="text" id="inp-dxb" placeholder="Dubai Import Code (Optional)" autocomplete="off" onkeydown="if(event.key==='Enter')addAndSave()"/>
+    <input type="text" id="inp-note" placeholder="Note (Optional)" autocomplete="off" onkeydown="if(event.key==='Enter')addAndSave()"/>
     <div class="modal-err" id="add-err"></div>
     <div class="modal-btns">
-      <button class="btn-ok" onclick="addAndSave()">💾 Save করুন</button>
+      <button class="btn-ok" onclick="addAndSave()">💾 Save</button>
       <button class="btn-cancel" onclick="closeModal('add-modal')">❌ বাতিল</button>
     </div>
-    <p style="color:#888;font-size:0.75rem;margin-top:8px;text-align:center;">💡 Enter চাপলে পরের field এ যাবে</p>
+    <p style="color:#888;font-size:0.72rem;margin-top:8px;text-align:center;">💡 Enter → পরের field</p>
   </div>
 </div>
 
-<!-- CHANGE CREDS MODAL -->
+<!-- ══ CHANGE CREDS MODAL ══ -->
 <div class="modal-bg" id="creds-modal" style="display:none">
   <div class="modal">
-    <h3>🔑 পাসওয়ার্ড পরিবর্তন করুন</h3>
+    <h3>🔑 পাসওয়ার্ড পরিবর্তন</h3>
     <label>বর্তমান Password</label>
     <div class="inp-wrap"><input type="password" id="c-old" placeholder="বর্তমান password" autocomplete="new-password" style="padding-right:44px;"/><button class="eye-btn" onclick="toggleEyeFor('c-old',this)" type="button">👁️</button></div>
     <label>নতুন Username (Optional)</label>
@@ -193,28 +393,33 @@ header{background:linear-gradient(135deg,#16213e,#0f3460);border-bottom:2px soli
   </div>
 </div>
 
-<!-- IMPORT MODAL -->
+<!-- ══ IMPORT MODAL ══ -->
 <div class="modal-bg" id="import-modal" style="display:none">
   <div class="modal">
-    <h3>📥 CSV Import (Replace)</h3>
-    <p style="color:#cfd8e3;font-size:.85rem;margin-bottom:8px;">ফরম্যাট: #, Company, Username, Password, Note</p>
-    <p style="color:#FFFF00;font-size:.82rem;margin-bottom:12px;">⚠️ Import করলে আগের সব Data মুছে নতুন Data Replace হবে!</p>
-    <input type="file" id="csv-file" accept=".csv" style="color:#eee;width:100%;margin-bottom:10px;"/>
+    <h3>📥 Import (Replace)</h3>
+    <p style="color:#cfd8e3;font-size:.82rem;margin-bottom:4px;">📊 Excel (.xlsx) — সব Sheet একসাথে</p>
+    <input type="file" id="xlsx-file" accept=".xlsx,.xls" style="color:#eee;width:100%;margin-bottom:10px;"/>
+    <p style="color:#aaa;font-size:.75rem;margin-bottom:3px;">অথবা আলাদা CSV:</p>
+    <p style="color:#cfd8e3;font-size:.78rem;margin-bottom:2px;">📋 Password CSV</p>
+    <input type="file" id="csv-file" accept=".csv" style="color:#eee;width:100%;margin-bottom:8px;"/>
+    <p style="color:#cfd8e3;font-size:.78rem;margin-bottom:2px;">🔗 Links CSV</p>
+    <input type="file" id="csv-links-file" accept=".csv" style="color:#eee;width:100%;margin-bottom:10px;"/>
+    <p style="color:#FFFF00;font-size:.78rem;margin-bottom:10px;">⚠️ Import করলে আগের সব Data replace হবে!</p>
     <div class="modal-err" id="import-err"></div>
     <div class="import-btns">
-      <button class="btn-import-ok" onclick="doImportCSV()">📥 ডাটা ইনপুট করুন</button>
+      <button class="btn-import-ok" onclick="doImportCSV()">📥 Import করুন</button>
       <button class="btn-import-cancel" onclick="closeModal('import-modal')">✖ বাতিল</button>
     </div>
   </div>
 </div>
 
-<!-- ADD/EDIT LINK MODAL -->
+<!-- ══ ADD/EDIT LINK MODAL ══ -->
 <div class="modal-bg" id="link-modal" style="display:none">
   <div class="modal">
     <h3 id="link-modal-title">🔗 নতুন Link যোগ করুন</h3>
     <input type="hidden" id="link-edit-id"/>
-    <label>📝 Label (যেমন: TOS Gulftainer)</label>
-    <input type="text" id="link-label" placeholder="Label লিখুন" autocomplete="off"/>
+    <label>📝 Label</label>
+    <input type="text" id="link-label" placeholder="যেমন: TOS Gulftainer" autocomplete="off"/>
     <label>🔗 URL</label>
     <input type="text" id="link-url" placeholder="https://..." autocomplete="off"/>
     <div class="modal-err" id="link-err"></div>
@@ -222,69 +427,154 @@ header{background:linear-gradient(135deg,#16213e,#0f3460);border-bottom:2px soli
       <button class="btn-del" onclick="deleteLinkFromModal()">🗑️ Delete করুন</button>
     </div>
     <div class="modal-btns">
-      <button class="btn-ok" onclick="saveLink()">💾 Save করুন</button>
+      <button class="btn-ok" onclick="saveLink()">💾 Save</button>
       <button class="btn-cancel" onclick="closeModal('link-modal')">❌ বাতিল</button>
     </div>
   </div>
 </div>
 
-<!-- APP -->
+<!-- ══ APP ══ -->
 <div id="app">
   <div id="sticky-top">
+
+    <!-- HEADER -->
     <header>
+      <!-- Row 1: Logo + Buttons -->
       <div class="header-top">
         <div class="header-left">
-          <div style="display:inline-flex;align-items:center;gap:10px;background:#0a0a1a;border:1px solid #2dd4ff;border-radius:10px;padding:6px 18px;box-shadow:0 0 10px #2dd4ff55;">
-            <span style="font-size:1.4rem;filter:drop-shadow(0 0 6px #c026d3);">🗂️</span>
+          <div style="display:inline-flex;align-items:center;gap:8px;background:#0a0a1a;border:1px solid #2dd4ff;border-radius:10px;padding:5px 14px;box-shadow:0 0 8px #2dd4ff44;">
+            <span style="font-size:1.2rem;filter:drop-shadow(0 0 5px #c026d3);">🗂️</span>
             <div>
-              <div style="background:linear-gradient(90deg,#c026d3,#2dd4ff);-webkit-background-clip:text;background-clip:text;color:transparent;font-size:1.05rem;font-weight:900;letter-spacing:0.5px;line-height:1.1;">USER PW LIST V.1</div>
-              <div style="color:#2dd4ff;font-size:0.75rem;line-height:1.1;text-shadow:0 0 4px #2dd4ff88;">Created by Idris Mansoor</div>
+              <div style="background:linear-gradient(90deg,#c026d3,#2dd4ff);-webkit-background-clip:text;background-clip:text;color:transparent;font-size:0.95rem;font-weight:900;line-height:1.1;">USER PW LIST V.1</div>
+              <div style="color:#2dd4ff;font-size:0.65rem;text-shadow:0 0 4px #2dd4ff88;">Created by Idris Mansoor</div>
             </div>
           </div>
         </div>
+        <button class="icon-btn" onclick="document.getElementById('creds-modal').style.display='flex'">🔑 PW</button>
+        <button class="icon-btn" onclick="doLogout()">🚪 Logout</button>
+        <div class="header-center">
+          <div class="link-search-inner">
+            <!-- Search input -->
+            <div id="link-srch-wrap">
+              <input type="search" id="link-srch" placeholder="🔍 Link..." autocomplete="off" oninput="doLinkSearch()" onkeyup="doLinkSearch()"/>
+              <button class="srch-clear" onclick="clearLinkSearch()" title="Clear">✖</button>
+            </div>
+            <!-- Show Links button -->
+            <button class="btn-show-links" id="btn-show-links" onclick="toggleLinksPanel()">🔗 Links ▼</button>
+            <!-- Search results (appears when searching, overlays without shifting layout) -->
+            <div id="link-search-results"></div>
+          </div>
+        </div>
         <div class="header-right">
-          <button class="icon-btn" onclick="document.getElementById('creds-modal').style.display='flex'">🔑 Change PW</button>
-          <button class="icon-btn" onclick="doLogout()">🚪 Logout</button>
-          <button class="icon-btn" onclick="loadFromSheets()" style="background:linear-gradient(90deg,#2980b9,#c026d3);color:#fff;box-shadow:0 0 8px #c026d344;">🔄 Reload</button>
           <button class="icon-btn" onclick="document.getElementById('import-modal').style.display='flex'">📥 Import</button>
           <button class="icon-btn" onclick="exportCSV()">📤 Export</button>
         </div>
       </div>
-      <div id="quicklinks"></div>
-      <div style="display:flex;gap:8px;padding:2px 0 4px;">
-        <button class="icon-btn" onclick="openAddLinkModal()">➕ Add Link</button>
-        <button class="icon-btn" onclick="toggleEditLinks()">✏️ Edit Link</button>
+
+      <!-- Row 2: Pinned links + Search results -->
+      <div class="header-links-row">
+        <!-- Pinned links (first 5, always visible) -->
+        <div id="pinned-links"></div>
       </div>
     </header>
+
+    <!-- ══ LINKS PANEL (collapsible) ══ -->
+    <div id="links-panel">
+      <div class="links-panel-hdr">
+        <span>🔗 সব Links</span>
+        <button class="lp-btn lp-btn-add" onclick="openAddLinkModal()">➕ Add Link</button>
+        <button class="lp-btn lp-btn-edit" id="lp-edit-btn" onclick="toggleEditLinks()">✏️ Edit</button>
+        <button class="lp-btn lp-btn-close" onclick="toggleLinksPanel()">✖ Close</button>
+      </div>
+      <div id="links-list"></div>
+    </div>
+
+    <!-- TOOLBAR (smaller buttons) -->
     <div class="toolbar">
       <div class="t-btns">
-        <button class="btn-add" onclick="openAddModal()">➕ Add New User PW</button>
-        <button class="btn-save" onclick="saveToSheets()">💾 Save</button>
+        <button class="btn-add" onclick="openAddModal()">➕ Add User PW</button>
+        <button class="btn-save" onclick="saveEverything()">💾 Save</button>
+        <button class="btn-reload" onclick="loadFromSheets()">🔄 Reload</button>
       </div>
     </div>
+
     <div id="status" class="loading">⏳ লোড হচ্ছে...</div>
-    <div class="search-bar">
-      <button onclick="clearSearch()" style="background:linear-gradient(90deg,#555,#333);border:none;color:#eee;border-radius:20px;padding:8px 14px;font-size:0.82rem;font-weight:bold;cursor:pointer;">✖ Clear</button>
+
+    <!-- TABS -->
+    <div class="tab-bar">
+      <button class="tab-btn active" id="tab-pw" onclick="switchTab('pw')">🔑 User PW</button>
+      <button class="tab-btn" id="tab-dm" onclick="switchTab('dm')">📦 DM Barcode</button>
+      <button class="tab-btn" id="tab-import" onclick="switchTab('import')">🔢 Import Code</button>
+    </div>
+
+    <!-- SEARCH BARS -->
+    <div id="search-pw" class="search-bar">
       <input type="search" id="search" placeholder="🔍 Company / User / Password সার্চ..." autocomplete="off" oninput="renderAll()" onkeyup="renderAll()"/>
-      <button onclick="openAddModal()" style="background:linear-gradient(90deg,#c026d3,#ff2d9c);border:none;color:#fff;border-radius:20px;padding:8px 14px;font-size:0.82rem;font-weight:bold;cursor:pointer;white-space:nowrap;box-shadow:0 0 8px #c026d344;">➕ Add User PW</button>
+      <button onclick="clearSearch()">✖ Clear</button>
+    </div>
+    <div id="search-dm" class="search-bar" style="display:none;">
+      <input type="search" id="search-dm-input" placeholder="🔍 Product / Barcode..." autocomplete="off" oninput="renderDmAll()" onkeyup="renderDmAll()"/>
+      <button onclick="clearDmSearch()">✖ Clear</button>
+      <button onclick="document.getElementById('dm-add-modal').style.display='flex'" style="background:linear-gradient(90deg,#27ae60,#2ecc71);border:none;color:#fff;border-radius:18px;padding:7px 10px;font-size:0.78rem;font-weight:bold;cursor:pointer;">➕ Add</button>
+    </div>
+    <div id="search-import" class="search-bar" style="display:none;">
+      <input type="search" id="search-import-input" placeholder="🔍 Search Import Code..." autocomplete="off" oninput="renderImportAll()" onkeyup="renderImportAll()"/>
+      <button onclick="clearImportSearch()">✖ Clear</button>
+      <button onclick="document.getElementById('import-add-modal').style.display='flex'" style="background:linear-gradient(90deg,#e0a800,#ffd84d);border:none;color:#1a1400;border-radius:18px;padding:7px 10px;font-size:0.78rem;font-weight:bold;cursor:pointer;">➕ Add Import</button>
     </div>
   </div>
-  <div id="tbody-wrap">
-    <table id="desk-table">
-      <colgroup><col/><col/><col/><col/><col/><col/><col/></colgroup>
+
+  <!-- ══ PW SECTION ══ -->
+  <div id="pw-section" style="display:flex;flex-direction:column;flex:1;overflow:hidden;min-height:0;">
+    <div id="tbody-wrap">
+      <table id="desk-table">
+        <colgroup><col/><col/><col/><col/><col/><col/></colgroup>
+        <thead>
+          <tr>
+            <th style="width:40px;text-align:center">#</th>
+            <th>Company Name</th><th>User Name</th><th>Password</th>
+            <th>Note / Mobile No.</th>
+            <th style="width:65px;text-align:center">Delete</th>
+          </tr>
+        </thead>
+        <tbody id="desk-tbody"></tbody>
+      </table>
+      <div id="mobile-list"></div>
+      <div id="empty-msg" class="empty-msg" style="display:none">কোনো entry নেই।</div>
+    </div>
+  </div>
+
+  <!-- ══ DM BARCODE SECTION ══ -->
+  <div id="dm-section">
+    <table id="dm-table">
       <thead>
         <tr>
-          <th style="width:40px;text-align:center">#</th>
-          <th>Company Name</th><th>User Name</th><th>Password</th>
-          <th>SHJ IMP CODE</th>
-          <th>DXB IMP CODE</th>
-          <th style="width:65px;text-align:center">Delete</th>
+          <th style="width:30px">#</th>
+          <th>Product Name</th><th>Size/Weight</th><th>Brand</th><th>Origin</th>
+          <th>DM Barcode</th>
+          <th style="width:60px">Del</th>
         </tr>
       </thead>
-      <tbody id="desk-tbody"></tbody>
+      <tbody id="dm-tbody"></tbody>
     </table>
-    <div id="mobile-list"></div>
-    <div id="empty-msg" class="empty-msg" style="display:none">কোনো entry নেই।</div>
+    <div id="dm-mobile-list"></div>
+    <div id="dm-empty-msg" class="empty-msg" style="display:none">কোনো DM Barcode নেই। ➕ Add চাপুন।</div>
+  </div>
+
+  <!-- ══ IMPORT CODE SECTION ══ -->
+  <div id="import-section" style="display:none;">
+    <table id="imp-table">
+      <thead>
+        <tr>
+          <th style="width:30px">#</th>
+          <th>Company / Item Name</th><th>Import Code</th><th>Note</th>
+          <th style="width:60px">Del</th>
+        </tr>
+      </thead>
+      <tbody id="imp-tbody"></tbody>
+    </table>
+    <div id="imp-mobile-list"></div>
+    <div id="imp-empty-msg" class="empty-msg" style="display:none">কোনো Import Code নেই। ➕ Add Import চাপুন।</div>
   </div>
 </div>
 
@@ -312,65 +602,113 @@ const DEFAULT_LINKS=[
 ];
 let quickLinks=[];
 let linkEditMode=false;
+let linksPanelOpen=false;
+const PINNED_COUNT=5; // header এ কতটা link দেখাবে
 
-// ── Links: localStorage cache (Google Sheets থেকে আসে) ──
+// ══ LINKS LOCAL ══
 function loadLinksLocal(){
-  try{
-    const s=localStorage.getItem("quickLinks_v3");
-    quickLinks=s?JSON.parse(s):DEFAULT_LINKS.slice();
-  }catch(e){quickLinks=DEFAULT_LINKS.slice();}
-  renderLinks();
+  try{const s=localStorage.getItem("quickLinks_v3");quickLinks=s?JSON.parse(s):DEFAULT_LINKS.slice();}
+  catch(e){quickLinks=DEFAULT_LINKS.slice();}
+  renderPinnedLinks();
+  renderLinksPanel();
 }
+function saveLinksCacheLocal(){localStorage.setItem("quickLinks_v3",JSON.stringify(quickLinks));}
 
-function saveLinksCacheLocal(){
-  localStorage.setItem("quickLinks_v3",JSON.stringify(quickLinks));
-}
-
-// ── Links: Google Sheets এ Save ──
 async function saveLinksToSheets(){
   saveLinksCacheLocal();
   try{
-    const res=await fetch(API_URL,{
-      method:"POST",redirect:"follow",
-      headers:{"Content-Type":"text/plain"},
-      body:JSON.stringify({action:"saveLinks",links:quickLinks})
-    });
+    const res=await fetch(API_URL,{method:"POST",redirect:"follow",headers:{"Content-Type":"text/plain"},body:JSON.stringify({action:"saveLinks",links:quickLinks})});
     const data=await res.json();
-    if(data.status==="ok"){
-      toast("🔗 Links Google Sheets এ save হয়েছে!");
-    }else{
-      toast("⚠️ Links local এ save হয়েছে");
-    }
-  }catch(e){
-    toast("⚠️ Links local এ save হয়েছে");
-  }
+    toast(data.status==="ok"?"🔗 Links save হয়েছে!":"⚠️ Links local এ save হয়েছে");
+  }catch(e){toast("⚠️ Links local এ save হয়েছে");}
 }
 
-function renderLinks(){
-  const c=document.getElementById("quicklinks");
-  c.innerHTML="";
-  if(linkEditMode)c.classList.add("edit-mode");else c.classList.remove("edit-mode");
-  quickLinks.forEach((l,idx)=>{
-    const wrap=document.createElement("div");
-    wrap.className="link-wrap";
+// ══ PINNED LINKS (header এ ৫টা) ══
+function renderPinnedLinks(){
+  const container=document.getElementById("pinned-links");
+  container.innerHTML="";
+  // screen width অনুযায়ে কতটা দেখাবে
+  const maxShow=window.innerWidth<500?3:window.innerWidth<768?4:PINNED_COUNT;
+  quickLinks.slice(0,maxShow).forEach(l=>{
     const a=document.createElement("a");
-    a.href=l.url;a.target="_blank";a.textContent=l.label;
-    a.onclick=function(ev){if(linkEditMode){ev.preventDefault();openAddLinkModal(idx);}};
-    wrap.appendChild(a);
-    const eb=document.createElement("button");
-    eb.className="link-edit";eb.textContent="✎";eb.type="button";eb.title="Edit";
-    eb.onclick=function(ev){ev.preventDefault();ev.stopPropagation();openAddLinkModal(idx);};
-    wrap.appendChild(eb);
-    c.appendChild(wrap);
+    a.href=l.url;a.target="_blank";a.rel="noopener";
+    a.textContent=l.label;
+    container.appendChild(a);
   });
 }
 
-function toggleEditLinks(){
-  linkEditMode=!linkEditMode;
-  renderLinks();
-  toast(linkEditMode?"✏️ Edit মোড — লিংকে বা ✎ চাপলে edit হবে":"✅ Edit মোড বন্ধ");
+// ══ LINKS PANEL (সব links, তালিকা আকারে) ══
+function renderLinksPanel(){
+  const list=document.getElementById("links-list");
+  list.innerHTML="";
+  const panel=document.getElementById("links-panel");
+
+  if(linkEditMode){panel.classList.add("edit-mode");document.getElementById("lp-edit-btn").style.background="linear-gradient(90deg,#ff8a00,#e94560)";}
+  else{panel.classList.remove("edit-mode");document.getElementById("lp-edit-btn").style.background="";}
+
+  if(quickLinks.length===0){
+    list.innerHTML='<div class="lp-empty">কোনো link নেই। ➕ Add Link চাপুন।</div>';return;
+  }
+  quickLinks.forEach((l,idx)=>{
+    const item=document.createElement("div");item.className="link-item";
+    const num=document.createElement("span");num.className="link-item-num";num.textContent=idx+1;
+    const a=document.createElement("a");a.href=l.url;a.target="_blank";a.rel="noopener";a.textContent=l.label;
+    const openBtn=document.createElement("a");openBtn.href=l.url;openBtn.target="_blank";openBtn.rel="noopener";
+    openBtn.className="link-item-open";openBtn.textContent="↗ Open";
+    const editBtn=document.createElement("button");editBtn.className="link-item-edit";editBtn.textContent="✎";editBtn.type="button";
+    editBtn.onclick=function(ev){ev.preventDefault();ev.stopPropagation();openAddLinkModal(idx);};
+    item.appendChild(num);item.appendChild(a);item.appendChild(openBtn);item.appendChild(editBtn);
+    list.appendChild(item);
+  });
 }
 
+// ══ TOGGLE LINKS PANEL ══
+function toggleLinksPanel(){
+  linksPanelOpen=!linksPanelOpen;
+  const panel=document.getElementById("links-panel");
+  const btn=document.getElementById("btn-show-links");
+  if(linksPanelOpen){
+    panel.classList.add("open");
+    btn.classList.add("open");
+    btn.textContent="🔗 Links ▲";
+    renderLinksPanel();
+  }else{
+    panel.classList.remove("open");
+    btn.classList.remove("open");
+    btn.textContent="🔗 Links ▼";
+  }
+}
+
+// ══ LINK SEARCH (header area) ══
+function doLinkSearch(){
+  const q=(document.getElementById("link-srch").value||"").toLowerCase().trim();
+  const pinned=document.getElementById("pinned-links");
+  const results=document.getElementById("link-search-results");
+  if(!q){
+    results.style.display="none";results.classList.remove("show");results.innerHTML="";return;
+  }
+  results.style.display="flex";results.innerHTML="";
+  requestAnimationFrame(()=>results.classList.add("show"));
+  const matched=quickLinks.filter(l=>l.label.toLowerCase().includes(q)||l.url.toLowerCase().includes(q));
+  if(matched.length===0){
+    const no=document.createElement("span");no.className="no-result";no.textContent="কোনো link পাওয়া যায়নি";
+    results.appendChild(no);return;
+  }
+  matched.slice(0,6).forEach(l=>{
+    const a=document.createElement("a");a.href=l.url;a.target="_blank";a.rel="noopener";
+    a.textContent=l.label;results.appendChild(a);
+  });
+}
+function clearLinkSearch(){document.getElementById("link-srch").value="";doLinkSearch();}
+
+// ══ EDIT LINKS MODE ══
+function toggleEditLinks(){
+  linkEditMode=!linkEditMode;
+  renderLinksPanel();
+  toast(linkEditMode?"✏️ Edit মোড চালু — ✎ চাপুন":"✅ Edit মোড বন্ধ");
+}
+
+// ══ LINK MODAL ══
 function openAddLinkModal(editIdx){
   document.getElementById("link-err").textContent="";
   if(typeof editIdx==="number"){
@@ -388,47 +726,50 @@ function openAddLinkModal(editIdx){
   }
   document.getElementById("link-modal").style.display="flex";
 }
-
 function deleteLinkFromModal(){
   const idVal=document.getElementById("link-edit-id").value;
   if(idVal==="")return;
   if(!confirm("এই link টি মুছবেন?"))return;
   quickLinks.splice(parseInt(idVal),1);
-  renderLinks();closeModal("link-modal");
-  saveLinksToSheets();
+  renderPinnedLinks();renderLinksPanel();closeModal("link-modal");saveLinksToSheets();
 }
-
 async function saveLink(){
   const idVal=document.getElementById("link-edit-id").value;
   const label=document.getElementById("link-label").value.trim();
   const url=document.getElementById("link-url").value.trim();
   const err=document.getElementById("link-err");
   if(!label||!url){err.textContent="❌ Label ও URL দিন!";return;}
-  if(idVal!==""){quickLinks[parseInt(idVal)]={label,url};}
-  else{quickLinks.push({label,url});}
-  renderLinks();closeModal("link-modal");
+  if(idVal!==""){quickLinks[parseInt(idVal)]={label,url};}else{quickLinks.push({label,url});}
+  renderPinnedLinks();renderLinksPanel();closeModal("link-modal");
   await saveLinksToSheets();
 }
 
-// ── Auth ──
-function getCreds(){return{user:localStorage.getItem("appUser")||DEFAULT_USER,pass:localStorage.getItem("appPass")||DEFAULT_PASS};}
-(function(){
-  const p=localStorage.getItem("appPass");
-  if(p&&p!==DEFAULT_PASS&&(p.includes("=")||p.length>30)){
-    localStorage.removeItem("appUser");localStorage.removeItem("appPass");
-  }
-})();
+// ══ TABS ══
+let currentTab="pw";
+function switchTab(tab){
+  currentTab=tab;
+  const isPw=tab==="pw",isDm=tab==="dm",isImp=tab==="import";
+  document.getElementById("tab-pw").className="tab-btn"+(isPw?" active":"");
+  document.getElementById("tab-dm").className="tab-btn"+(isDm?" active":"");
+  document.getElementById("tab-import").className="tab-btn"+(isImp?" active":"");
+  document.getElementById("pw-section").style.display=isPw?"flex":"none";
+  document.getElementById("dm-section").style.display=isDm?"flex":"none";
+  document.getElementById("import-section").style.display=isImp?"flex":"none";
+  document.getElementById("search-pw").style.display=isPw?"flex":"none";
+  document.getElementById("search-dm").style.display=isDm?"flex":"none";
+  document.getElementById("search-import").style.display=isImp?"flex":"none";
+  document.getElementById("pw-section").style.flexDirection="column";
+  document.getElementById("pw-section").style.flex="1";
+  document.getElementById("pw-section").style.overflow="hidden";
+  document.getElementById("pw-section").style.minHeight="0";
+}
 
-function toggleEye(){
-  const i=document.getElementById("l-pass"),b=document.getElementById("eye-btn");
-  if(i.type==="password"){i.type="text";b.textContent="🙈";}
-  else{i.type="password";b.textContent="👁️";}
-}
-function toggleEyeFor(id,btn){
-  const i=document.getElementById(id);
-  if(i.type==="password"){i.type="text";btn.textContent="🙈";}
-  else{i.type="password";btn.textContent="👁️";}
-}
+// ══ AUTH ══
+function getCreds(){return{user:localStorage.getItem("appUser")||DEFAULT_USER,pass:localStorage.getItem("appPass")||DEFAULT_PASS};}
+(function(){const p=localStorage.getItem("appPass");if(p&&p!==DEFAULT_PASS&&(p.includes("=")||p.length>30)){localStorage.removeItem("appUser");localStorage.removeItem("appPass");}})();
+
+function toggleEye(){const i=document.getElementById("l-pass"),b=document.getElementById("eye-btn");if(i.type==="password"){i.type="text";b.textContent="🙈";}else{i.type="password";b.textContent="👁️";}}
+function toggleEyeFor(id,btn){const i=document.getElementById(id);if(i.type==="password"){i.type="text";btn.textContent="🙈";}else{i.type="password";btn.textContent="👁️";}}
 
 function doLogin(){
   try{
@@ -445,22 +786,19 @@ function doLogin(){
     }
   }catch(e){document.getElementById("login-err").textContent="❌ Error: "+e.message;}
 }
-
 function doLogout(){
   document.getElementById("app").style.display="none";
   document.getElementById("login-screen").style.display="flex";
-  document.getElementById("l-user").value="";
-  document.getElementById("l-pass").value="";
+  document.getElementById("l-user").value="";document.getElementById("l-pass").value="";
   document.getElementById("login-err").textContent="";
+  linksPanelOpen=false;linkEditMode=false;
+  document.getElementById("links-panel").classList.remove("open");
+  document.getElementById("btn-show-links").textContent="🔗 Links ▼";
 }
-
 function doChangeCreds(){
-  const op=document.getElementById("c-old").value;
-  const nu=document.getElementById("c-user").value.trim();
-  const np=document.getElementById("c-new").value;
-  const np2=document.getElementById("c-new2").value;
-  const e=document.getElementById("creds-err");
-  const c=getCreds();
+  const op=document.getElementById("c-old").value,nu=document.getElementById("c-user").value.trim();
+  const np=document.getElementById("c-new").value,np2=document.getElementById("c-new2").value;
+  const e=document.getElementById("creds-err"),c=getCreds();
   if(op!==c.pass){e.textContent="❌ বর্তমান password ভুল!";return;}
   if(np.length<4){e.textContent="❌ কমপক্ষে ৪ অক্ষর!";return;}
   if(np!==np2){e.textContent="❌ Password মিলছে না!";return;}
@@ -471,178 +809,336 @@ function doChangeCreds(){
   ["c-old","c-user","c-new","c-new2"].forEach(id=>document.getElementById(id).value="");
   toast("✅ Password পরিবর্তন হয়েছে!");
 }
-
 function closeModal(id){document.getElementById(id).style.display="none";}
+function openAddModal(){document.getElementById("add-modal").style.display="flex";setTimeout(()=>document.getElementById("inp-company").focus(),100);}
 
-function openAddModal(){
-  document.getElementById("add-modal").style.display="flex";
-  setTimeout(()=>document.getElementById("inp-company").focus(),100);
-}
-
+// ══ PW CRUD ══
 async function addAndSave(){
   const c=document.getElementById("inp-company").value.trim();
   const u=document.getElementById("inp-user").value.trim();
   const p=document.getElementById("inp-pw").value.trim();
   const n=document.getElementById("inp-note").value.trim();
-  const shj=document.getElementById("inp-shj").value.trim();
-  const dxb=document.getElementById("inp-dxb").value.trim();
   if(!c&&!u){document.getElementById("add-err").textContent="❌ Company বা Username দিন!";return;}
-  rows.push({company:c,user:u,password:p,note:n,shj,dxb});
-  ["inp-company","inp-user","inp-pw","inp-note","inp-shj","inp-dxb"].forEach(id=>document.getElementById(id).value="");
+  rows.push({company:c,user:u,password:p,note:n});
+  ["inp-company","inp-user","inp-pw","inp-note"].forEach(id=>document.getElementById(id).value="");
   document.getElementById("add-err").textContent="";
-  closeModal("add-modal");renderAll();
-  await saveToSheets();
+  closeModal("add-modal");renderAll();await saveToSheets();
 }
 
-// ── Load from Sheets: rows + links একসাথে ──
 async function loadFromSheets(){
   setStatus("⏳ লোড হচ্ছে...","loading");
-  loadLinksLocal(); // প্রথমে local cache দেখাও
+  loadLinksLocal();
   try{
-    const res=await fetch(API_URL,{redirect:"follow"});
+    const res=await fetch(API_URL+"?t="+Date.now(),{redirect:"follow",cache:"no-store"});
     const data=await res.json();
     if(data.status==="ok"){
-      rows=(data.rows||[]).map(r=>({...r,shj:r.shj||r.note||"",dxb:r.dxb||"",...(!r.shj&&r.note?{note:""}:{})}));
-      localStorage.setItem("tosKhoBackup",JSON.stringify(rows));
-
-      // Sheets এ links থাকলে সেটা ব্যবহার করো
+      rows=data.rows||[];localStorage.setItem("tosKhoBackup",JSON.stringify(rows));
       if(data.links&&data.links.length>0){
-        quickLinks=data.links;
-        saveLinksCacheLocal();
-        renderLinks();
+        quickLinks=data.links;saveLinksCacheLocal();renderPinnedLinks();renderLinksPanel();
         setStatus("✅ "+rows.length+" entry + Links — Google Sheets সংযুক্ত ✔","ok");
       }else{
-        // Sheets এ links নেই → DEFAULT লোড করো এবং Sheets এ সেভ করো
         loadLinksLocal();
-        setStatus("✅ "+rows.length+" টি entry load হয়েছে — Google Sheets সংযুক্ত","ok");
-        // প্রথমবার links Sheets এ push করো
+        setStatus("✅ "+rows.length+" entry — Google Sheets সংযুক্ত","ok");
         await saveLinksToSheets();
+      }
+      if(data.importCodes&&data.importCodes.length>0){
+        importRows=data.importCodes;saveImportRows();
+      }else{
+        loadImportRows();
+        await saveImportToSheets();
+      }
+      if(data.dmBarcodes&&data.dmBarcodes.length>0){
+        dmRows=data.dmBarcodes;saveDmRows();
+      }else{
+        loadDmRows();
+        await saveDmToSheets();
       }
     }else throw new Error();
   }catch(e){
     const b=localStorage.getItem("tosKhoBackup");
-    if(b){rows=JSON.parse(b);setStatus("⚠️ Offline mode: "+rows.length+" entry (local backup)","err");}
-    else{rows=[];setStatus("⚠️ সংযোগ ব্যর্থ — data নেই","err");}
+    if(b){rows=JSON.parse(b);setStatus("⚠️ Offline: "+rows.length+" entry (local backup)","err");}
+    else{rows=[];setStatus("⚠️ সংযোগ ব্যর্থ","err");}
+    loadImportRows();
+    loadDmRows();
   }
-  renderAll();
+  renderAll();renderImportAll();renderDmAll();
 }
 
 async function saveToSheets(){
   setStatus("⏳ Save হচ্ছে...","loading");
   try{
     const res=await fetch(API_URL,{method:"POST",redirect:"follow",headers:{"Content-Type":"text/plain"},
-      body:JSON.stringify({action:"save",rows:rows.map((r,i)=>[i+1,r.company,r.user,r.password,r.note||"",r.shj||"",r.dxb||""])})});
+      body:JSON.stringify({action:"save",rows:rows.map((r,i)=>[i+1,r.company,r.user,r.password,r.note])})});
     const data=await res.json();
     if(data.status==="ok"){
       localStorage.setItem("tosKhoBackup",JSON.stringify(rows));
-      setStatus("✅ "+rows.length+" টি entry save হয়েছে!","ok");toast("💾 Save সফল!");
+      setStatus("✅ "+rows.length+" entry save হয়েছে!","ok");toast("💾 Save সফল!");
     }else throw new Error();
-  }catch(e){
-    localStorage.setItem("tosKhoBackup",JSON.stringify(rows));
-    setStatus("⚠️ Local এ save হয়েছে","err");
-  }
+  }catch(e){localStorage.setItem("tosKhoBackup",JSON.stringify(rows));setStatus("⚠️ Local এ save হয়েছে","err");}
 }
 
-function deleteRow(i){
-  if(!confirm("মুছবেন?"))return;
-  rows.splice(i,1);renderAll();setStatus("🗑️ মুছে গেছে। 💾 Save করুন।","ok");
+async function saveEverything(){
+  await saveToSheets();
+  await saveImportToSheets();
+  await saveDmToSheets();
 }
+
+function deleteRow(i){if(!confirm("মুছবেন?"))return;rows.splice(i,1);renderAll();setStatus("🗑️ মুছে গেছে। 💾 Save করুন।","ok");}
 function editField(i,f,v){rows[i][f]=v;}
 
 function copyText(t){
-  if(navigator.clipboard&&navigator.clipboard.writeText){
-    navigator.clipboard.writeText(t).then(()=>toast("📋 Copied!")).catch(()=>fallbackCopy(t));
-  }else{fallbackCopy(t);}
+  if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(t).then(()=>toast("📋 Copied!")).catch(()=>fallbackCopy(t));}
+  else{fallbackCopy(t);}
 }
 function fallbackCopy(t){
-  const el=document.createElement("textarea");
-  el.value=t;el.style.position="fixed";el.style.opacity="0";
+  const el=document.createElement("textarea");el.value=t;el.style.position="fixed";el.style.opacity="0";
   document.body.appendChild(el);el.focus();el.select();
   try{document.execCommand("copy");toast("📋 Copied!");}catch(e){toast("❌ Copy হয়নি");}
   document.body.removeChild(el);
 }
-
 function clearSearch(){document.getElementById("search").value="";renderAll();}
 
+// ══ EXPORT ══
 function exportCSV(){
-  if(!rows.length){toast("⚠️ কোনো data নেই!");return;}
-  const csv=["#,Company,Username,Password,Note,SHJ IMP CODE,DXB IMP CODE",
-    ...rows.map((r,i)=>[i+1,`"${r.company}"`,`"${r.user}"`,`"${r.password}"`,`"${r.note||''}"`,`"${r.shj||''}"`,`"${r.dxb||''}"`].join(","))].join("\n");
-  const a=document.createElement("a");
-  a.href=URL.createObjectURL(new Blob(["\uFEFF"+csv],{type:"text/csv;charset=utf-8;"}));
-  a.download="user-pw-list-v1.csv";a.click();toast("📤 Export হয়েছে!");
+  if(!rows.length&&!quickLinks.length){toast("⚠️ কোনো data নেই!");return;}
+  try{
+    const wb=XLSX.utils.book_new();
+    const ws1=XLSX.utils.aoa_to_sheet([["#","Company","Username","Password","Note"],...rows.map((r,i)=>[i+1,r.company,r.user,r.password,r.note])]);
+    XLSX.utils.book_append_sheet(wb,ws1,"Password List");
+    const ws2=XLSX.utils.aoa_to_sheet([["Label","URL"],...quickLinks.map(l=>[l.label,l.url])]);
+    XLSX.utils.book_append_sheet(wb,ws2,"Links");
+    const ws3=XLSX.utils.aoa_to_sheet([["#","Product Name","Size/Weight","Brand","Origin","DM Barcode"],...dmRows.map((r,i)=>[i+1,r.product,r.size,r.brand,r.origin,r.barcode])]);
+    XLSX.utils.book_append_sheet(wb,ws3,"DM Barcode");
+    const ws4=XLSX.utils.aoa_to_sheet([["#","Company / Item Name","Import Code","Note"],...importRows.map((r,i)=>[i+1,r.company,r.code,r.note])]);
+    XLSX.utils.book_append_sheet(wb,ws4,"Import Code");
+    XLSX.writeFile(wb,"user-pw-list-v1.xlsx");
+    toast("📤 Excel export সফল! ✅");
+  }catch(err){toast("❌ Export error: "+err.message);}
 }
 
+// ══ IMPORT ══
 function doImportCSV(){
-  const file=document.getElementById("csv-file").files[0];
-  if(!file){document.getElementById("import-err").textContent="❌ ফাইল বেছে নিন!";return;}
-  if(!confirm("⚠️ আগের সব data মুছে নতুন CSV দিয়ে replace হবে। নিশ্চিত?"))return;
-  const reader=new FileReader();
-  reader.onload=function(e){
-    const lines=e.target.result.split("\n").map(l=>l.trim()).filter(l=>l);
-    rows=[];let n=0;
-    lines.forEach((line,idx)=>{
-      if(idx===0&&(line.toLowerCase().startsWith("#")||line.toLowerCase().includes("company")))return;
-      const cols=line.split(",").map(c=>c.replace(/^"|"$/g,"").trim());
-      if(cols.length<2)return;
-      rows.push({company:cols[1]||cols[0]||"",user:cols[2]||"",password:cols[3]||"",note:cols[4]||"",shj:cols[5]||"",dxb:cols[6]||""});n++;
-    });
-    localStorage.setItem("tosKhoBackup",JSON.stringify(rows));
-    renderAll();closeModal("import-modal");
-    document.getElementById("csv-file").value="";
-    setStatus("✅ "+n+" টি import হয়েছে। 💾 Save করুন।","ok");toast("📥 "+n+" টি import সফল!");
-  };
-  reader.readAsText(file,"UTF-8");
+  const xlsxFile=document.getElementById("xlsx-file").files[0];
+  const csvFile=document.getElementById("csv-file").files[0];
+  const linksFile=document.getElementById("csv-links-file").files[0];
+  const errEl=document.getElementById("import-err");errEl.textContent="";
+  if(!xlsxFile&&!csvFile&&!linksFile){errEl.textContent="❌ কমপক্ষে একটি ফাইল বেছে নিন!";return;}
+  if(xlsxFile){
+    const ext=xlsxFile.name.split(".").pop().toLowerCase();
+    if(!["xlsx","xls"].includes(ext)){errEl.textContent="❌ শুধু .xlsx বা .xls ফাইল!";return;}
+    if(!confirm("⚠️ Excel import করলে আগের সব data replace হবে। নিশ্চিত?"))return;
+    _doActualImport(xlsxFile,csvFile,linksFile);return;
+  }
+  if(csvFile){
+    const reader=new FileReader();
+    reader.onload=function(e){
+      const firstLine=e.target.result.split("\n")[0].toLowerCase();
+      if(!firstLine.includes("#")&&!firstLine.includes("company")&&!firstLine.includes("username")){errEl.textContent="❌ ভুল ফাইল format!";return;}
+      const lines=e.target.result.split("\n").filter(l=>l.trim()).length-1;
+      if(!confirm("✅ "+lines+" entry পাওয়া গেছে। আগের data replace হবে। নিশ্চিত?"))return;
+      _doActualImport(xlsxFile,csvFile,linksFile);
+    };reader.readAsText(csvFile,"UTF-8");return;
+  }
+  if(!confirm("⚠️ আগের data replace হবে। নিশ্চিত?"))return;
+  _doActualImport(xlsxFile,csvFile,linksFile);
 }
 
+function _doActualImport(xlsxFile,csvFile,linksFile){
+  if(xlsxFile){
+    const reader=new FileReader();
+    reader.onload=function(e){
+      try{
+        const wb=XLSX.read(e.target.result,{type:"binary"});
+        const ws1=wb.Sheets[wb.SheetNames[0]];const data=XLSX.utils.sheet_to_json(ws1,{header:1});
+        rows=[];let n=0;
+        data.forEach((row,idx)=>{if(idx===0)return;if(!row[1]&&!row[2])return;rows.push({company:String(row[1]||""),user:String(row[2]||""),password:String(row[3]||""),note:String(row[4]||"")});n++;});
+        localStorage.setItem("tosKhoBackup",JSON.stringify(rows));renderAll();
+        const lsName=wb.SheetNames.find(n=>n.toLowerCase().includes("link"));
+        if(lsName){const ws2=wb.Sheets[lsName];const ld=XLSX.utils.sheet_to_json(ws2,{header:1});quickLinks=[];let m=0;ld.forEach((row,idx)=>{if(idx===0)return;if(!row[0]||!row[1])return;quickLinks.push({label:String(row[0]),url:String(row[1])});m++;});saveLinksCacheLocal();renderPinnedLinks();renderLinksPanel();}
+        const dmSheetName=wb.SheetNames.find(n=>n.toLowerCase().includes("dm"));
+        if(dmSheetName){const wsDm=wb.Sheets[dmSheetName];const dd=XLSX.utils.sheet_to_json(wsDm,{header:1});dmRows=[];dd.forEach((row,idx)=>{if(idx===0)return;if(!row[1]&&!row[5])return;dmRows.push({product:String(row[1]||""),size:String(row[2]||""),brand:String(row[3]||""),origin:String(row[4]||""),barcode:String(row[5]||"")});});saveDmRows();renderDmAll();}
+        const impSheetName=wb.SheetNames.find(n=>n.toLowerCase().includes("import"));
+        if(impSheetName){const wsImp=wb.Sheets[impSheetName];const idata=XLSX.utils.sheet_to_json(wsImp,{header:1});importRows=[];idata.forEach((row,idx)=>{if(idx===0)return;if(!row[1]&&!row[2])return;importRows.push({company:String(row[1]||""),code:String(row[2]||""),note:String(row[3]||"")});});saveImportRows();renderImportAll();}
+        document.getElementById("xlsx-file").value="";
+        setStatus("✅ Excel import সফল — "+n+" entry।","ok");toast("📥 "+n+" PW import সফল! ✅");
+      }catch(err){document.getElementById("import-err").textContent="❌ Excel error: "+err.message;}
+    };reader.readAsBinaryString(xlsxFile);closeModal("import-modal");return;
+  }
+  if(csvFile){
+    const reader=new FileReader();
+    reader.onload=function(e){
+      const lines=e.target.result.split("\n").map(l=>l.trim()).filter(l=>l);rows=[];let n=0;
+      lines.forEach((line,idx)=>{if(idx===0&&(line.toLowerCase().startsWith("#")||line.toLowerCase().includes("company")))return;const cols=line.split(",").map(c=>c.replace(/^"|"$/g,"").trim());if(cols.length<2)return;rows.push({company:cols[1]||cols[0]||"",user:cols[2]||"",password:cols[3]||"",note:cols[4]||""});n++;});
+      localStorage.setItem("tosKhoBackup",JSON.stringify(rows));renderAll();document.getElementById("csv-file").value="";
+      setStatus("✅ "+n+" password import হয়েছে।","ok");toast("📥 "+n+" import সফল!");
+    };reader.readAsText(csvFile,"UTF-8");
+  }
+  if(linksFile){
+    const lr=new FileReader();
+    lr.onload=function(e){
+      const lines=e.target.result.split("\n").map(l=>l.trim()).filter(l=>l);quickLinks=[];let m=0;
+      lines.forEach((line,idx)=>{if(idx===0&&(line.toLowerCase().startsWith("label")||line.toLowerCase().includes("url")))return;const cols=line.split(",").map(c=>c.replace(/^"|"$/g,"").trim());if(cols.length<2)return;quickLinks.push({label:cols[0]||"",url:cols[1]||""});m++;});
+      saveLinksCacheLocal();renderPinnedLinks();renderLinksPanel();document.getElementById("csv-links-file").value="";toast("🔗 "+m+" link import সফল!");
+    };lr.readAsText(linksFile,"UTF-8");
+  }
+  closeModal("import-modal");
+}
+
+// ══ RENDER PW ══
 function getFiltered(){
   const q=(document.getElementById("search").value||"").toLowerCase().trim();
-  return rows.map((r,i)=>({...r,_i:i}))
-    .filter(r=>!q||r.company.toLowerCase().includes(q)||r.user.toLowerCase().includes(q)||r.password.toLowerCase().includes(q)||r.note.toLowerCase().includes(q));
+  return rows.map((r,i)=>({...r,_i:i})).filter(r=>!q||r.company.toLowerCase().includes(q)||r.user.toLowerCase().includes(q)||r.password.toLowerCase().includes(q)||r.note.toLowerCase().includes(q));
 }
-
 function renderAll(){
   const f=getFiltered();
   document.getElementById("empty-msg").style.display=f.length===0?"block":"none";
   renderDesktop(f);renderMobile(f);
 }
-
 function renderDesktop(filtered){
   const tbody=document.getElementById("desk-tbody");tbody.innerHTML="";
   filtered.forEach(r=>{
-    const i=r._i;
-    const tr=document.createElement("tr");
-    tr.innerHTML=`
-      <td class="sn">${i+1}</td>
+    const i=r._i;const tr=document.createElement("tr");
+    tr.innerHTML=`<td class="sn">${i+1}</td>
       <td><input class="co-input" value="${esc(r.company)}" oninput="editField(${i},'company',this.value)" autocomplete="off"/></td>
       <td><div class="cell-flex"><input value="${esc(r.user)}" oninput="editField(${i},'user',this.value)" autocomplete="off"/><button class="cpbtn" onclick="copyText('${esc(r.user)}')">📋</button></div></td>
       <td><div class="cell-flex"><input class="mono" value="${esc(r.password)}" oninput="editField(${i},'password',this.value)" autocomplete="off"/><button class="cpbtn" onclick="copyText('${esc(r.password)}')">📋</button></div></td>
-      <td><div class="cell-flex"><input value="${esc(r.shj||'')}" oninput="editField(${i},'shj',this.value)" autocomplete="off" placeholder="SHJ Code"/><button class="cpbtn" onclick="copyText('${esc(r.shj||'')}')">📋</button></div></td>
-      <td><div class="cell-flex"><input value="${esc(r.dxb||'')}" oninput="editField(${i},'dxb',this.value)" autocomplete="off" placeholder="DXB Code"/><button class="cpbtn" onclick="copyText('${esc(r.dxb||'')}')">📋</button></div></td>
+      <td><div class="cell-flex"><input value="${esc(r.note)}" oninput="editField(${i},'note',this.value)" autocomplete="off"/><button class="cpbtn" onclick="copyText('${esc(r.note)}')">📋</button></div></td>
       <td><button class="delbtn" onclick="deleteRow(${i})">🗑️</button></td>`;
     tbody.appendChild(tr);
   });
 }
-
 function renderMobile(filtered){
   const list=document.getElementById("mobile-list");list.innerHTML="";
   filtered.forEach(r=>{
-    const i=r._i;
-    const card=document.createElement("div");card.className="card";
-    card.innerHTML=`
-      <div class="card-company">${i+1}. ${esc(r.company)}</div>
+    const i=r._i;const card=document.createElement("div");card.className="card";
+    card.innerHTML=`<div class="card-company">${i+1}. ${esc(r.company)}</div>
       <div class="card-row"><label>👤</label><input value="${esc(r.user)}" oninput="editField(${i},'user',this.value)" autocomplete="off"/><button class="card-copy" onclick="copyText('${esc(r.user)}')">📋 Copy</button></div>
       <div class="card-row"><label>🔑</label><input class="mono" value="${esc(r.password)}" oninput="editField(${i},'password',this.value)" autocomplete="off"/><button class="card-copy" onclick="copyText('${esc(r.password)}')">📋 Copy</button></div>
-      <div class="card-row"><label>🔢</label><input value="${esc(r.shj||'')}" oninput="editField(${i},'shj',this.value)" autocomplete="off" placeholder="SHJ IMP CODE"/><button class="card-copy" onclick="copyText('${esc(r.shj||'')}')">📋 Copy</button></div>
-      <div class="card-row"><label>🔢</label><input value="${esc(r.dxb||'')}" oninput="editField(${i},'dxb',this.value)" autocomplete="off" placeholder="DXB IMP CODE"/><button class="card-copy" onclick="copyText('${esc(r.dxb||'')}')">📋 Copy</button></div>
+      <div class="card-row"><label>📝</label><input value="${esc(r.note)}" oninput="editField(${i},'note',this.value)" autocomplete="off"/><button class="card-copy" onclick="copyText('${esc(r.note)}')">📋 Copy</button></div>
       <button class="card-del" onclick="deleteRow(${i})">🗑️ Delete</button>`;
     list.appendChild(card);
   });
 }
 
+// ══ DM BARCODE ══
+let dmRows=[];
+function loadDmRows(){try{const s=localStorage.getItem("dmRows_v1");dmRows=s?JSON.parse(s):[];}catch(e){dmRows=[];}}
+function saveDmRows(){localStorage.setItem("dmRows_v1",JSON.stringify(dmRows));}
+async function saveDmToSheets(){
+  saveDmRows();
+  try{
+    const res=await fetch(API_URL,{method:"POST",redirect:"follow",headers:{"Content-Type":"text/plain"},body:JSON.stringify({action:"saveDmBarcodes",dmBarcodes:dmRows})});
+    const data=await res.json();
+    toast(data.status==="ok"?"📦 DM Barcode save হয়েছে!":"⚠️ DM Barcode local এ save হয়েছে");
+  }catch(e){toast("⚠️ DM Barcode local এ save হয়েছে (offline)");}
+}
+function addDmBarcode(){
+  const product=document.getElementById("dm-product").value.trim();
+  const size=document.getElementById("dm-size").value.trim();
+  const brand=document.getElementById("dm-brand").value.trim();
+  const origin=document.getElementById("dm-origin").value.trim();
+  const barcode=document.getElementById("dm-barcode").value.trim();
+  const err=document.getElementById("dm-add-err");
+  if(!product&&!barcode){err.textContent="❌ Product বা Barcode দিন!";return;}
+  dmRows.push({product,size,brand,origin,barcode});
+  ["dm-product","dm-size","dm-brand","dm-origin","dm-barcode"].forEach(id=>document.getElementById(id).value="");
+  err.textContent="";closeModal("dm-add-modal");renderDmAll();toast("✅ DM Barcode যোগ হয়েছে!");
+  saveDmToSheets();
+}
+function deleteDmRow(i){if(!confirm("মুছবেন?"))return;dmRows.splice(i,1);renderDmAll();toast("🗑️ মুছে গেছে!");saveDmToSheets();}
+function editDmField(i,f,v){dmRows[i][f]=v;saveDmRows();}
+function clearDmSearch(){document.getElementById("search-dm-input").value="";renderDmAll();}
+function getDmFiltered(){
+  const q=(document.getElementById("search-dm-input")?document.getElementById("search-dm-input").value||"":"").toLowerCase().trim();
+  return dmRows.map((r,i)=>({...r,_i:i})).filter(r=>!q||r.product.toLowerCase().includes(q)||r.barcode.toLowerCase().includes(q)||r.origin.toLowerCase().includes(q)||r.brand.toLowerCase().includes(q));
+}
+function renderDmAll(){
+  const f=getDmFiltered();
+  document.getElementById("dm-empty-msg").style.display=f.length===0?"block":"none";
+  const tbody=document.getElementById("dm-tbody");tbody.innerHTML="";
+  f.forEach(r=>{
+    const i=r._i;const tr=document.createElement("tr");
+    tr.innerHTML=`<td style="color:#aaa;text-align:center;font-size:0.78rem;">${i+1}</td>
+      <td><input class="dm-input" value="${esc(r.product)}" oninput="editDmField(${i},'product',this.value)" autocomplete="off"/></td>
+      <td><input class="dm-input" value="${esc(r.size)}" oninput="editDmField(${i},'size',this.value)" autocomplete="off"/></td>
+      <td><input class="dm-input" value="${esc(r.brand)}" oninput="editDmField(${i},'brand',this.value)" autocomplete="off"/></td>
+      <td><input class="dm-input" value="${esc(r.origin)}" oninput="editDmField(${i},'origin',this.value)" autocomplete="off"/></td>
+      <td><div class="cell-flex"><input class="dm-input dm-barcode-val" value="${esc(r.barcode)}" oninput="editDmField(${i},'barcode',this.value)" autocomplete="off"/><button class="cpbtn" onclick="copyText('${esc(r.barcode)}')">📋</button></div></td>
+      <td><button class="delbtn" onclick="deleteDmRow(${i})">🗑️</button></td>`;
+    tbody.appendChild(tr);
+  });
+  const list=document.getElementById("dm-mobile-list");list.innerHTML="";
+  f.forEach(r=>{
+    const i=r._i;const card=document.createElement("div");card.className="dm-card";
+    card.innerHTML=`<div class="dm-card-title">${i+1}. ${esc(r.product)}</div>
+      <div class="dm-card-barcode" onclick="copyText('${esc(r.barcode)}')">${esc(r.barcode)||'—'} 📋</div>
+      <div class="dm-card-row">⚖️ ${esc(r.size)||'—'} &nbsp;|&nbsp; 🏷️ ${esc(r.brand)||'—'} &nbsp;|&nbsp; 🌍 ${esc(r.origin)||'—'}</div>
+      <button class="card-del" onclick="deleteDmRow(${i})" style="margin-top:6px;">🗑️ Delete</button>`;
+    list.appendChild(card);
+  });
+}
+
+// ══ IMPORT CODE ══
+let importRows=[];
+function loadImportRows(){try{const s=localStorage.getItem("importRows_v1");importRows=s?JSON.parse(s):[];}catch(e){importRows=[];}}
+function saveImportRows(){localStorage.setItem("importRows_v1",JSON.stringify(importRows));}
+async function saveImportToSheets(){
+  saveImportRows();
+  try{
+    const res=await fetch(API_URL,{method:"POST",redirect:"follow",headers:{"Content-Type":"text/plain"},body:JSON.stringify({action:"saveImportCodes",importCodes:importRows})});
+    const data=await res.json();
+    toast(data.status==="ok"?"🔢 Import Code save হয়েছে!":"⚠️ Import Code local এ save হয়েছে");
+  }catch(e){toast("⚠️ Import Code local এ save হয়েছে (offline)");}
+}
+function addImportCode(){
+  const company=document.getElementById("imp-company").value.trim();
+  const code=document.getElementById("imp-code").value.trim();
+  const note=document.getElementById("imp-note").value.trim();
+  const err=document.getElementById("imp-add-err");
+  if(!company&&!code){err.textContent="❌ Company/Item বা Import Code দিন!";return;}
+  importRows.push({company,code,note});
+  ["imp-company","imp-code","imp-note"].forEach(id=>document.getElementById(id).value="");
+  err.textContent="";closeModal("import-add-modal");renderImportAll();toast("✅ Import Code যোগ হয়েছে!");
+  saveImportToSheets();
+}
+function deleteImportRow(i){if(!confirm("মুছবেন?"))return;importRows.splice(i,1);renderImportAll();toast("🗑️ মুছে গেছে!");saveImportToSheets();}
+function editImportField(i,f,v){importRows[i][f]=v;saveImportRows();}
+function clearImportSearch(){document.getElementById("search-import-input").value="";renderImportAll();}
+function getImportFiltered(){
+  const q=(document.getElementById("search-import-input")?document.getElementById("search-import-input").value||"":"").toLowerCase().trim();
+  return importRows.map((r,i)=>({...r,_i:i})).filter(r=>!q||r.company.toLowerCase().includes(q)||r.code.toLowerCase().includes(q)||r.note.toLowerCase().includes(q));
+}
+function renderImportAll(){
+  const f=getImportFiltered();
+  document.getElementById("imp-empty-msg").style.display=f.length===0?"block":"none";
+  const tbody=document.getElementById("imp-tbody");tbody.innerHTML="";
+  f.forEach(r=>{
+    const i=r._i;const tr=document.createElement("tr");
+    tr.innerHTML=`<td style="color:#aaa;text-align:center;font-size:0.78rem;">${i+1}</td>
+      <td><input class="imp-input" value="${esc(r.company)}" oninput="editImportField(${i},'company',this.value)" autocomplete="off"/></td>
+      <td><div class="cell-flex"><input class="imp-input" value="${esc(r.code)}" oninput="editImportField(${i},'code',this.value)" autocomplete="off"/><button class="cpbtn" onclick="copyText('${esc(r.code)}')">📋</button></div></td>
+      <td><input class="imp-input" value="${esc(r.note)}" oninput="editImportField(${i},'note',this.value)" autocomplete="off"/></td>
+      <td><button class="delbtn" onclick="deleteImportRow(${i})">🗑️</button></td>`;
+    tbody.appendChild(tr);
+  });
+  const list=document.getElementById("imp-mobile-list");list.innerHTML="";
+  f.forEach(r=>{
+    const i=r._i;const card=document.createElement("div");card.className="imp-card";
+    card.innerHTML=`<div class="imp-card-title">${i+1}. ${esc(r.company)}</div>
+      <div class="imp-card-code" onclick="copyText('${esc(r.code)}')">${esc(r.code)||'—'} 📋</div>
+      <div class="imp-card-row">📝 ${esc(r.note)||'—'}</div>
+      <button class="card-del" onclick="deleteImportRow(${i})" style="margin-top:6px;">🗑️ Delete</button>`;
+    list.appendChild(card);
+  });
+}
+
+// ══ UTILS ══
 function esc(s){return String(s||"").replace(/&/g,"&amp;").replace(/"/g,"&quot;").replace(/</g,"&lt;").replace(/'/g,"&#39;");}
 function setStatus(m,t){const el=document.getElementById("status");el.textContent=m;el.className=t||"";}
 function toast(m){const t=document.getElementById("toast");t.textContent=m;t.classList.add("show");setTimeout(()=>t.classList.remove("show"),2500);}
+
+// Resize: re-render pinned links when window resized
+window.addEventListener("resize",renderPinnedLinks);
 
 history.pushState({p:1},null,location.href);
 window.addEventListener("popstate",function(){
