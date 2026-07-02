@@ -452,6 +452,8 @@ header{background:linear-gradient(135deg,#16213e,#0f3460);border-bottom:2px soli
         </div>
         <button class="icon-btn" onclick="document.getElementById('creds-modal').style.display='flex'">🔑 PW</button>
         <button class="icon-btn" onclick="doLogout()">🚪 Logout</button>
+        <button class="icon-btn" onclick="loadFromSheets()">🔄 Reload</button>
+        <button class="icon-btn" onclick="saveEverything()">💾 Final Save</button>
         <div class="header-center">
           <div class="link-search-inner">
             <!-- Search input -->
@@ -489,15 +491,6 @@ header{background:linear-gradient(135deg,#16213e,#0f3460);border-bottom:2px soli
       <div id="links-list"></div>
     </div>
 
-    <!-- TOOLBAR (smaller buttons) -->
-    <div class="toolbar">
-      <div class="t-btns">
-        <button class="btn-add" onclick="openAddModal()">➕ Add User PW</button>
-        <button class="btn-save" onclick="saveEverything()">💾 Save</button>
-        <button class="btn-reload" onclick="loadFromSheets()">🔄 Reload</button>
-      </div>
-    </div>
-
     <div id="status" class="loading">⏳ লোড হচ্ছে...</div>
 
     <!-- TABS -->
@@ -509,8 +502,9 @@ header{background:linear-gradient(135deg,#16213e,#0f3460);border-bottom:2px soli
 
     <!-- SEARCH BARS -->
     <div id="search-pw" class="search-bar">
-      <input type="search" id="search" placeholder="🔍 Company / User / Password সার্চ..." autocomplete="off" oninput="renderAll()" onkeyup="renderAll()"/>
       <button onclick="clearSearch()">✖ Clear</button>
+      <input type="search" id="search" placeholder="🔍 Company / User / Password সার্চ..." autocomplete="off" oninput="renderAll()" onkeyup="renderAll()"/>
+      <button class="btn-add" style="flex:0 0 auto;white-space:nowrap;border-radius:18px;" onclick="openAddModal()">➕ Add User PW</button>
     </div>
     <div id="search-dm" class="search-bar" style="display:none;">
       <input type="search" id="search-dm-input" placeholder="🔍 Product / Barcode..." autocomplete="off" oninput="renderDmAll()" onkeyup="renderDmAll()"/>
