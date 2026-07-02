@@ -194,10 +194,11 @@ header{background:linear-gradient(135deg,#16213e,#0f3460);border-bottom:2px soli
 .card-del{background:linear-gradient(90deg,#e94560,#ff2d9c);border:none;color:#fff;padding:5px 14px;font-size:0.78rem;border-radius:8px;cursor:pointer;margin-top:4px;}
 
 /* ── DM BARCODE ── */
-#dm-section{display:none;flex:1;overflow-y:auto;overflow-x:auto;min-height:0;}
+#dm-section{display:none;flex:1;flex-direction:column;align-items:stretch;align-content:flex-start;overflow-y:auto;overflow-x:auto;min-height:0;}
 #dm-section.active{display:flex;flex-direction:column;}
-#import-section{display:none;flex:1;overflow-y:auto;overflow-x:auto;min-height:0;}
+#import-section{display:none;flex:1;flex-direction:column;align-items:stretch;align-content:flex-start;overflow-y:auto;overflow-x:auto;min-height:0;}
 #import-section.active{display:flex;flex-direction:column;}
+#dm-table,#imp-table{flex-shrink:0;}
 #dm-table{width:100%;border-collapse:collapse;font-size:0.88rem;table-layout:auto;}
 #dm-table thead th{padding:8px;text-align:left;color:#fff;font-size:0.82rem;font-weight:bold;background:#0a3a2a;border-bottom:2px solid #2ecc71;border-right:1px solid #1a3a2a;white-space:nowrap;}
 #dm-table thead th:last-child{border-right:none;text-align:center;}
@@ -492,7 +493,7 @@ header{background:linear-gradient(135deg,#16213e,#0f3460);border-bottom:2px soli
     <div class="toolbar">
       <div class="t-btns">
         <button class="btn-add" onclick="openAddModal()">➕ Add User PW</button>
-        <button class="btn-save" onclick="saveToSheets()">💾 Save</button>
+        <button class="btn-save" onclick="saveEverything()">💾 Save</button>
         <button class="btn-reload" onclick="loadFromSheets()">🔄 Reload</button>
       </div>
     </div>
@@ -778,7 +779,7 @@ function doLogin(){
     if(u===c.user&&p===c.pass){
       document.getElementById("login-screen").style.display="none";
       document.getElementById("app").style.display="flex";
-      loadFromSheets();loadDmRows();renderDmAll();loadImportRows();renderImportAll();
+      loadFromSheets();loadDmRows();renderDmAll();
     }else{
       document.getElementById("login-err").textContent="❌ Username বা Password ভুল!";
       document.getElementById("l-pass").value="";
@@ -840,13 +841,20 @@ async function loadFromSheets(){
         setStatus("✅ "+rows.length+" entry — Google Sheets সংযুক্ত","ok");
         await saveLinksToSheets();
       }
+      if(data.importCodes&&data.importCodes.length>0){
+        importRows=data.importCodes;saveImportRows();
+      }else{
+        loadImportRows();
+        await saveImportToSheets();
+      }
     }else throw new Error();
   }catch(e){
     const b=localStorage.getItem("tosKhoBackup");
     if(b){rows=JSON.parse(b);setStatus("⚠️ Offline: "+rows.length+" entry (local backup)","err");}
     else{rows=[];setStatus("⚠️ সংযোগ ব্যর্থ","err");}
+    loadImportRows();
   }
-  renderAll();
+  renderAll();renderImportAll();
 }
 
 async function saveToSheets(){
@@ -860,6 +868,11 @@ async function saveToSheets(){
       setStatus("✅ "+rows.length+" entry save হয়েছে!","ok");toast("💾 Save সফল!");
     }else throw new Error();
   }catch(e){localStorage.setItem("tosKhoBackup",JSON.stringify(rows));setStatus("⚠️ Local এ save হয়েছে","err");}
+}
+
+async function saveEverything(){
+  await saveToSheets();
+  await saveImportToSheets();
 }
 
 function deleteRow(i){if(!confirm("মুছবেন?"))return;rows.splice(i,1);renderAll();setStatus("🗑️ মুছে গেছে। 💾 Save করুন।","ok");}
@@ -1052,17 +1065,26 @@ function renderDmAll(){
 let importRows=[];
 function loadImportRows(){try{const s=localStorage.getItem("importRows_v1");importRows=s?JSON.parse(s):[];}catch(e){importRows=[];}}
 function saveImportRows(){localStorage.setItem("importRows_v1",JSON.stringify(importRows));}
+async function saveImportToSheets(){
+  saveImportRows();
+  try{
+    const res=await fetch(API_URL,{method:"POST",redirect:"follow",headers:{"Content-Type":"text/plain"},body:JSON.stringify({action:"saveImportCodes",importCodes:importRows})});
+    const data=await res.json();
+    toast(data.status==="ok"?"🔢 Import Code save হয়েছে!":"⚠️ Import Code local এ save হয়েছে");
+  }catch(e){toast("⚠️ Import Code local এ save হয়েছে (offline)");}
+}
 function addImportCode(){
   const company=document.getElementById("imp-company").value.trim();
   const code=document.getElementById("imp-code").value.trim();
   const note=document.getElementById("imp-note").value.trim();
   const err=document.getElementById("imp-add-err");
   if(!company&&!code){err.textContent="❌ Company/Item বা Import Code দিন!";return;}
-  importRows.push({company,code,note});saveImportRows();
+  importRows.push({company,code,note});
   ["imp-company","imp-code","imp-note"].forEach(id=>document.getElementById(id).value="");
   err.textContent="";closeModal("import-add-modal");renderImportAll();toast("✅ Import Code যোগ হয়েছে!");
+  saveImportToSheets();
 }
-function deleteImportRow(i){if(!confirm("মুছবেন?"))return;importRows.splice(i,1);saveImportRows();renderImportAll();toast("🗑️ মুছে গেছে!");}
+function deleteImportRow(i){if(!confirm("মুছবেন?"))return;importRows.splice(i,1);renderImportAll();toast("🗑️ মুছে গেছে!");saveImportToSheets();}
 function editImportField(i,f,v){importRows[i][f]=v;saveImportRows();}
 function clearImportSearch(){document.getElementById("search-import-input").value="";renderImportAll();}
 function getImportFiltered(){
