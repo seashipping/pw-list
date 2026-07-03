@@ -19,7 +19,7 @@ body{font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;background:#000
 .btn-login{width:100%;padding:14px;background:linear-gradient(90deg,#00d4ff,#00ff88);color:#000;border:none;border-radius:30px;font-size:1.1rem;font-weight:bold;cursor:pointer;margin-top:15px;}
 .footer-neon{margin-top:30px;padding:15px;border:2px solid #ff0055;border-radius:15px;background:rgba(255,0,85,0.05);box-shadow:0 0 15px rgba(255,0,85,0.2);}
 .footer-neon .line1{color:#fff;font-weight:bold;font-size:0.9rem;text-shadow:0 0 8px #ff0055;}
-.footer-neon .line2{color:#00d4ff;font-weight:bold;font-size:0.75rem;text-shadow:0 0 8px #00d4ff;}
+.footer-neon .line2{color:#ff0000;font-weight:bold;font-size:0.85rem;text-shadow:0 0 8px #ff0000;margin-top:5px;}
 
 /* ── APP ── */
 #app{display:none;flex-direction:column;height:100%;}
@@ -28,7 +28,13 @@ header{background:#111;padding:15px 20px;border-bottom:3px solid #00d4ff;display
 .header-title .by{color:#00ffcc;font-size:0.85rem;font-weight:bold;background:rgba(0,255,204,0.1);padding:3px 12px;border-radius:15px;border:2px solid #00ffcc;text-shadow:0 0 8px #00ffcc;}
 .header-right{display:flex;align-items:center;gap:15px;}
 .company-badge{background:rgba(0,255,0,0.1);color:#00ff00;padding:8px 18px;border-radius:20px;font-weight:bold;border:2px solid #00ff00;font-size:0.9rem;box-shadow:0 0 10px rgba(0,255,0,0.2);}
-.btn-logout-pro{background:linear-gradient(90deg,#ff0055,#c0392b);color:#fff;border:none;padding:10px 20px;border-radius:25px;font-weight:bold;cursor:pointer;display:flex;align-items:center;gap:8px;transition:0.3s;box-shadow:0 0 15px rgba(255,0,85,0.3);}
+.btn-logout-pro{background:linear-gradient(90deg,#ff0055,#c0392b);color:#fff;border:none;padding:10px 20px;border-radius:25px;font-weight:bold;cursor:pointer;display:flex;align-items:center;gap:8px;transition:0.3s;}
+
+/* ── PINNED LINKS ── */
+.pinned-links{background:#000;padding:8px 20px;display:flex;gap:10px;align-items:center;border-bottom:1px solid #00d4ff33;overflow-x:auto;}
+.pinned-links span{font-size:0.75rem;color:#00d4ff;font-weight:bold;margin-right:5px;}
+.pin-btn{padding:5px 12px;background:#111;border:1px solid #00ffcc;color:#00ffcc;border-radius:15px;font-size:0.75rem;text-decoration:none;font-weight:bold;transition:0.3s;}
+.pin-btn:hover{background:#00ffcc;color:#000;}
 
 /* ── TABS ── */
 .tab-container{background:#111;display:flex;border-bottom:2px solid #00d4ff;overflow-x:auto;}
@@ -37,21 +43,13 @@ header{background:#111;padding:15px 20px;border-bottom:3px solid #00d4ff;display
 .tab-btn::after{content:'';position:absolute;bottom:0;left:50%;width:0;height:4px;background:#ff0000;transition:0.3s ease-in-out;transform:translateX(-50%);}
 .tab-btn.active::after{width:100%;box-shadow:0 0 10px #ff0000;}
 
-/* ── TOOLBAR ── */
-.toolbar{background:#000;padding:15px 20px;display:flex;gap:12px;align-items:center;flex-wrap:wrap;border-bottom:1px solid #00d4ff33;}
-.toolbar button{padding:10px 18px;border-radius:8px;border:2px solid #fff;background:#000;color:#fff;font-weight:bold;cursor:pointer;font-size:0.85rem;transition:0.3s;}
-.toolbar button:hover{background:#fff;color:#000;}
-
 /* ── SEARCH BOX ── */
-.search-container{padding:20px;background:#000;display:flex;justify-content:center;}
+.search-container{padding:20px;background:#000;display:flex;justify-content:center;align-items:center;gap:15px;}
 .search-wrapper{position:relative;width:100%;max-width:800px;}
 .search-wrapper input{width:100%;padding:15px 20px 15px 50px;border-radius:30px;border:2px solid #00d4ff;background:#111;color:#fff;font-size:1.1rem;outline:none;transition:0.3s;box-shadow:0 0 15px rgba(0,212,255,0.1);}
 .search-wrapper input:focus{border-color:#00ffcc;box-shadow:0 0 25px rgba(0,255,204,0.3);}
 .search-wrapper::before{content:'🔍';position:absolute;left:20px;top:50%;transform:translateY(-50%);font-size:1.2rem;opacity:0.7;}
-
-/* ── STATUS ── */
-#status-bar{padding:10px 20px;background:#111;display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid #00d4ff22;}
-#total-count{background:#00d4ff;color:#000;padding:3px 10px;border-radius:12px;font-size:0.75rem;font-weight:bold;}
+.btn-clear{background:#333;color:#fff;border:1px solid #555;padding:10px 20px;border-radius:20px;cursor:pointer;font-weight:bold;transition:0.3s;}
 
 /* ── TABLE ── */
 .table-container{flex:1;overflow:auto;padding:0 20px 20px;background:#000;}
@@ -88,19 +86,19 @@ td{padding:12px;border-bottom:1px solid #222;font-size:0.95rem;color:#eee;overfl
     <div id="login-err" style="color:#ff0055;margin-bottom:10px;font-size:0.9rem;"></div>
     <div class="lf">
       <label>USERNAME</label>
-      <input type="text" id="l-user" placeholder="seashipping" autocomplete="off">
+      <input type="text" id="l-user" placeholder="seashipping" autocomplete="off" onkeydown="if(event.key==='Enter') handleLogin()">
     </div>
     <div class="lf">
       <label>PASSWORD</label>
       <div style="position:relative">
-        <input type="password" id="l-pass" placeholder="••••••••">
+        <input type="password" id="l-pass" placeholder="••••••••" onkeydown="if(event.key==='Enter') handleLogin()">
         <button onclick="togglePass('l-pass')" style="position:absolute;right:10px;top:50%;transform:translateY(-50%);background:none;border:none;color:#00d4ff;cursor:pointer;">👁️</button>
       </div>
     </div>
     <button class="btn-login" onclick="handleLogin()">LOGIN NOW</button>
     <div class="footer-neon">
       <div class="line1">শুধুমাত্র SEA SHIPPING LLC ব্যবহার যোগ্য</div>
-      <div class="line2">রিলিজ-জুলাই'২০২৬</div>
+      <div class="line2">রিলিজ-জুলাই-২০২৬</div>
     </div>
   </div>
 </div>
@@ -115,10 +113,21 @@ td{padding:12px;border-bottom:1px solid #222;font-size:0.95rem;color:#eee;overfl
       </div>
     </div>
     <div class="header-right">
-      <div class="company-badge">🚢 SEA SHIPPING LLC</div>
+      <div class="company-badge">© SEA SHIPPING LLC - Release-July 2026</div>
       <button class="btn-logout-pro" onclick="handleLogout()">🚪 Logout</button>
     </div>
   </header>
+
+  <!-- PINNED LINKS SECTION -->
+  <div class="pinned-links">
+    <span>📌 QUICK LINKS:</span>
+    <a href="https://www.google.com" target="_blank" class="pin-btn">Google</a>
+    <a href="https://mail.google.com" target="_blank" class="pin-btn">Gmail</a>
+    <a href="https://web.whatsapp.com" target="_blank" class="pin-btn">WhatsApp</a>
+    <a href="https://www.facebook.com" target="_blank" class="pin-btn">Facebook</a>
+    <a href="https://www.youtube.com" target="_blank" class="pin-btn">YouTube</a>
+    <button onclick="editPinnedLinks()" style="background:none;border:none;color:#555;font-size:0.7rem;cursor:pointer;margin-left:auto;">⚙️ Edit Links</button>
+  </div>
 
   <div class="tab-container">
     <button class="tab-btn active" onclick="switchTab('pw')">📋 Passwords</button>
@@ -138,13 +147,14 @@ td{padding:12px;border-bottom:1px solid #222;font-size:0.95rem;color:#eee;overfl
 
   <div id="status-bar">
     <div id="status-text" style="color:#00d4ff;font-weight:bold;">⏳ System Ready</div>
-    <div id="total-count">Total: 0</div>
+    <div id="total-count" style="background:#00d4ff;color:#000;padding:3px 10px;border-radius:12px;font-size:0.75rem;font-weight:bold;">Total: 0</div>
   </div>
 
   <div class="search-container">
     <div class="search-wrapper">
       <input type="text" id="search-input" placeholder="Universal Search (Passwords, Links, Barcodes...)" oninput="renderTable()">
     </div>
+    <button class="btn-clear" onclick="clearSearch()">Clear Text</button>
   </div>
 
   <!-- TABLES -->
@@ -195,6 +205,18 @@ td{padding:12px;border-bottom:1px solid #222;font-size:0.95rem;color:#eee;overfl
   </div>
 </div>
 
+<!-- PINNED LINKS EDIT MODAL -->
+<div id="pin-modal" class="modal">
+  <div class="modal-content">
+    <h3 style="color:#00ffcc;margin-bottom:15px;">⚙️ Edit Quick Links</h3>
+    <div id="pin-inputs"></div>
+    <div class="modal-f">
+      <button class="btn-ok" onclick="savePinnedLinks()">💾 Save Links</button>
+      <button class="btn-cancel" onclick="closeModal('pin-modal')">Cancel</button>
+    </div>
+  </div>
+</div>
+
 <div id="add-modal" class="modal">
   <div class="modal-content">
     <div id="modal-title" style="color:#00d4ff;font-size:1.2rem;font-weight:bold;margin-bottom:20px;">➕ Add New Entry</div>
@@ -215,11 +237,52 @@ let rows = { pw: [], dm: [], import: [], links: [] };
 let currentUser = null;
 let currentTab = 'pw';
 let editingIdx = -1;
+let pinnedLinks = [
+  { name: 'Google', url: 'https://www.google.com' },
+  { name: 'Gmail', url: 'https://mail.google.com' },
+  { name: 'WhatsApp', url: 'https://web.whatsapp.com' },
+  { name: 'Facebook', url: 'https://www.facebook.com' },
+  { name: 'YouTube', url: 'https://www.youtube.com' }
+];
 
 window.onload = () => {
   const savedUser = localStorage.getItem('tos_username');
   if(savedUser) document.getElementById('l-user').value = savedUser;
+  const savedLinks = localStorage.getItem('tos_pinned_links');
+  if(savedLinks) { pinnedLinks = JSON.parse(savedLinks); renderPinnedLinks(); }
 };
+
+function renderPinnedLinks() {
+  const container = document.querySelector('.pinned-links');
+  const editBtn = container.querySelector('button');
+  container.innerHTML = '<span>📌 QUICK LINKS:</span>';
+  pinnedLinks.forEach(link => {
+    const a = document.createElement('a');
+    a.href = link.url; a.target = '_blank'; a.className = 'pin-btn'; a.textContent = link.name;
+    container.appendChild(a);
+  });
+  container.appendChild(editBtn);
+}
+
+function editPinnedLinks() {
+  const container = document.getElementById('pin-inputs');
+  container.innerHTML = "";
+  pinnedLinks.forEach((link, i) => {
+    container.innerHTML += `<div style="display:flex;gap:10px;margin-bottom:10px;">
+      <input id="pin-name-${i}" value="${esc(link.name)}" placeholder="Name" style="flex:1;padding:8px;background:#000;border:1px solid #444;color:#fff;">
+      <input id="pin-url-${i}" value="${esc(link.url)}" placeholder="URL" style="flex:2;padding:8px;background:#000;border:1px solid #444;color:#fff;">
+    </div>`;
+  });
+  document.getElementById('pin-modal').style.display = 'flex';
+}
+
+function savePinnedLinks() {
+  for(let i=0; i<5; i++) {
+    pinnedLinks[i] = { name: document.getElementById(`pin-name-${i}`).value, url: document.getElementById(`pin-url-${i}`).value };
+  }
+  localStorage.setItem('tos_pinned_links', JSON.stringify(pinnedLinks));
+  renderPinnedLinks(); closeModal('pin-modal'); showToast("✅ Links Updated!");
+}
 
 function togglePass(id) {
   const inp = document.getElementById(id);
@@ -295,6 +358,8 @@ function renderTable() {
   document.getElementById('total-count').textContent = `Total: ${total}`;
 }
 
+function clearSearch() { document.getElementById('search-input').value = ""; renderTable(); }
+
 function removeDuplicates() {
   const initialCount = rows.pw.length;
   const unique = [];
@@ -346,23 +411,23 @@ async function addEntry() {
   
   renderTable(); 
   closeModal('add-modal');
-  await saveToSheets(); // Auto Save to Sheets
+  await saveToSheets();
 }
 
 async function deleteRow(t, idx) { 
   if(confirm("Delete?")) { 
     rows[t].splice(idx, 1); 
     renderTable(); 
-    await saveToSheets(); // Auto Save to Sheets
+    await saveToSheets();
   } 
 }
 
 async function saveToSheets() {
-  document.getElementById('status-text').textContent = "⏳ Saving to Google Sheets...";
+  document.getElementById('status-text').textContent = "⏳ Syncing...";
   try {
     const res = await fetch(API_URL, { method: 'POST', body: JSON.stringify({ action: 'save', username: currentUser.username, rows: rows }) });
     const data = await res.json();
-    if(data.status === "ok") { document.getElementById('status-text').textContent = "✅ Synced with Sheets"; showToast("💾 Data Synced!"); }
+    if(data.status === "ok") { document.getElementById('status-text').textContent = "✅ Synced"; showToast("💾 Saved!"); }
   } catch(e) { document.getElementById('status-text').textContent = "❌ Sync Error"; }
 }
 
@@ -388,7 +453,7 @@ async function handleFileImport(event) {
       rows[currentTab] = json;
       renderTable(); 
       showToast("📥 Imported!");
-      await saveToSheets(); // Auto Save to Sheets
+      await saveToSheets();
     } catch(err) { alert("Import failed: " + err.message); }
   };
   reader.readAsArrayBuffer(file);
