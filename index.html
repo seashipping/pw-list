@@ -4,333 +4,328 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
 <title>USER PW LIST V.1</title>
-<meta name="mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-capable" content="yes">
-<meta name="theme-color" content="#1a1a2e">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.min.js"></script>
 <style>
 *{box-sizing:border-box;margin:0;padding:0;}
-html,body{height:100%;}
-body{font-family:Arial,sans-serif;background:#1a1a2e;color:#eee;font-size:15px;}
+body{font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;background:#1a1a2e;color:#eee;height:100vh;display:flex;flex-direction:column;overflow:hidden;}
 
-/* ── LOGIN ── */
-#login-screen{position:fixed;inset:0;background:#1a1a2e;display:flex;align-items:center;justify-content:center;z-index:9999;overflow-y:auto;}
-.login-box{background:#16213e;border:2px solid #e94560;border-radius:16px;padding:36px 28px;text-align:center;max-width:380px;width:92%;margin:auto;}
-.lf{margin-bottom:14px;text-align:left;}
-.lf label{display:block;color:#cfd8e3;font-size:0.85rem;font-weight:bold;margin-bottom:6px;}
-.inp-wrap{position:relative;}
-.lf input{width:100%;padding:11px 14px;border-radius:8px;border:2px solid #2a2a4a;background:#0f3460;color:#eee;font-size:1rem;}
-.lf input:focus{outline:none;border-color:#e94560;}
-.eye-btn{position:absolute;right:10px;top:50%;transform:translateY(-50%);background:none;border:none;color:#aaa;font-size:1.1rem;cursor:pointer;padding:4px;}
-#login-err{color:#e94560;font-size:0.83rem;min-height:18px;margin-bottom:8px;}
-.btn-login{width:100%;padding:13px;background:linear-gradient(90deg,#c026d3,#2dd4ff);color:#fff;border:none;border-radius:30px;font-size:1.05rem;font-weight:bold;cursor:pointer;box-shadow:0 0 14px #2dd4ff77,0 0 14px #c026d377;}
-.login-footer{margin-top:18px;font-size:0.8rem;font-weight:bold;line-height:1.7;color:#fff;border:1px solid #2dd4ff66;border-radius:14px;padding:10px 14px;}
+/* ── LOGIN SCREEN ── */
+#login-screen{position:fixed;inset:0;background:#1a1a2e;display:flex;align-items:center;justify-content:center;z-index:9999;}
+.login-box{background:#16213e;border:2px solid #e94560;border-radius:20px;padding:40px;text-align:center;max-width:400px;width:90%;box-shadow: 0 0 20px rgba(233, 69, 96, 0.2);}
+.login-box h1{color:#2dd4ff;font-size:1.5rem;margin-bottom:10px;display:flex;align-items:center;justify-content:center;gap:10px;}
+.login-box p{color:#aaa;font-size:0.8rem;margin-bottom:20px;text-transform:uppercase;letter-spacing:1px;}
+.lf{margin-bottom:15px;text-align:left;}
+.lf label{display:block;color:#cfd8e3;font-size:0.75rem;font-weight:bold;margin-bottom:5px;}
+.lf input{width:100%;padding:12px;border-radius:10px;border:2px solid #2a2a4a;background:#0f3460;color:#fff;font-size:1rem;outline:none;transition:0.3s;}
+.lf input:focus{border-color:#e94560;box-shadow:0 0 10px rgba(233, 69, 96, 0.3);}
+.btn-login{width:100%;padding:14px;background:linear-gradient(90deg,#c026d3,#2dd4ff);color:#fff;border:none;border-radius:30px;font-size:1rem;font-weight:bold;cursor:pointer;margin-top:10px;transition:0.3s;}
+.btn-login:hover{transform:scale(1.02);box-shadow:0 0 15px rgba(45, 212, 255, 0.5);}
+#login-err{color:#e94560;font-size:0.8rem;margin-bottom:10px;min-height:18px;}
 
-/* ── APP ── */
-#app{display:none;flex-direction:column;height:100vh;overflow:hidden;}
-#sticky-top{flex-shrink:0;}
+/* ── APP INTERFACE ── */
+#app{display:none;flex-direction:column;height:100%;}
+header{background:#16213e;padding:15px 20px;border-bottom:2px solid #e94560;display:flex;justify-content:space-between;align-items:center;}
+.header-title{color:#2dd4ff;font-weight:bold;font-size:1.2rem;display:flex;align-items:center;gap:10px;}
+.user-info{display:flex;align-items:center;gap:15px;}
+.user-badge{background:#0f3460;padding:5px 12px;border-radius:20px;font-size:0.8rem;color:#c026d3;font-weight:bold;border:1px solid #c026d3;}
 
-/* ── HEADER ── */
-header{background:linear-gradient(135deg,#16213e,#0f3460);border-bottom:2px solid #e94560;padding:8px 12px;}
-.header-top{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:4px;margin-bottom:6px;}
-.header-right{display:flex;gap:4px;flex-wrap:wrap;align-items:center;}
-.header-center{display:flex;gap:6px;flex-wrap:nowrap;align-items:center;justify-content:center;flex:1;}
-.icon-btn{background:#0a0a1a;border:1px solid #2dd4ff88;color:#7ec8e3;border-radius:16px;padding:5px 10px;cursor:pointer;font-size:0.72rem;white-space:nowrap;box-shadow:0 0 4px #2dd4ff22;}
-.icon-btn:hover{border-color:#2dd4ff;color:#2dd4ff;box-shadow:0 0 8px #2dd4ff77;}
-.header-links-row{display:flex;align-items:center;gap:6px;flex-wrap:nowrap;overflow:hidden;}
-#pinned-links{display:flex;gap:5px;flex-wrap:nowrap;overflow:hidden;min-width:0;flex:1;}
-#pinned-links a{color:#7ec8e3;font-size:0.78rem;font-weight:bold;text-decoration:none;padding:5px 10px;border:1px solid #c026d388;border-radius:14px;white-space:nowrap;background:#0a0a1a;flex-shrink:0;}
-#pinned-links a:hover{background:linear-gradient(90deg,#c026d3,#2dd4ff);color:#fff;}
+/* ── TOOLBAR ── */
+.toolbar{background:#0f3460;padding:10px 20px;display:flex;gap:10px;align-items:center;flex-wrap:wrap;}
+.toolbar button{padding:8px 15px;border-radius:20px;border:none;font-weight:bold;cursor:pointer;font-size:0.85rem;display:flex;align-items:center;gap:5px;transition:0.3s;}
+.btn-add{background:#e94560;color:#fff;}
+.btn-save{background:#27ae60;color:#fff;}
+.btn-export{background:#f39c12;color:#fff;}
+.btn-logout{background:#2a2a4a;color:#aaa;}
+.toolbar button:hover{opacity:0.8;transform:translateY(-2px);}
 
-/* ── TOOLBAR — বড় বাটন ── */
-.toolbar{background:#16213e;padding:10px 8px;display:flex;gap:6px;border-bottom:1px solid #2a2a4a;}
-.t-btns{display:flex;gap:8px;width:100%;}
-.t-btns button{
-  flex: 1;
-  padding: 14px 5px; 
-  font-size: 0.95rem; 
-  font-weight: bold;
-  border: none;
-  border-radius: 12px;
-  cursor: pointer;
-  text-transform: uppercase;
-  transition: transform 0.1s, box-shadow 0.2s;
-  box-shadow: 0 4px 6px rgba(0,0,0,0.3);
-}
-.t-btns button:active { transform: translateY(2px); box-shadow: 0 2px 3px rgba(0,0,0,0.3); }
-.btn-add{background:linear-gradient(90deg,#c026d3,#ff2d9c);color:#fff;}
-.btn-save{background:linear-gradient(90deg,#27ae60,#2dd4ff);color:#fff; border: 2px solid #fff;}
-.btn-reload{background:linear-gradient(90deg,#2980b9,#c026d3);color:#fff; border: 2px solid #fff;}
+/* ── SEARCH ── */
+.search-bar{padding:10px 20px;background:#1a1a2e;display:flex;gap:10px;}
+.search-bar input{flex:1;padding:10px 15px;border-radius:25px;border:1px solid #2dd4ff55;background:#0f3460;color:#fff;outline:none;}
+.search-bar input:focus{border-color:#2dd4ff;}
 
-/* ── STATUS ── */
-#status{padding:5px 12px;font-size:0.78rem;background:#1a1a2e;color:#cfd8e3;border-bottom:1px solid #2dd4ff22;}
-#status.ok{color:#2dd4ff;font-weight:bold;}
-#status.err{color:#ff5e7e;font-weight:bold;}
-#status.loading{color:#ffd84d;font-weight:bold;}
+/* ── TABLE ── */
+.table-container{flex:1;overflow:auto;padding:0 20px 20px;}
+table{width:100%;border-collapse:collapse;background:#16213e;border-radius:10px;overflow:hidden;}
+th{background:#0f3460;color:#2dd4ff;padding:12px;text-align:left;font-size:0.85rem;border-bottom:2px solid #e94560;}
+td{padding:10px 12px;border-bottom:1px solid #2a2a4a;font-size:0.9rem;}
+tr:hover{background:rgba(233, 69, 96, 0.1);}
+.co-name{font-weight:bold;color:#00fbfe;}
+.copy-btn{background:#0a1a3a;border:1px solid #2dd4ff66;color:#2dd4ff;padding:4px 8px;border-radius:5px;cursor:pointer;font-size:0.7rem;}
+.del-btn{background:#e94560;color:#fff;border:none;padding:5px 10px;border-radius:5px;cursor:pointer;}
 
-/* ── TABS ── */
-.tab-bar{display:flex;gap:0;background:#0a0a1a;border-bottom:2px solid #2a2a4a;overflow-x:auto;}
-.tab-btn{flex:1;min-width:70px;padding:10px 4px;font-size:0.75rem;font-weight:bold;border:none;cursor:pointer;background:transparent;color:#7ec8e3;border-bottom:3px solid transparent;white-space:nowrap;}
-.tab-btn.active{color:#fff;border-bottom:3px solid #e94560;background:#16213e;}
-.tab-btn:hover:not(.active){background:#1a2a4a;}
+/* ── MODALS ── */
+.modal{display:none;position:fixed;inset:0;background:rgba(0,0,0,0.8);z-index:1000;align-items:center;justify-content:center;}
+.modal-content{background:#16213e;border:2px solid #e94560;border-radius:15px;padding:25px;width:90%;max-width:450px;}
+.modal-h{color:#2dd4ff;margin-bottom:15px;font-size:1.1rem;}
+.form-g{margin-bottom:12px;}
+.form-g label{display:block;font-size:0.75rem;color:#aaa;margin-bottom:4px;}
+.form-g input{width:100%;padding:10px;background:#0f3460;border:1px solid #2a2a4a;border-radius:8px;color:#fff;outline:none;}
+.modal-f{display:flex;gap:10px;margin-top:20px;}
+.modal-f button{flex:1;padding:10px;border-radius:8px;border:none;font-weight:bold;cursor:pointer;}
 
-/* ── SEARCH BARS ── */
-.search-bar{padding:8px 10px;background:#16213e;border-bottom:1px solid #2a2a4a;display:flex;gap:8px;align-items:center;}
-.search-bar input{flex:1;padding:10px 14px;border:1px solid #2dd4ff55;border-radius:10px;background:#0f3460;color:#eee;font-size:0.9rem;}
-.search-bar input:focus{outline:none;border-color:#e94560;}
-.search-bar button{background:linear-gradient(90deg,#e94560,#ff8a00);border:none;color:#fff;border-radius:10px;padding:8px 14px;font-size:0.8rem;font-weight:bold;cursor:pointer;}
-
-/* ── LINKS SECTION ── */
-#links-section{display:none; flex:1; flex-direction:column; overflow:hidden;}
-.link-search-results-container{flex:1; overflow-y:auto; padding:10px; background:#0a0a1a;}
-.link-card{display:flex; align-items:center; justify-content:space-between; background:#16213e; border:1px solid #2a2a4a; border-radius:10px; padding:12px; margin-bottom:8px; transition: 0.2s;}
-.link-card:hover{border-color:#2dd4ff; background:#1a2a4a;}
-.link-info{flex:1; min-width:0;}
-.link-label{display:block; color:#ffd84d; font-weight:bold; font-size:1rem; margin-bottom:4px; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;}
-.link-url-text{display:block; color:#7ec8e3; font-size:0.75rem; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;}
-.link-actions{display:flex; gap:8px;}
-.link-go-btn{background:#27ae60; color:#fff; text-decoration:none; padding:8px 12px; border-radius:8px; font-size:0.8rem; font-weight:bold;}
-
-/* ── PW TABLE ── */
-#tbody-wrap{flex:1;overflow-y:auto;overflow-x:auto;-webkit-overflow-scrolling:touch;min-height:0;}
-#desk-table{width:100%;border-collapse:collapse;font-size:0.88rem;table-layout:fixed;}
-#desk-table colgroup col:nth-child(1){width:36px;}
-#desk-table colgroup col:nth-child(2){width:28%;}
-#desk-table colgroup col:nth-child(3){width:17%;}
-#desk-table colgroup col:nth-child(4){width:18%;}
-#desk-table colgroup col:nth-child(5){width:16%;}
-#desk-table colgroup col:nth-child(6){width:60px;}
-#desk-table thead th{padding:7px 6px;text-align:left;color:#fff;font-size:0.82rem;font-weight:bold;background:#0f3460;border-bottom:2px solid #2dd4ff;border-right:1px solid #1a3a6a;white-space:nowrap;}
-#desk-table thead th:last-child{border-right:none;text-align:center;}
-#desk-table tbody tr{border-bottom:1px solid #2a2a4a;}
-#desk-table tbody tr:hover{background:#760542;}
-#desk-table tbody td{padding:5px 6px;border-right:1px solid #1e2a4a;vertical-align:middle;overflow:hidden;}
-#desk-table tbody td:last-child{border-right:none;text-align:center;}
-.cell-flex{display:flex;align-items:center;gap:3px;}
-.cell-flex input{flex:1;min-width:0;background:transparent;border:none;color:#00fbfe;font-size:0.82rem;font-family:Arial,sans-serif;padding:2px 3px;outline:none;}
-.cell-flex input:focus{background:#0f3460;border-radius:3px;}
-.cell-flex input.mono{font-family:monospace;}
-.co-input{width:100%;background:transparent;border:none;color:#00fbfe;font-size:0.84rem;font-weight:bold;font-family:Arial,sans-serif;padding:2px 3px;outline:none;}
-.co-input:focus{background:#0f3460;border-radius:3px;}
-.cpbtn{background:#0a1a3a;border:1px solid #2dd4ff66;color:#2dd4ff;padding:2px 5px;font-size:0.68rem;border-radius:5px;cursor:pointer;flex-shrink:0;}
-.cpbtn:hover{box-shadow:0 0 4px #2dd4ff77;}
-.delbtn{background:linear-gradient(90deg,#e94560,#ff2d9c);border:none;color:#fff;padding:3px 7px;font-size:0.72rem;border-radius:7px;cursor:pointer;}
-.sn{color:#fff;font-size:0.78rem;text-align:center;}
-
-/* ── MOBILE PW CARDS ── */
-#mobile-list{display:none;padding:6px;}
-.card{background:#16213e;border:1px solid #2a2a4a;border-radius:8px;padding:8px 10px;margin-bottom:7px;}
-.card-company{font-weight:bold;font-size:0.9rem;color:#00fbfe;margin-bottom:6px;word-break:break-word;}
-.card-row{display:flex;align-items:center;gap:5px;margin-bottom:5px;}
-.card-row label{color:#aaa;font-size:0.72rem;min-width:20px;}
-.card-row input{flex:1;background:#0f3460;border:none;border-radius:4px;color:#00fbfe;font-size:0.85rem;padding:5px 7px;outline:none;}
-.card-row input:focus{border:1px solid #e94560;}
-.card-row input.mono{font-family:monospace;}
-.card-copy{background:#0a1a3a;border:1px solid #2dd4ff66;color:#2dd4ff;padding:5px 9px;font-size:0.75rem;border-radius:7px;cursor:pointer;white-space:nowrap;}
-.card-del{background:linear-gradient(90deg,#e94560,#ff2d9c);border:none;color:#fff;padding:5px 12px;font-size:0.75rem;border-radius:7px;cursor:pointer;margin-top:3px;}
-
-/* ── TOAST ── */
-#toast{position:fixed;bottom:80px;left:50%;transform:translateX(-50%);background:rgba(0,0,0,0.9);color:#fff;padding:10px 20px;border-radius:30px;font-size:0.85rem;z-index:10001;display:none;border:1px solid #2dd4ff;box-shadow:0 0 15px rgba(45,212,255,0.3);}
-
-@media(max-width:768px){
-  #desk-table{display:none;}
-  #mobile-list{display:block;}
-}
+#toast{position:fixed;bottom:20px;right:20px;background:#27ae60;color:#fff;padding:12px 20px;border-radius:10px;display:none;z-index:2000;}
 </style>
 </head>
 <body>
 
-<!-- LOGIN SCREEN -->
+<!-- ══ LOGIN ══ -->
 <div id="login-screen">
   <div class="login-box">
-    <h2 style="color:#2dd4ff;margin-bottom:24px;letter-spacing:1px;">USER PW LIST V.1</h2>
+    <h1>🔐 USER PW LIST V.1</h1>
+    <p>OFFICIAL SYSTEM ACCESS</p>
+    <div id="login-err"></div>
     <div class="lf">
       <label>USERNAME</label>
-      <input type="text" id="l-user" placeholder="Enter username..." autocomplete="username">
+      <input type="text" id="l-user" placeholder="seashipping" autocomplete="off">
     </div>
     <div class="lf">
       <label>PASSWORD</label>
-      <div class="inp-wrap">
-        <input type="password" id="l-pass" placeholder="Enter password..." autocomplete="current-password">
-        <button type="button" class="eye-btn" id="eye-btn" onclick="toggleEye()">👁️</button>
-      </div>
+      <input type="password" id="l-pass" placeholder="••••••••">
     </div>
-    <div id="login-err"></div>
-    <button class="btn-login" onclick="doLogin()">LOGIN NOW</button>
-    <div class="login-footer">
-      OFFICIAL SYSTEM ACCESS<br>
-      <span style="color:#e94560;">PRIVATE & CONFIDENTIAL</span>
+    <button class="btn-login" onclick="handleLogin()">LOGIN NOW</button>
+    <p style="margin-top:20px;color:#e94560;font-size:0.7rem;letter-spacing:2px;">PRIVATE & CONFIDENTIAL</p>
+  </div>
+</div>
+
+<!-- ══ APP ══ -->
+<div id="app">
+  <header>
+    <div class="header-title">🔐 USER PW LIST V.1</div>
+    <div class="user-info">
+      <span class="user-badge" id="user-badge">👤 Loading...</span>
+      <button class="btn-logout" onclick="handleLogout()">Logout</button>
+    </div>
+  </header>
+
+  <div class="toolbar">
+    <button class="btn-add" onclick="openModal('add-modal')">➕ Add User PW</button>
+    <button class="btn-save" onclick="saveToSheets()">💾 Save to Excel</button>
+    <button class="btn-export" onclick="exportToExcel()">📤 Export Excel</button>
+    <button style="background:#8e44ad;color:#fff;" onclick="openModal('pass-modal')">🔑 Change Pass</button>
+    <button style="background:#34495e;color:#fff;" onclick="loadFromSheets()">🔄 Reload</button>
+  </div>
+
+  <div class="search-bar">
+    <input type="text" id="search-input" placeholder="🔍 Search Company, User, or Dubai Code..." oninput="renderTable()">
+    <button onclick="document.getElementById('search-input').value='';renderTable()" style="background:#e94560;color:#fff;border:none;padding:8px 15px;border-radius:20px;cursor:pointer;">Clear</button>
+  </div>
+
+  <div class="table-container">
+    <table>
+      <thead>
+        <tr>
+          <th style="width:50px">#</th>
+          <th>Company Name</th>
+          <th>Shj Code</th>
+          <th>User Name</th>
+          <th>Password</th>
+          <th>Dubai Code</th>
+          <th style="width:80px">Action</th>
+        </tr>
+      </thead>
+      <tbody id="data-body"></tbody>
+    </table>
+    <div id="no-data" style="text-align:center;padding:40px;color:#555;display:none;">No data found.</div>
+  </div>
+</div>
+
+<!-- ══ ADD MODAL ══ -->
+<div id="add-modal" class="modal">
+  <div class="modal-content">
+    <div class="modal-h">➕ Add New Entry</div>
+    <div class="form-g"><label>Company Name</label><input type="text" id="in-co"></div>
+    <div class="form-g"><label>Shj Code</label><input type="text" id="in-shj"></div>
+    <div class="form-g"><label>User Name</label><input type="text" id="in-user"></div>
+    <div class="form-g"><label>Password</label><input type="text" id="in-pw"></div>
+    <div class="form-g"><label>Dubai Code</label><input type="text" id="in-note"></div>
+    <div class="modal-f">
+      <button class="btn-save" onclick="addEntry()">Add Entry</button>
+      <button class="btn-logout" onclick="closeModal('add-modal')">Cancel</button>
     </div>
   </div>
 </div>
 
-<!-- MAIN APP -->
-<div id="app">
-  <div id="sticky-top">
-    <header>
-      <div class="header-top">
-        <div style="display:flex;align-items:center;gap:8px;">
-          <span style="color:#2dd4ff;font-weight:bold;font-size:1rem;text-shadow:0 0 5px #2dd4ff55;">TOS KHO</span>
-          <button class="icon-btn" onclick="exportExcel()">📤 EXCEL</button>
-        </div>
-        <div class="header-right">
-          <button class="icon-btn" style="border-color:#e94560;color:#e94560;" onclick="doLogout()">🔌 OUT</button>
-        </div>
-      </div>
-    </header>
-
-    <div class="toolbar">
-      <div class="t-btns">
-        <button class="btn-add" onclick="openAddModal()">➕ ADD NEW</button>
-        <button class="btn-reload" onclick="loadFromSheets()">🔄 RELOAD</button>
-        <button class="btn-save" onclick="saveEverything()">💾 FINAL SAVE</button>
-      </div>
-    </div>
-
-    <div id="status">⏳ লোড হচ্ছে...</div>
-
-    <div class="tab-bar">
-      <button class="tab-btn active" id="tab-pw" onclick="switchTab('pw')">🔑 PASSWORDS</button>
-      <button class="tab-btn" id="tab-links" onclick="switchTab('links')">🔗 LINKS & SEARCH</button>
+<!-- ══ CHANGE PASS MODAL ══ -->
+<div id="pass-modal" class="modal">
+  <div class="modal-content">
+    <div class="modal-h">🔑 Change Password</div>
+    <div class="form-g"><label>New Password</label><input type="password" id="new-pass"></div>
+    <div class="form-g"><label>Confirm Password</label><input type="password" id="confirm-pass"></div>
+    <div id="pass-err" style="color:#e94560;font-size:0.8rem;margin-bottom:10px;"></div>
+    <div class="modal-f">
+      <button class="btn-save" onclick="handleChangePass()">Update</button>
+      <button class="btn-logout" onclick="closeModal('pass-modal')">Cancel</button>
     </div>
   </div>
-
-  <section id="pw-section" style="display:flex;flex:1;flex-direction:column;overflow:hidden;">
-    <div class="search-bar" id="search-pw">
-      <input type="text" id="search" placeholder="Company বা Username খুঁজুন..." oninput="renderAll()">
-      <button onclick="clearSearch()">Clear</button>
-    </div>
-    <div id="tbody-wrap">
-      <table id="desk-table">
-        <colgroup><col><col><col><col><col><col></colgroup>
-        <thead>
-          <tr><th>#</th><th>Company</th><th>Username</th><th>Password</th><th>Note</th><th>Action</th></tr>
-        </thead>
-        <tbody id="tbody"></tbody>
-      </table>
-      <div id="mobile-list"></div>
-    </div>
-  </section>
-
-  <section id="links-section">
-    <div class="search-bar">
-      <input type="text" id="tab-link-srch" placeholder="লিঙ্ক বা নাম লিখে খুঁজুন..." oninput="doLinkSearchTab()">
-      <button onclick="document.getElementById('tab-link-srch').value='';doLinkSearchTab()">Clear</button>
-    </div>
-    <div id="link-results-tab" class="link-search-results-container"></div>
-  </section>
 </div>
 
 <div id="toast"></div>
 
-<script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
-
 <script>
-const API_URL = "https://script.google.com/macros/s/AKfycbzP0NQm1C8-kltfq5BEzkGtP5Htv54sGx4XqDNGOxJFGxZqJUBqYvQOeYZTpVW9BMaY0A/exec";
-const DEFAULT_USER = "seashipping";
-const DEFAULT_PASS = "admin@2026";
+// ⚠️ IMPORTANT: REPLACE THIS WITH YOUR DEPLOYED WEB APP URL
+const API_URL = "https://script.google.com/macros/s/YOUR_DEPLOYMENT_ID/exec";
 
 let rows = [];
-let quickLinks = [];
+let currentUser = null;
 
-function toggleEye(){const i=document.getElementById("l-pass"),b=document.getElementById("eye-btn");if(i.type==="password"){i.type="text";b.textContent="🙈";}else{i.type="password";b.textContent="👁️";}}
-
-function doLogin(){
-  const u=document.getElementById("l-user").value.trim();
-  const p=document.getElementById("l-pass").value;
+async function handleLogin() {
+  const u = document.getElementById('l-user').value.trim();
+  const p = document.getElementById('l-pass').value;
+  const err = document.getElementById('login-err');
   
-  // Force clean local storage if new credentials are provided
-  if(u===DEFAULT_USER && p===DEFAULT_PASS){
-    localStorage.setItem("appUser", u);
-    localStorage.setItem("appPass", p);
-    document.getElementById("login-screen").style.display="none";
-    document.getElementById("app").style.display="flex";
-    loadFromSheets();
-  } else {
-    document.getElementById("login-err").textContent="❌ Username বা Password ভুল!";
-  }
-}
-
-function doLogout(){
-  localStorage.removeItem("appUser");
-  localStorage.removeItem("appPass");
-  location.reload();
-}
-
-async function loadFromSheets(){
-  setStatus("⏳ লোড হচ্ছে...","loading");
-  try{
-    const res=await fetch(API_URL+"?t="+Date.now(),{redirect:"follow"});
-    const data=await res.json();
-    if(data.status==="ok"){
-      rows=data.rows||[];
-      quickLinks=data.links||[];
-      renderAll();
-      doLinkSearchTab();
-      setStatus("✅ "+rows.length+" entry সংযুক্ত","ok");
+  if(!u || !p) { err.textContent = "Please enter credentials"; return; }
+  
+  err.textContent = "⏳ Authenticating...";
+  try {
+    const res = await fetch(API_URL, {
+      method: 'POST',
+      body: JSON.stringify({ action: 'login', username: u, password: p })
+    });
+    const data = await res.json();
+    if(data.success) {
+      currentUser = data.user;
+      document.getElementById('login-screen').style.display = 'none';
+      document.getElementById('app').style.display = 'flex';
+      document.getElementById('user-badge').textContent = `👤 ${currentUser.username}`;
+      loadFromSheets();
+    } else {
+      err.textContent = "❌ " + (data.error || "Login Failed");
     }
-  }catch(e){
-    setStatus("⚠️ সংযোগ ব্যর্থ","err");
+  } catch(e) {
+    err.textContent = "❌ Failed to connect to server";
+    console.error(e);
   }
 }
 
-function renderAll(){
-  const q=document.getElementById("search").value.toLowerCase();
-  const tbody=document.getElementById("tbody"),mlist=document.getElementById("mobile-list");
-  tbody.innerHTML="";mlist.innerHTML="";
-  const filtered=rows.filter(r=>(r.company||'').toLowerCase().includes(q)||(r.user||'').toLowerCase().includes(q));
-  filtered.forEach((r,i)=>{
-    const tr=document.createElement("tr");
-    tr.innerHTML=`<td>${i+1}</td>
-      <td>${r.company}</td>
-      <td><div class="cell-flex">${r.user} <button class="cpbtn" onclick="copyText('${r.user}')">C</button></div></td>
-      <td><div class="cell-flex">${r.password} <button class="cpbtn" onclick="copyText('${r.password}')">C</button></div></td>
-      <td><div class="cell-flex">${r.note} <button class="cpbtn" onclick="copyText('${r.note}')">C</button></div></td>
-      <td><button class="delbtn" onclick="deleteRow(${i})">Del</button></td>`;
-    tbody.appendChild(tr);
-    const card=document.createElement("div");card.className="card";
-    card.innerHTML=`<div class="card-company">${r.company}</div>
-      <div class="card-row"><label>U:</label><span>${r.user}</span><button class="card-copy" onclick="copyText('${r.user}')">Copy</button></div>
-      <div class="card-row"><label>P:</label><span>${r.password}</span><button class="card-copy" onclick="copyText('${r.password}')">Copy</button></div>
-      <button class="card-del" onclick="deleteRow(${i})">Delete</button>`;
-    mlist.appendChild(card);
-  });
+function handleLogout() {
+  if(confirm("Logout?")) location.reload();
 }
 
-function doLinkSearchTab() {
-  const q = (document.getElementById("tab-link-srch").value || "").toLowerCase().trim();
-  const container = document.getElementById("link-results-tab");
-  container.innerHTML = "";
-  const matched = q ? quickLinks.filter(l => l.label.toLowerCase().includes(q) || l.url.toLowerCase().includes(q)) : quickLinks;
-  matched.forEach(l => {
-    const card = document.createElement("div");
-    card.className = "link-card";
-    card.innerHTML = `<div class="link-info"><span class="link-label">${l.label}</span><span class="link-url-text">${l.url}</span></div>
-      <div class="link-actions"><button class="cpbtn" onclick="copyText('${l.url}')">Copy</button><a href="${l.url}" target="_blank" class="link-go-btn">GO ↗</a></div>`;
-    container.appendChild(card);
-  });
-}
-
-function switchTab(tab){
-  document.getElementById("tab-pw").className="tab-btn"+(tab==='pw'?" active":"");
-  document.getElementById("tab-links").className="tab-btn"+(tab==='links'?" active":"");
-  document.getElementById("pw-section").style.display=tab==='pw'?"flex":"none";
-  document.getElementById("links-section").style.display=tab==='links'?"flex":"none";
-}
-
-function copyText(t){navigator.clipboard.writeText(t).then(()=>toast("📋 Copied!"));}
-function toast(m){const t=document.getElementById("toast");t.textContent=m;t.style.display="block";setTimeout(()=>t.style.display="none",2000);}
-function setStatus(m,c){const s=document.getElementById("status");s.textContent=m;s.className=c||"";}
-function clearSearch(){document.getElementById("search").value="";renderAll();}
-
-window.onload = () => {
-  const u = localStorage.getItem("appUser");
-  const p = localStorage.getItem("appPass");
-  if(u === DEFAULT_USER && p === DEFAULT_PASS){
-    document.getElementById("login-screen").style.display="none";
-    document.getElementById("app").style.display="flex";
-    loadFromSheets();
+async function loadFromSheets() {
+  document.getElementById('status').textContent = "⏳ Loading data from Excel...";
+  try {
+    const res = await fetch(API_URL + "?t=" + Date.now());
+    const data = await res.json();
+    if(data.status === "ok") {
+      rows = data.rows || [];
+      renderTable();
+      document.getElementById('status').textContent = `✅ ${rows.length} entries loaded`;
+    }
+  } catch(e) {
+    document.getElementById('status').textContent = "❌ Failed to load data";
   }
-};
+}
+
+function renderTable() {
+  const q = document.getElementById('search-input').value.toLowerCase();
+  const body = document.getElementById('data-body');
+  body.innerHTML = "";
+  
+  const filtered = rows.filter(r => 
+    r.company.toLowerCase().includes(q) || 
+    r.user.toLowerCase().includes(q) || 
+    r.note.toLowerCase().includes(q)
+  );
+  
+  document.getElementById('no-data').style.display = filtered.length ? 'none' : 'block';
+  
+  filtered.forEach((r, i) => {
+    const tr = document.createElement('tr');
+    tr.innerHTML = `
+      <td style="color:#555;text-align:center">${i+1}</td>
+      <td class="co-name">${esc(r.company)}</td>
+      <td>${esc(r.shj)} <button class="copy-btn" onclick="copy('${esc(r.shj)}')">📋</button></td>
+      <td>${esc(r.user)} <button class="copy-btn" onclick="copy('${esc(r.user)}')">📋</button></td>
+      <td>${esc(r.password)} <button class="copy-btn" onclick="copy('${esc(r.password)}')">📋</button></td>
+      <td>${esc(r.note)}</td>
+      <td><button class="del-btn" onclick="deleteRow(${rows.indexOf(r)})">🗑️</button></td>
+    `;
+    body.appendChild(tr);
+  });
+}
+
+function addEntry() {
+  const co = document.getElementById('in-co').value.trim();
+  const shj = document.getElementById('in-shj').value.trim();
+  const user = document.getElementById('in-user').value.trim();
+  const pw = document.getElementById('in-pw').value.trim();
+  const note = document.getElementById('in-note').value.trim();
+  
+  if(!co) return alert("Company name is required");
+  
+  rows.push({ company: co, shj, user, password: pw, note });
+  renderTable();
+  closeModal('add-modal');
+  showToast("Entry added locally. Click Save to sync.");
+  
+  // Clear inputs
+  ['in-co','in-shj','in-user','in-pw','in-note'].forEach(id => document.getElementById(id).value = "");
+}
+
+function deleteRow(idx) {
+  if(!confirm("Delete this entry?")) return;
+  rows.splice(idx, 1);
+  renderTable();
+  showToast("Entry deleted locally.");
+}
+
+async function saveToSheets() {
+  document.getElementById('status').textContent = "⏳ Saving to Excel...";
+  try {
+    const res = await fetch(API_URL, {
+      method: 'POST',
+      body: JSON.stringify({ action: 'save', username: currentUser.username, rows: rows })
+    });
+    const data = await res.json();
+    if(data.status === "ok") {
+      document.getElementById('status').textContent = "✅ Data synced with Excel";
+      showToast("💾 Saved to Google Sheets!");
+    }
+  } catch(e) {
+    document.getElementById('status').textContent = "❌ Sync failed";
+  }
+}
+
+async function handleChangePass() {
+  const p1 = document.getElementById('new-pass').value;
+  const p2 = document.getElementById('confirm-pass').value;
+  if(p1 !== p2) return document.getElementById('pass-err').textContent = "Passwords don't match";
+  
+  try {
+    const res = await fetch(API_URL, {
+      method: 'POST',
+      body: JSON.stringify({ action: 'changePass', username: currentUser.username, newPass: p1 })
+    });
+    const data = await res.json();
+    if(data.status === "ok") {
+      closeModal('pass-modal');
+      showToast("🔑 Password updated!");
+    }
+  } catch(e) { alert("Failed to update password"); }
+}
+
+function exportToExcel() {
+  const ws = XLSX.utils.json_to_sheet(rows);
+  const wb = XLSX.utils.book_new();
+  XLSX.utils.book_append_sheet(wb, ws, "Passwords");
+  XLSX.writeFile(wb, "TOS_USER_PW_LIST.xlsx");
+}
+
+function copy(text) {
+  navigator.clipboard.writeText(text).then(() => showToast("📋 Copied!"));
+}
+
+function showToast(msg) {
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.style.display = 'block';
+  t.classList.add('show');
+  setTimeout(() => { t.style.display = 'none'; t.classList.remove('show'); }, 3000);
+}
+
+function openModal(id) { document.getElementById(id).style.display = 'flex'; }
+function closeModal(id) { document.getElementById(id).style.display = 'none'; }
+function esc(s) { const d = document.createElement('div'); d.textContent = s; return d.innerHTML; }
 </script>
 </body>
 </html>
