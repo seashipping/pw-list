@@ -41,7 +41,7 @@ header{background:linear-gradient(135deg,#16213e,#0f3460);border-bottom:2px soli
 #pinned-links a{color:#7ec8e3;font-size:0.78rem;font-weight:bold;text-decoration:none;padding:5px 10px;border:1px solid #c026d388;border-radius:14px;white-space:nowrap;background:#0a0a1a;flex-shrink:0;}
 #pinned-links a:hover{background:linear-gradient(90deg,#c026d3,#2dd4ff);color:#fff;}
 
-/* ── TOOLBAR — বড় বাটন (Updated) ── */
+/* ── TOOLBAR — বড় বাটন ── */
 .toolbar{background:#16213e;padding:10px 8px;display:flex;gap:6px;border-bottom:1px solid #2a2a4a;}
 .t-btns{display:flex;gap:8px;width:100%;}
 .t-btns button{
@@ -79,7 +79,7 @@ header{background:linear-gradient(135deg,#16213e,#0f3460);border-bottom:2px soli
 .search-bar input:focus{outline:none;border-color:#e94560;}
 .search-bar button{background:linear-gradient(90deg,#e94560,#ff8a00);border:none;color:#fff;border-radius:10px;padding:8px 14px;font-size:0.8rem;font-weight:bold;cursor:pointer;}
 
-/* ── LINKS SECTION (New) ── */
+/* ── LINKS SECTION ── */
 #links-section{display:none; flex:1; flex-direction:column; overflow:hidden;}
 .link-search-results-container{flex:1; overflow-y:auto; padding:10px; background:#0a0a1a;}
 .link-card{display:flex; align-items:center; justify-content:space-between; background:#16213e; border:1px solid #2a2a4a; border-radius:10px; padding:12px; margin-bottom:8px; transition: 0.2s;}
@@ -128,79 +128,12 @@ header{background:linear-gradient(135deg,#16213e,#0f3460);border-bottom:2px soli
 .card-copy{background:#0a1a3a;border:1px solid #2dd4ff66;color:#2dd4ff;padding:5px 9px;font-size:0.75rem;border-radius:7px;cursor:pointer;white-space:nowrap;}
 .card-del{background:linear-gradient(90deg,#e94560,#ff2d9c);border:none;color:#fff;padding:5px 12px;font-size:0.75rem;border-radius:7px;cursor:pointer;margin-top:3px;}
 
-/* ── DM BARCODE ── */
-#dm-section{display:none;flex:1;flex-direction:column;overflow-y:auto;overflow-x:auto;min-height:0;}
-#dm-section.active{display:flex;flex-direction:column;}
-#dm-table{width:100%;border-collapse:collapse;font-size:0.85rem;table-layout:auto;}
-#dm-table thead th{padding:7px 6px;text-align:left;color:#fff;font-size:0.78rem;font-weight:bold;background:#0a3a2a;border-bottom:2px solid #2ecc71;border-right:1px solid #1a3a2a;white-space:nowrap;}
-#dm-table thead th:last-child{border-right:none;text-align:center;}
-#dm-table tbody tr{border-bottom:1px solid #1a2a1a;}
-#dm-table tbody tr:hover{background:#0a2a1a;}
-#dm-table tbody td{padding:5px 6px;border-right:1px solid #1a2a1a;vertical-align:middle;color:#2ecc71;}
-#dm-table tbody td:last-child{border-right:none;text-align:center;}
-.dm-input{width:100%;background:transparent;border:none;color:#2ecc71;font-size:0.8rem;font-family:Arial,sans-serif;padding:2px 3px;outline:none;}
-.dm-input:focus{background:#0a2a0a;border-radius:3px;}
-.dm-barcode-val{font-family:monospace;font-size:0.78rem;color:#00fbfe;}
-#dm-mobile-list{display:none;padding:6px;}
-.dm-card{background:#0a1a0a;border:1px solid #2ecc7166;border-radius:8px;padding:8px 10px;margin-bottom:7px;}
-.dm-card-title{font-weight:bold;font-size:0.88rem;color:#2ecc71;margin-bottom:5px;}
-.dm-card-barcode{font-family:monospace;font-size:0.82rem;color:#00fbfe;background:#0a2a0a;border-radius:5px;padding:4px 7px;margin-bottom:4px;word-break:break-all;cursor:pointer;}
-.dm-card-row{font-size:0.75rem;color:#aaa;margin-bottom:2px;}
-
-/* ══ IMPORT CODE (DXB/SHJ) — gold/amber theme ══ */
-#import-section{display:none;flex:1;flex-direction:column;overflow-y:auto;overflow-x:auto;min-height:0;}
-#import-section.active{display:flex;flex-direction:column;}
-#imp-table{width:100%;border-collapse:collapse;font-size:0.82rem;table-layout:auto;min-width:800px;}
-#imp-table thead th{
-  padding:7px 8px;text-align:left;color:#fff;font-size:0.78rem;font-weight:bold;
-  background:#2a1a00;border-bottom:2px solid #ffd84d;border-right:1px solid #3a2a0a;
-  white-space:nowrap;
-}
-#imp-table thead th:last-child{border-right:none;text-align:center;}
-#imp-table tbody tr{border-bottom:1px solid #2a1a0a;}
-#imp-table tbody tr:hover{background:#1a1000;}
-#imp-table tbody td{padding:5px 7px;border-right:1px solid #2a1a0a;vertical-align:middle;}
-#imp-table tbody td:last-child{border-right:none;text-align:center;}
-.imp-co-input{width:100%;background:transparent;border:none;color:#ffd84d;font-size:0.8rem;font-weight:bold;padding:2px 3px;outline:none;}
-.imp-co-input:focus{background:#1a1000;border-radius:3px;}
-.imp-shj{width:100%;background:transparent;border:none;color:#ff8a00;font-size:0.8rem;font-family:monospace;padding:2px 3px;outline:none;}
-.imp-shj:focus{background:#1a0a00;border-radius:3px;}
-.imp-dxb{width:100%;background:transparent;border:none;color:#2dd4ff;font-size:0.8rem;font-family:monospace;padding:2px 3px;outline:none;}
-.imp-dxb:focus{background:#001a2a;border-radius:3px;}
-.imp-biz{width:100%;background:transparent;border:none;color:#c026d3;font-size:0.8rem;font-family:monospace;padding:2px 3px;outline:none;}
-.imp-biz:focus{background:#1a001a;border-radius:3px;}
-.imp-dxb-user{width:100%;background:transparent;border:none;color:#2ecc71;font-size:0.8rem;padding:2px 3px;outline:none;}
-.imp-dxb-user:focus{background:#001a0a;border-radius:3px;}
-.imp-dxb-pass{width:100%;background:transparent;border:none;color:#00fbfe;font-size:0.8rem;font-family:monospace;padding:2px 3px;outline:none;}
-.imp-dxb-pass:focus{background:#001a1a;border-radius:3px;}
-.imp-dm-user{width:100%;background:transparent;border:none;color:#e94560;font-size:0.8rem;padding:2px 3px;outline:none;}
-.imp-dm-user:focus{background:#1a0008;border-radius:3px;}
-.imp-dm-pass{width:100%;background:transparent;border:none;color:#ff8a00;font-size:0.8rem;font-family:monospace;padding:2px 3px;outline:none;}
-.imp-dm-pass:focus{background:#1a0500;border-radius:3px;}
-
-/* ── MODALS ── */
-.modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,0.85);display:none;align-items:center;justify-content:center;z-index:10000;padding:15px;overflow-y:auto;}
-.modal-box{background:#16213e;border:2px solid #e94560;border-radius:16px;padding:24px;width:100%;max-width:420px;margin:auto;}
-.modal-box h3{margin-bottom:18px;color:#fff;text-align:center;font-size:1.2rem;}
-.modal-row{margin-bottom:12px;}
-.modal-row label{display:block;color:#cfd8e3;font-size:0.8rem;font-weight:bold;margin-bottom:5px;}
-.modal-row input{width:100%;padding:10px 12px;border-radius:8px;border:1px solid #2a2a4a;background:#0f3460;color:#eee;font-size:0.95rem;}
-.modal-row input:focus{outline:none;border-color:#e94560;}
-.modal-err{color:#e94560;font-size:0.8rem;min-height:18px;margin-bottom:8px;text-align:center;}
-.modal-btns{display:flex;gap:10px;margin-top:20px;}
-.modal-btns button{flex:1;padding:12px;border-radius:30px;border:none;font-weight:bold;cursor:pointer;font-size:0.9rem;}
-.btn-confirm{background:linear-gradient(90deg,#c026d3,#2dd4ff);color:#fff;}
-.btn-cancel{background:#2a2a4a;color:#aaa;}
-
 /* ── TOAST ── */
 #toast{position:fixed;bottom:80px;left:50%;transform:translateX(-50%);background:rgba(0,0,0,0.9);color:#fff;padding:10px 20px;border-radius:30px;font-size:0.85rem;z-index:10001;display:none;border:1px solid #2dd4ff;box-shadow:0 0 15px rgba(45,212,255,0.3);}
 
 @media(max-width:768px){
   #desk-table{display:none;}
   #mobile-list{display:block;}
-  #dm-table{display:none;}
-  #dm-mobile-list{display:block;}
-  #imp-table{min-width:unset;}
 }
 </style>
 </head>
@@ -240,18 +173,11 @@ header{background:linear-gradient(135deg,#16213e,#0f3460);border-bottom:2px soli
           <button class="icon-btn" onclick="exportExcel()">📤 EXCEL</button>
         </div>
         <div class="header-right">
-          <button class="icon-btn" onclick="document.getElementById('creds-modal').style.display='flex'">🔑 PW</button>
           <button class="icon-btn" style="border-color:#e94560;color:#e94560;" onclick="doLogout()">🔌 OUT</button>
         </div>
       </div>
-      
-      <div class="header-links-row">
-        <div id="pinned-links"></div>
-        <button id="btn-show-links" class="btn-show-links" onclick="toggleLinksPanel()">🔗 Links ▼</button>
-      </div>
     </header>
 
-    <!-- Toolbar with BIG buttons -->
     <div class="toolbar">
       <div class="t-btns">
         <button class="btn-add" onclick="openAddModal()">➕ ADD NEW</button>
@@ -260,17 +186,14 @@ header{background:linear-gradient(135deg,#16213e,#0f3460);border-bottom:2px soli
       </div>
     </div>
 
-    <div id="status">⏳ সিস্টেম প্রস্তুত হচ্ছে...</div>
+    <div id="status">⏳ লোড হচ্ছে...</div>
 
     <div class="tab-bar">
       <button class="tab-btn active" id="tab-pw" onclick="switchTab('pw')">🔑 PASSWORDS</button>
-      <button class="tab-btn" id="tab-dm" onclick="switchTab('dm')">📦 DM BARCODE</button>
-      <button class="tab-btn" id="tab-import" onclick="switchTab('import')">🚢 IMPORT</button>
       <button class="tab-btn" id="tab-links" onclick="switchTab('links')">🔗 LINKS & SEARCH</button>
     </div>
   </div>
 
-  <!-- PASSWORDS SECTION -->
   <section id="pw-section" style="display:flex;flex:1;flex-direction:column;overflow:hidden;">
     <div class="search-bar" id="search-pw">
       <input type="text" id="search" placeholder="Company বা Username খুঁজুন..." oninput="renderAll()">
@@ -280,7 +203,7 @@ header{background:linear-gradient(135deg,#16213e,#0f3460);border-bottom:2px soli
       <table id="desk-table">
         <colgroup><col><col><col><col><col><col></colgroup>
         <thead>
-          <tr><th>#</th><th>Company</th><th>Username</th><th>Password</th><th>Dubai Code</th><th>Action</th></tr>
+          <tr><th>#</th><th>Company</th><th>Username</th><th>Password</th><th>Note</th><th>Action</th></tr>
         </thead>
         <tbody id="tbody"></tbody>
       </table>
@@ -288,357 +211,68 @@ header{background:linear-gradient(135deg,#16213e,#0f3460);border-bottom:2px soli
     </div>
   </section>
 
-  <!-- DM BARCODE SECTION -->
-  <section id="dm-section">
-    <div class="search-bar" id="search-dm">
-      <input type="text" id="search-dm-inp" placeholder="পণ্য বা বারকোড খুঁজুন..." oninput="renderDmAll()">
-      <button onclick="document.getElementById('search-dm-inp').value='';renderDmAll()">Clear</button>
-      <button style="background:#27ae60;" onclick="openAddDmModal()">➕ ADD</button>
-    </div>
-    <div id="tbody-wrap">
-      <table id="dm-table">
-        <thead>
-          <tr><th>#</th><th>Product Name</th><th>Size/Weight</th><th>Brand</th><th>Origin</th><th>Barcode</th><th>Del</th></tr>
-        </thead>
-        <tbody id="dm-tbody"></tbody>
-      </table>
-      <div id="dm-mobile-list"></div>
-    </div>
-  </section>
-
-  <!-- IMPORT SECTION -->
-  <section id="import-section">
-    <div class="search-bar" id="search-import">
-      <input type="text" id="search-imp-inp" placeholder="কোম্পানি খুঁজুন..." oninput="renderImportAll()">
-      <button onclick="document.getElementById('search-imp-inp').value='';renderImportAll()">Clear</button>
-      <button style="background:#27ae60;" onclick="openAddImportModal()">➕ ADD</button>
-    </div>
-    <div id="tbody-wrap">
-      <table id="imp-table">
-        <thead>
-          <tr><th>#</th><th>Company</th><th>SHJ CODE</th><th>DXB CODE</th><th>BIZ CODE</th><th>DXB USER</th><th>DXB PASS</th><th>DM USER</th><th>DM PASS</th><th>Del</th></tr>
-        </thead>
-        <tbody id="imp-tbody"></tbody>
-      </table>
-      <div id="imp-mobile-list"></div>
-    </div>
-  </section>
-
-  <!-- LINKS & SEARCH SECTION (New) -->
   <section id="links-section">
     <div class="search-bar">
       <input type="text" id="tab-link-srch" placeholder="লিঙ্ক বা নাম লিখে খুঁজুন..." oninput="doLinkSearchTab()">
       <button onclick="document.getElementById('tab-link-srch').value='';doLinkSearchTab()">Clear</button>
-      <button style="background:#c026d3;" onclick="openAddLinkModal()">➕ ADD LINK</button>
     </div>
-    <div id="link-results-tab" class="link-search-results-container">
-      <!-- Results will appear here -->
-    </div>
+    <div id="link-results-tab" class="link-search-results-container"></div>
   </section>
-
-  <!-- OLD LINKS PANEL (Keep for quick access if needed) -->
-  <div id="links-panel">
-    <div class="links-panel-hdr">
-      <span>🔗 QUICK LINKS</span>
-      <button class="lp-btn lp-btn-add" onclick="openAddLinkModal()">➕ Add</button>
-      <button id="lp-edit-btn" class="lp-btn lp-btn-edit" onclick="toggleEditLinks()">✏️ Edit</button>
-      <button class="lp-btn lp-btn-close" onclick="toggleLinksPanel()">✖</button>
-    </div>
-    <div id="links-list"></div>
-  </div>
-</div>
-
-<!-- MODALS -->
-<!-- (All existing modals kept for functionality) -->
-<div id="add-modal" class="modal-overlay">
-  <div class="modal-box">
-    <h3>➕ নতুন এন্ট্রি</h3>
-    <div class="modal-row"><label>COMPANY NAME</label><input type="text" id="inp-company"></div>
-    <div class="modal-row"><label>USERNAME</label><input type="text" id="inp-user"></div>
-    <div class="modal-row"><label>PASSWORD</label><input type="text" id="inp-pw"></div>
-    <div class="modal-row"><label>DUBAI CODE (Note)</label><input type="text" id="inp-note"></div>
-    <div id="add-err" class="modal-err"></div>
-    <div class="modal-btns">
-      <button class="btn-cancel" onclick="closeModal('add-modal')">CANCEL</button>
-      <button class="btn-confirm" onclick="addAndSave()">SAVE NOW</button>
-    </div>
-  </div>
-</div>
-
-<div id="creds-modal" class="modal-overlay">
-  <div class="modal-box">
-    <h3>🔑 পাসওয়ার্ড পরিবর্তন</h3>
-    <div class="modal-row"><label>বর্তমান PASSWORD</label><input type="password" id="c-old"></div>
-    <div class="modal-row"><label>নতুন USERNAME (ঐচ্ছিক)</label><input type="text" id="c-user"></div>
-    <div class="modal-row"><label>নতুন PASSWORD</label><input type="password" id="c-new"></div>
-    <div class="modal-row"><label>আবার লিখুন</label><input type="password" id="c-new2"></div>
-    <div id="creds-err" class="modal-err"></div>
-    <div class="modal-btns">
-      <button class="btn-cancel" onclick="closeModal('creds-modal')">CANCEL</button>
-      <button class="btn-confirm" onclick="doChangeCreds()">UPDATE</button>
-    </div>
-  </div>
-</div>
-
-<div id="link-modal" class="modal-overlay">
-  <div class="modal-box">
-    <h3 id="link-modal-title">🔗 লিঙ্ক যোগ করুন</h3>
-    <input type="hidden" id="link-edit-id">
-    <div class="modal-row"><label>নাম (Label)</label><input type="text" id="link-label" placeholder="যেমন: MOFA Login"></div>
-    <div class="modal-row"><label>URL</label><input type="text" id="link-url" placeholder="https://..."></div>
-    <div id="link-err" class="modal-err"></div>
-    <div id="link-modal-del-wrap" style="display:none;margin-bottom:10px;"><button style="width:100%;padding:8px;background:#e94560;color:#fff;border:none;border-radius:8px;cursor:pointer;font-weight:bold;" onclick="deleteLinkFromModal()">🗑️ এই লিঙ্ক মুছুন</button></div>
-    <div class="modal-btns">
-      <button class="btn-cancel" onclick="closeModal('link-modal')">CANCEL</button>
-      <button class="btn-confirm" onclick="saveLink()">SAVE LINK</button>
-    </div>
-  </div>
-</div>
-
-<!-- DM ADD MODAL -->
-<div id="dm-modal" class="modal-overlay">
-  <div class="modal-box">
-    <h3 id="dm-modal-title">📦 নতুন DM বারকোড</h3>
-    <input type="hidden" id="dm-edit-id">
-    <div class="modal-row"><label>PRODUCT NAME</label><input type="text" id="dm-inp-product"></div>
-    <div class="modal-row"><label>SIZE / WEIGHT</label><input type="text" id="dm-inp-size"></div>
-    <div class="modal-row"><label>BRAND</label><input type="text" id="dm-inp-brand"></div>
-    <div class="modal-row"><label>ORIGIN</label><input type="text" id="dm-inp-origin"></div>
-    <div class="modal-row"><label>BARCODE</label><input type="text" id="dm-inp-barcode"></div>
-    <div id="dm-err" class="modal-err"></div>
-    <div class="modal-btns">
-      <button class="btn-cancel" onclick="closeModal('dm-modal')">CANCEL</button>
-      <button class="btn-confirm" onclick="saveDmEntry()">SAVE</button>
-    </div>
-  </div>
-</div>
-
-<!-- IMPORT ADD MODAL -->
-<div id="imp-modal" class="modal-overlay">
-  <div class="modal-box" style="max-width:500px;">
-    <h3 id="imp-modal-title">🚢 নতুন ইমপোর্ট কোড</h3>
-    <input type="hidden" id="imp-edit-id">
-    <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;">
-      <div class="modal-row" style="grid-column:span 2;"><label>COMPANY NAME</label><input type="text" id="imp-inp-co"></div>
-      <div class="modal-row"><label>SHJ CODE</label><input type="text" id="imp-inp-shj"></div>
-      <div class="modal-row"><label>DXB CODE</label><input type="text" id="imp-inp-dxb"></div>
-      <div class="modal-row"><label>BIZ CODE</label><input type="text" id="imp-inp-biz"></div>
-      <div class="modal-row"><label>DXB USER</label><input type="text" id="imp-inp-dxbu"></div>
-      <div class="modal-row"><label>DXB PASS</label><input type="text" id="imp-inp-dxbp"></div>
-      <div class="modal-row"><label>DM USER</label><input type="text" id="imp-inp-dmu"></div>
-      <div class="modal-row"><label>DM PASS</label><input type="text" id="imp-inp-dmp"></div>
-    </div>
-    <div id="imp-err" class="modal-err"></div>
-    <div class="modal-btns">
-      <button class="btn-cancel" onclick="closeModal('imp-modal')">CANCEL</button>
-      <button class="btn-confirm" onclick="saveImportEntry()">SAVE</button>
-    </div>
-  </div>
 </div>
 
 <div id="toast"></div>
 
-<!-- XLSX Library -->
 <script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
 
 <script>
-const API_URL = "https://script.google.com/macros/s/AKfycbz_E_YpZ3z8_E_YpZ3z8_E_YpZ3z8_E_YpZ3z8/exec"; // আপনার API URL এখানে দিন
-const DEFAULT_USER = "admin";
-const DEFAULT_PASS = "1234";
+const API_URL = "https://script.google.com/macros/s/AKfycbzP0NQm1C8-kltfq5BEzkGtP5Htv54sGx4XqDNGOxJFGxZqJUBqYvQOeYZTpVW9BMaY0A/exec";
+const DEFAULT_USER = "seashipping";
+const DEFAULT_PASS = "admin@2026";
 
 let rows = [];
-const DEFAULT_LINKS = [
-  {label:"🏢 MOFA LOGIN",url:"https://www.mofa.gov.ae/"},
-  {label:"📝 MOFA REG EDAS 2.0",url:"https://edas.mofa.gov.ae/"},
-  {label:"💰 VAT PAYMENT",url:"https://tax.gov.ae/"},
-  {label:"📄 EXEMPTION",url:"https://mirsal.ae/"},
-  {label:"🚢 CMA-CGM",url:"https://www.cma-cgm.com/"},
-  {label:"🚢 ODEX-HAPPAG",url:"https://www.hapag-lloyd.com/"}
-];
-let quickLinks=[], linkEditMode=false, linksPanelOpen=false;
-const PINNED_COUNT=5;
+let quickLinks = [];
 
-// ── LINKS ──
-function loadLinksLocal(){try{const s=localStorage.getItem("quickLinks_v3");quickLinks=s?JSON.parse(s):DEFAULT_LINKS.slice();}catch(e){quickLinks=DEFAULT_LINKS.slice();}renderPinnedLinks();renderLinksPanel();doLinkSearchTab();}
-function saveLinksCacheLocal(){localStorage.setItem("quickLinks_v3",JSON.stringify(quickLinks));}
-async function saveLinksToSheets(){
-  saveLinksCacheLocal();
-  try{const res=await fetch(API_URL,{method:"POST",redirect:"follow",headers:{"Content-Type":"text/plain"},body:JSON.stringify({action:"saveLinks",links:quickLinks})});const data=await res.json();toast(data.status==="ok"?"🔗 Links save হয়েছে!":"⚠️ Links local এ save হয়েছে");}
-  catch(e){toast("⚠️ Links local এ save হয়েছে");}
-}
-function renderPinnedLinks(){
-  const c=document.getElementById("pinned-links");c.innerHTML="";
-  const max=window.innerWidth<500?3:window.innerWidth<768?4:PINNED_COUNT;
-  quickLinks.slice(0,max).forEach(l=>{const a=document.createElement("a");a.href=l.url;a.target="_blank";a.rel="noopener";a.textContent=l.label;c.appendChild(a);});
-}
-function renderLinksPanel(){
-  const list=document.getElementById("links-list");list.innerHTML="";
-  const panel=document.getElementById("links-panel");
-  if(linkEditMode){panel.classList.add("edit-mode");document.getElementById("lp-edit-btn").style.background="linear-gradient(90deg,#ff8a00,#e94560)";}
-  else{panel.classList.remove("edit-mode");document.getElementById("lp-edit-btn").style.background="";}
-  if(!quickLinks.length){list.innerHTML='<div class="lp-empty">কোনো link নেই।</div>';return;}
-  quickLinks.forEach((l,idx)=>{
-    const item=document.createElement("div");item.className="link-item";
-    const num=document.createElement("span");num.className="link-item-num";num.textContent=idx+1;
-    const a=document.createElement("a");a.href=l.url;a.target="_blank";a.rel="noopener";a.textContent=l.label;
-    const ob=document.createElement("a");ob.href=l.url;ob.target="_blank";ob.rel="noopener";ob.className="link-item-open";ob.textContent="↗ Open";
-    const eb=document.createElement("button");eb.className="link-item-edit";eb.textContent="✎";eb.type="button";
-    eb.onclick=function(ev){ev.preventDefault();ev.stopPropagation();openAddLinkModal(idx);};
-    item.appendChild(num);item.appendChild(a);item.appendChild(ob);item.appendChild(eb);list.appendChild(item);
-  });
-}
-
-function doLinkSearchTab() {
-  const q = (document.getElementById("tab-link-srch").value || "").toLowerCase().trim();
-  const container = document.getElementById("link-results-tab");
-  container.innerHTML = "";
-  
-  const matched = q ? quickLinks.filter(l => l.label.toLowerCase().includes(q) || l.url.toLowerCase().includes(q)) : quickLinks;
-  
-  if (matched.length === 0) {
-    container.innerHTML = '<div style="text-align:center;padding:40px;color:#555;">কোনো লিঙ্ক পাওয়া যায়নি।</div>';
-    return;
-  }
-  
-  matched.forEach((l, idx) => {
-    const card = document.createElement("div");
-    card.className = "link-card";
-    card.innerHTML = `
-      <div class="link-info">
-        <span class="link-label">${l.label}</span>
-        <span class="link-url-text">${l.url}</span>
-      </div>
-      <div class="link-actions">
-        <button class="cpbtn" onclick="copyText('${l.url}')">Copy</button>
-        <a href="${l.url}" target="_blank" class="link-go-btn">GO ↗</a>
-      </div>
-    `;
-    container.appendChild(card);
-  });
-}
-
-function toggleLinksPanel(){
-  linksPanelOpen=!linksPanelOpen;
-  const panel=document.getElementById("links-panel"),btn=document.getElementById("btn-show-links");
-  if(linksPanelOpen){panel.classList.add("open");btn.classList.add("open");btn.textContent="🔗 Links ▲";renderLinksPanel();}
-  else{panel.classList.remove("open");btn.classList.remove("open");btn.textContent="🔗 Links ▼";}
-}
-
-function toggleEditLinks(){linkEditMode=!linkEditMode;renderLinksPanel();toast(linkEditMode?"✏️ Edit মোড — ✎ চাপুন":"✅ Edit মোড বন্ধ");}
-function openAddLinkModal(editIdx){
-  document.getElementById("link-err").textContent="";
-  if(typeof editIdx==="number"){
-    document.getElementById("link-modal-title").textContent="✏️ Link পরিবর্তন করুন";
-    document.getElementById("link-edit-id").value=editIdx;
-    document.getElementById("link-label").value=quickLinks[editIdx].label;
-    document.getElementById("link-url").value=quickLinks[editIdx].url;
-    document.getElementById("link-modal-del-wrap").style.display="flex";
-  }else{
-    document.getElementById("link-modal-title").textContent="🔗 নতুন Link যোগ করুন";
-    document.getElementById("link-edit-id").value="";
-    document.getElementById("link-label").value="";
-    document.getElementById("link-url").value="";
-    document.getElementById("link-modal-del-wrap").style.display="none";
-  }
-  document.getElementById("link-modal").style.display="flex";
-}
-function deleteLinkFromModal(){
-  const idVal=document.getElementById("link-edit-id").value;if(idVal==="")return;
-  if(!confirm("এই link মুছবেন?"))return;
-  quickLinks.splice(parseInt(idVal),1);renderPinnedLinks();renderLinksPanel();closeModal("link-modal");saveLinksToSheets();doLinkSearchTab();
-}
-async function saveLink(){
-  const idVal=document.getElementById("link-edit-id").value;
-  const label=document.getElementById("link-label").value.trim();
-  const url=document.getElementById("link-url").value.trim();
-  const err=document.getElementById("link-err");
-  if(!label||!url){err.textContent="❌ Label ও URL দিন!";return;}
-  if(idVal!==""){quickLinks[parseInt(idVal)]={label,url};}else{quickLinks.push({label,url});}
-  renderPinnedLinks();renderLinksPanel();closeModal("link-modal");await saveLinksToSheets();doLinkSearchTab();
-}
-
-// ── TABS ──
-let currentTab="pw";
-function switchTab(tab){
-  currentTab=tab;
-  const isPw=tab==="pw",isDm=tab==="dm",isImp=tab==="import",isLinks=tab==="links";
-  document.getElementById("tab-pw").className="tab-btn"+(isPw?" active":"");
-  document.getElementById("tab-dm").className="tab-btn"+(isDm?" active":"");
-  document.getElementById("tab-import").className="tab-btn"+(isImp?" active":"");
-  document.getElementById("tab-links").className="tab-btn"+(isLinks?" active":"");
-  
-  document.getElementById("pw-section").style.display=isPw?"flex":"none";
-  document.getElementById("dm-section").style.display=isDm?"flex":"none";
-  document.getElementById("import-section").style.display=isImp?"flex":"none";
-  document.getElementById("links-section").style.display=isLinks?"flex":"none";
-  
-  if(isLinks) doLinkSearchTab();
-}
-
-// ── AUTH ──
-function getCreds(){return{user:localStorage.getItem("appUser")||DEFAULT_USER,pass:localStorage.getItem("appPass")||DEFAULT_PASS};}
 function toggleEye(){const i=document.getElementById("l-pass"),b=document.getElementById("eye-btn");if(i.type==="password"){i.type="text";b.textContent="🙈";}else{i.type="password";b.textContent="👁️";}}
-function doLogin(){
-  try{
-    const u=document.getElementById("l-user").value.trim(),p=document.getElementById("l-pass").value,c=getCreds();
-    if(u===c.user&&p===c.pass){document.getElementById("login-screen").style.display="none";document.getElementById("app").style.display="flex";loadFromSheets();}
-    else{document.getElementById("login-err").textContent="❌ Username বা Password ভুল!";document.getElementById("l-pass").value="";}
-  }catch(e){document.getElementById("login-err").textContent="❌ Error: "+e.message;}
-}
-function doLogout(){
-  document.getElementById("app").style.display="none";document.getElementById("login-screen").style.display="flex";
-  document.getElementById("l-user").value="";document.getElementById("l-pass").value="";document.getElementById("login-err").textContent="";
-}
-function doChangeCreds(){
-  const op=document.getElementById("c-old").value,nu=document.getElementById("c-user").value.trim(),np=document.getElementById("c-new").value,np2=document.getElementById("c-new2").value;
-  const e=document.getElementById("creds-err"),c=getCreds();
-  if(op!==c.pass){e.textContent="❌ বর্তমান password ভুল!";return;}
-  if(np.length<4){e.textContent="❌ কমপক্ষে ৪ অক্ষর!";return;}
-  if(np!==np2){e.textContent="❌ Password মিলছে না!";return;}
-  const finalUser=nu||c.user;localStorage.setItem("appUser",finalUser);localStorage.setItem("appPass",np);
-  document.getElementById("l-user").value=finalUser;closeModal("creds-modal");
-  ["c-old","c-user","c-new","c-new2"].forEach(id=>document.getElementById(id).value="");toast("✅ Password পরিবর্তন হয়েছে!");
-}
-function closeModal(id){document.getElementById(id).style.display="none";}
-function openAddModal(){document.getElementById("add-modal").style.display="flex";setTimeout(()=>document.getElementById("inp-company").focus(),100);}
 
-// ── PW CRUD ──
-async function addAndSave(){
-  const c=document.getElementById("inp-company").value.trim(),u=document.getElementById("inp-user").value.trim();
-  const p=document.getElementById("inp-pw").value.trim(),n=document.getElementById("inp-note").value.trim();
-  if(!c&&!u){document.getElementById("add-err").textContent="❌ Company বা Username দিন!";return;}
-  rows.push({company:c,user:u,password:p,note:n});
-  ["inp-company","inp-user","inp-pw","inp-note"].forEach(id=>document.getElementById(id).value="");
-  document.getElementById("add-err").textContent="";closeModal("add-modal");renderAll();await saveToSheets();
+function doLogin(){
+  const u=document.getElementById("l-user").value.trim();
+  const p=document.getElementById("l-pass").value;
+  
+  // Force clean local storage if new credentials are provided
+  if(u===DEFAULT_USER && p===DEFAULT_PASS){
+    localStorage.setItem("appUser", u);
+    localStorage.setItem("appPass", p);
+    document.getElementById("login-screen").style.display="none";
+    document.getElementById("app").style.display="flex";
+    loadFromSheets();
+  } else {
+    document.getElementById("login-err").textContent="❌ Username বা Password ভুল!";
+  }
 }
+
+function doLogout(){
+  localStorage.removeItem("appUser");
+  localStorage.removeItem("appPass");
+  location.reload();
+}
+
 async function loadFromSheets(){
-  setStatus("⏳ লোড হচ্ছে...","loading");loadLinksLocal();loadDmRows();loadImportRows();
+  setStatus("⏳ লোড হচ্ছে...","loading");
   try{
-    const res=await fetch(API_URL+"?t="+Date.now(),{redirect:"follow",cache:"no-store"});
+    const res=await fetch(API_URL+"?t="+Date.now(),{redirect:"follow"});
     const data=await res.json();
     if(data.status==="ok"){
-      rows=data.rows||[];localStorage.setItem("tosKhoBackup",JSON.stringify(rows));
-      if(data.links&&data.links.length>0){quickLinks=data.links;saveLinksCacheLocal();renderPinnedLinks();renderLinksPanel();setStatus("✅ "+rows.length+" entry + Links — Google Sheets সংযুক্ত ✔","ok");}
-      else{loadLinksLocal();setStatus("✅ "+rows.length+" entry — Google Sheets সংযুক্ত","ok");}
-    }else throw new Error();
+      rows=data.rows||[];
+      quickLinks=data.links||[];
+      renderAll();
+      doLinkSearchTab();
+      setStatus("✅ "+rows.length+" entry সংযুক্ত","ok");
+    }
   }catch(e){
-    const b=localStorage.getItem("tosKhoBackup");
-    if(b){rows=JSON.parse(b);setStatus("⚠️ Offline: "+rows.length+" entry (local backup)","err");}
-    else{rows=[];setStatus("⚠️ সংযোগ ব্যর্থ","err");}
+    setStatus("⚠️ সংযোগ ব্যর্থ","err");
   }
-  renderAll();renderImportAll();renderDmAll();doLinkSearchTab();
 }
-async function saveToSheets(){
-  setStatus("⏳ Save হচ্ছে...","loading");
-  try{
-    const res=await fetch(API_URL,{method:"POST",redirect:"follow",headers:{"Content-Type":"text/plain"},body:JSON.stringify({action:"save",rows:rows.map((r,i)=>[i+1,r.company,r.user,r.password,r.note])})});
-    const data=await res.json();
-    if(data.status==="ok"){localStorage.setItem("tosKhoBackup",JSON.stringify(rows));setStatus("✅ "+rows.length+" entry save হয়েছে!","ok");toast("💾 PW Save সফল!");}
-    else throw new Error();
-  }catch(e){localStorage.setItem("tosKhoBackup",JSON.stringify(rows));setStatus("⚠️ Local এ save হয়েছে","err");}
-}
-async function saveEverything(){await saveToSheets();await saveLinksToSheets();/* Add other save functions if needed */}
-function deleteRow(i){if(!confirm("মুছবেন?"))return;rows.splice(i,1);renderAll();setStatus("🗑️ মুছে গেছে।","ok");}
+
 function renderAll(){
   const q=document.getElementById("search").value.toLowerCase();
   const tbody=document.getElementById("tbody"),mlist=document.getElementById("mobile-list");
@@ -647,41 +281,55 @@ function renderAll(){
   filtered.forEach((r,i)=>{
     const tr=document.createElement("tr");
     tr.innerHTML=`<td>${i+1}</td>
-      <td><input class="co-input" value="${r.company}" onchange="editField(${i},'company',this.value)"></td>
-      <td><div class="cell-flex"><input value="${r.user}" onchange="editField(${i},'user',this.value)"><button class="cpbtn" onclick="copyText('${r.user}')">C</button></div></td>
-      <td><div class="cell-flex"><input class="mono" value="${r.password}" onchange="editField(${i},'password',this.value)"><button class="cpbtn" onclick="copyText('${r.password}')">C</button></div></td>
-      <td><div class="cell-flex"><input value="${r.note}" onchange="editField(${i},'note',this.value)"><button class="cpbtn" onclick="copyText('${r.note}')">C</button></div></td>
+      <td>${r.company}</td>
+      <td><div class="cell-flex">${r.user} <button class="cpbtn" onclick="copyText('${r.user}')">C</button></div></td>
+      <td><div class="cell-flex">${r.password} <button class="cpbtn" onclick="copyText('${r.password}')">C</button></div></td>
+      <td><div class="cell-flex">${r.note} <button class="cpbtn" onclick="copyText('${r.note}')">C</button></div></td>
       <td><button class="delbtn" onclick="deleteRow(${i})">Del</button></td>`;
     tbody.appendChild(tr);
     const card=document.createElement("div");card.className="card";
     card.innerHTML=`<div class="card-company">${r.company}</div>
-      <div class="card-row"><label>U:</label><input value="${r.user}" onchange="editField(${i},'user',this.value)"><button class="card-copy" onclick="copyText('${r.user}')">Copy</button></div>
-      <div class="card-row"><label>P:</label><input class="mono" value="${r.password}" onchange="editField(${i},'password',this.value)"><button class="card-copy" onclick="copyText('${r.password}')">Copy</button></div>
-      <div class="card-row"><label>D:</label><input value="${r.note}" onchange="editField(${i},'note',this.value)"><button class="card-copy" onclick="copyText('${r.note}')">Copy</button></div>
-      <button class="card-del" onclick="deleteRow(${i})">Delete Entry</button>`;
+      <div class="card-row"><label>U:</label><span>${r.user}</span><button class="card-copy" onclick="copyText('${r.user}')">Copy</button></div>
+      <div class="card-row"><label>P:</label><span>${r.password}</span><button class="card-copy" onclick="copyText('${r.password}')">Copy</button></div>
+      <button class="card-del" onclick="deleteRow(${i})">Delete</button>`;
     mlist.appendChild(card);
   });
 }
-function editField(i,f,v){rows[i][f]=v;}
-function copyText(t){if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(t).then(()=>toast("📋 Copied!")).catch(()=>fallbackCopy(t));}else fallbackCopy(t);}
-function fallbackCopy(t){const el=document.createElement("textarea");el.value=t;el.style.position="fixed";el.style.opacity="0";document.body.appendChild(el);el.focus();el.select();try{document.execCommand("copy");toast("📋 Copied!");}catch(e){toast("❌ Copy হয়নি");}document.body.removeChild(el);}
+
+function doLinkSearchTab() {
+  const q = (document.getElementById("tab-link-srch").value || "").toLowerCase().trim();
+  const container = document.getElementById("link-results-tab");
+  container.innerHTML = "";
+  const matched = q ? quickLinks.filter(l => l.label.toLowerCase().includes(q) || l.url.toLowerCase().includes(q)) : quickLinks;
+  matched.forEach(l => {
+    const card = document.createElement("div");
+    card.className = "link-card";
+    card.innerHTML = `<div class="link-info"><span class="link-label">${l.label}</span><span class="link-url-text">${l.url}</span></div>
+      <div class="link-actions"><button class="cpbtn" onclick="copyText('${l.url}')">Copy</button><a href="${l.url}" target="_blank" class="link-go-btn">GO ↗</a></div>`;
+    container.appendChild(card);
+  });
+}
+
+function switchTab(tab){
+  document.getElementById("tab-pw").className="tab-btn"+(tab==='pw'?" active":"");
+  document.getElementById("tab-links").className="tab-btn"+(tab==='links'?" active":"");
+  document.getElementById("pw-section").style.display=tab==='pw'?"flex":"none";
+  document.getElementById("links-section").style.display=tab==='links'?"flex":"none";
+}
+
+function copyText(t){navigator.clipboard.writeText(t).then(()=>toast("📋 Copied!"));}
 function toast(m){const t=document.getElementById("toast");t.textContent=m;t.style.display="block";setTimeout(()=>t.style.display="none",2000);}
 function setStatus(m,c){const s=document.getElementById("status");s.textContent=m;s.className=c||"";}
 function clearSearch(){document.getElementById("search").value="";renderAll();}
 
-// (Remaining logic for DM and Import sections would go here - simplified for brevity)
-function loadDmRows(){/* Logic */}
-function loadImportRows(){/* Logic */}
-function renderDmAll(){/* Logic */}
-function renderImportAll(){/* Logic */}
-function openAddDmModal(){/* Logic */}
-function openAddImportModal(){/* Logic */}
-function saveDmEntry(){/* Logic */}
-function saveImportEntry(){/* Logic */}
-function exportExcel(){/* Logic */}
-
-window.onload=()=>{
-  // Auto login if saved? (Optional)
+window.onload = () => {
+  const u = localStorage.getItem("appUser");
+  const p = localStorage.getItem("appPass");
+  if(u === DEFAULT_USER && p === DEFAULT_PASS){
+    document.getElementById("login-screen").style.display="none";
+    document.getElementById("app").style.display="flex";
+    loadFromSheets();
+  }
 };
 </script>
 </body>
