@@ -29,28 +29,37 @@ header{background:#111;padding:15px 20px;border-bottom:3px solid #00d4ff;display
 .header-right{display:flex;align-items:center;gap:15px;}
 .company-badge{background:rgba(0,255,0,0.1);color:#00ff00;padding:8px 18px;border-radius:20px;font-weight:bold;border:2px solid #00ff00;font-size:0.9rem;box-shadow:0 0 10px rgba(0,255,0,0.2);}
 .btn-logout-pro{background:linear-gradient(90deg,#ff0055,#c0392b);color:#fff;border:none;padding:10px 20px;border-radius:25px;font-weight:bold;cursor:pointer;display:flex;align-items:center;gap:8px;transition:0.3s;box-shadow:0 0 15px rgba(255,0,85,0.3);}
-.btn-logout-pro:hover{transform:scale(1.05);box-shadow:0 0 25px rgba(255,0,85,0.6);}
 
 /* ── TABS ── */
 .tab-container{background:#111;display:flex;border-bottom:2px solid #00d4ff;overflow-x:auto;}
 .tab-btn{padding:12px 25px;border:none;background:transparent;color:#7ec8e3;cursor:pointer;font-weight:bold;white-space:nowrap;border-bottom:3px solid transparent;transition:0.3s ease-in-out;position:relative;}
-.tab-btn.active{color:#fff;transform:translateY(-2px);}
+.tab-btn.active{color:#fff;}
 .tab-btn::after{content:'';position:absolute;bottom:0;left:50%;width:0;height:4px;background:#ff0000;transition:0.3s ease-in-out;transform:translateX(-50%);}
 .tab-btn.active::after{width:100%;box-shadow:0 0 10px #ff0000;}
 
-/* ── TOOLBAR & STATUS ── */
+/* ── TOOLBAR ── */
 .toolbar{background:#000;padding:15px 20px;display:flex;gap:12px;align-items:center;flex-wrap:wrap;border-bottom:1px solid #00d4ff33;}
 .toolbar button{padding:10px 18px;border-radius:8px;border:2px solid #fff;background:#000;color:#fff;font-weight:bold;cursor:pointer;font-size:0.85rem;transition:0.3s;}
 .toolbar button:hover{background:#fff;color:#000;}
+
+/* ── SEARCH BOX ── */
+.search-container{padding:20px;background:#000;display:flex;justify-content:center;}
+.search-wrapper{position:relative;width:100%;max-width:800px;}
+.search-wrapper input{width:100%;padding:15px 20px 15px 50px;border-radius:30px;border:2px solid #00d4ff;background:#111;color:#fff;font-size:1.1rem;outline:none;transition:0.3s;box-shadow:0 0 15px rgba(0,212,255,0.1);}
+.search-wrapper input:focus{border-color:#00ffcc;box-shadow:0 0 25px rgba(0,255,204,0.3);}
+.search-wrapper::before{content:'🔍';position:absolute;left:20px;top:50%;transform:translateY(-50%);font-size:1.2rem;opacity:0.7;}
+
+/* ── STATUS ── */
 #status-bar{padding:10px 20px;background:#111;display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid #00d4ff22;}
 #total-count{background:#00d4ff;color:#000;padding:3px 10px;border-radius:12px;font-size:0.75rem;font-weight:bold;}
 
 /* ── TABLE ── */
-.table-container{flex:1;overflow:auto;padding:15px 20px 20px;background:#000;}
+.table-container{flex:1;overflow:auto;padding:0 20px 20px;background:#000;}
 table{width:100%;border-collapse:collapse;background:#111;border-radius:10px;overflow:hidden;border:1px solid #333;table-layout:fixed;}
 th{background:#222;color:#00d4ff;padding:14px;text-align:left;font-size:0.85rem;border-bottom:2px solid #00d4ff;text-transform:uppercase;}
-td{padding:10px 12px;border-bottom:1px solid #222;font-size:0.95rem;color:#eee;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;vertical-align:middle;}
-.cell-content{display:inline-block;width:100px;overflow:hidden;text-overflow:ellipsis;vertical-align:middle;}
+td{padding:12px;border-bottom:1px solid #222;font-size:0.95rem;color:#eee;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;vertical-align:middle;}
+.cell-30{display:inline-block;width:250px;overflow:hidden;text-overflow:ellipsis;vertical-align:middle;}
+.cell-10{display:inline-block;width:120px;overflow:hidden;text-overflow:ellipsis;vertical-align:middle;}
 .copy-btn{background:transparent;border:1px solid #00d4ff;color:#00d4ff;padding:4px 8px;border-radius:5px;cursor:pointer;font-size:0.7rem;margin-left:5px;vertical-align:middle;}
 .copy-btn:hover{background:#00d4ff;color:#000;}
 .edit-btn{background:#00d4ff;color:#000;border:none;padding:6px 12px;border-radius:5px;cursor:pointer;font-weight:bold;margin-right:5px;}
@@ -64,7 +73,7 @@ td{padding:10px 12px;border-bottom:1px solid #222;font-size:0.95rem;color:#eee;o
 .form-g input{width:100%;padding:12px;background:#000;border:1px solid #444;border-radius:8px;color:#fff;outline:none;}
 .modal-f{display:flex;gap:15px;margin-top:25px;}
 .modal-f button{flex:1;padding:12px;border-radius:8px;border:none;font-weight:bold;cursor:pointer;}
-.btn-ok{background:#00d4ff;color:#000;}
+.btn-ok{background:#00ff88;color:#000;}
 .btn-cancel{background:#333;color:#fff;}
 
 #toast{position:fixed;bottom:20px;right:20px;background:#00d4ff;color:#000;padding:15px 25px;border-radius:10px;display:none;z-index:2000;font-weight:bold;}
@@ -76,7 +85,7 @@ td{padding:10px 12px;border-bottom:1px solid #222;font-size:0.95rem;color:#eee;o
 <div id="login-screen">
   <div class="login-box">
     <h1>🔐 USER PW LIST V.1</h1>
-    <div id="login-err"></div>
+    <div id="login-err" style="color:#ff0055;margin-bottom:10px;font-size:0.9rem;"></div>
     <div class="lf">
       <label>USERNAME</label>
       <input type="text" id="l-user" placeholder="seashipping" autocomplete="off">
@@ -121,7 +130,6 @@ td{padding:10px 12px;border-bottom:1px solid #222;font-size:0.95rem;color:#eee;o
 
   <div class="toolbar">
     <button onclick="openModal('add-modal')">➕ Add Entry</button>
-    <button onclick="saveToSheets()">💾 Save</button>
     <button onclick="exportToExcel()">📤 Export</button>
     <button onclick="importFromExcel()">📥 Import</button>
     <button onclick="loadFromSheets()">🔄 Reload</button>
@@ -133,14 +141,16 @@ td{padding:10px 12px;border-bottom:1px solid #222;font-size:0.95rem;color:#eee;o
     <div id="total-count">Total: 0</div>
   </div>
 
-  <div class="search-bar">
-    <input type="text" id="search-input" placeholder="🔍 Universal Search (Passwords, Links, Barcodes...)" oninput="renderTable()">
+  <div class="search-container">
+    <div class="search-wrapper">
+      <input type="text" id="search-input" placeholder="Universal Search (Passwords, Links, Barcodes...)" oninput="renderTable()">
+    </div>
   </div>
 
   <!-- TABLES -->
   <div id="pw-tab" class="table-container">
     <table>
-      <colgroup><col style="width:50px"><col style="width:150px"><col style="width:160px"><col style="width:160px"><col style="width:160px"><col style="width:160px"><col style="width:120px"></colgroup>
+      <colgroup><col style="width:50px"><col style="width:280px"><col style="width:150px"><col style="width:150px"><col style="width:150px"><col style="width:150px"><col style="width:120px"></colgroup>
       <thead><tr><th>#</th><th>Company</th><th>Shj Code</th><th>User</th><th>Password</th><th>Dubai Code</th><th>Action</th></tr></thead>
       <tbody id="pw-body"></tbody>
     </table>
@@ -148,7 +158,7 @@ td{padding:10px 12px;border-bottom:1px solid #222;font-size:0.95rem;color:#eee;o
 
   <div id="dm-tab" class="table-container" style="display:none;">
     <table>
-      <colgroup><col style="width:50px"><col style="width:150px"><col style="width:120px"><col style="width:120px"><col style="width:120px"><col style="width:150px"><col style="width:120px"></colgroup>
+      <colgroup><col style="width:50px"><col style="width:200px"><col style="width:120px"><col style="width:120px"><col style="width:120px"><col style="width:180px"><col style="width:120px"></colgroup>
       <thead><tr><th>#</th><th>Products</th><th>Size</th><th>Brand</th><th>Country</th><th>Barcode</th><th>Action</th></tr></thead>
       <tbody id="dm-body"></tbody>
     </table>
@@ -156,7 +166,7 @@ td{padding:10px 12px;border-bottom:1px solid #222;font-size:0.95rem;color:#eee;o
 
   <div id="import-tab" class="table-container" style="display:none;">
     <table>
-      <colgroup><col style="width:50px"><col style="width:200px"><col style="width:auto"><col style="width:120px"></colgroup>
+      <colgroup><col style="width:50px"><col style="width:250px"><col style="width:auto"><col style="width:120px"></colgroup>
       <thead><tr><th>#</th><th>Code</th><th>Description</th><th>Action</th></tr></thead>
       <tbody id="import-body"></tbody>
     </table>
@@ -164,7 +174,7 @@ td{padding:10px 12px;border-bottom:1px solid #222;font-size:0.95rem;color:#eee;o
 
   <div id="links-tab" class="table-container" style="display:none;">
     <table>
-      <colgroup><col style="width:50px"><col style="width:200px"><col style="width:auto"><col style="width:150px"></colgroup>
+      <colgroup><col style="width:50px"><col style="width:300px"><col style="width:auto"><col style="width:120px"></colgroup>
       <thead><tr><th>#</th><th>Title</th><th>URL</th><th>Action</th></tr></thead>
       <tbody id="links-body"></tbody>
     </table>
@@ -190,7 +200,7 @@ td{padding:10px 12px;border-bottom:1px solid #222;font-size:0.95rem;color:#eee;o
     <div id="modal-title" style="color:#00d4ff;font-size:1.2rem;font-weight:bold;margin-bottom:20px;">➕ Add New Entry</div>
     <div id="add-form-fields"></div>
     <div class="modal-f">
-      <button class="btn-ok" id="modal-btn" onclick="addEntry()">Add</button>
+      <button class="btn-ok" id="modal-btn" onclick="addEntry()">💾 Save</button>
       <button class="btn-cancel" onclick="closeModal('add-modal')">Cancel</button>
     </div>
   </div>
@@ -271,13 +281,13 @@ function renderTable() {
       const actualIdx = data.indexOf(r);
       const tr = document.createElement('tr');
       if(t === 'pw') {
-        tr.innerHTML = `<td>${i+1}</td><td><span class="cell-content">${esc(r.company)}</span><button class="copy-btn" onclick="copy('${esc(r.company)}')">📋</button></td><td><span class="cell-content">${esc(r.shj)}</span><button class="copy-btn" onclick="copy('${esc(r.shj)}')">📋</button></td><td><span class="cell-content">${esc(r.user)}</span><button class="copy-btn" onclick="copy('${esc(r.user)}')">📋</button></td><td><span class="cell-content">${esc(r.password)}</span><button class="copy-btn" onclick="copy('${esc(r.password)}')">📋</button></td><td><span class="cell-content">${esc(r.note)}</span><button class="copy-btn" onclick="copy('${esc(r.note)}')">📋</button></td><td><button class="edit-btn" onclick="openEdit('${t}',${actualIdx})">✏️</button><button class="del-btn" onclick="deleteRow('${t}',${actualIdx})">🗑️</button></td>`;
+        tr.innerHTML = `<td>${i+1}</td><td title="${esc(r.company)}"><span class="cell-30">${esc(r.company)}</span></td><td><span class="cell-10">${esc(r.shj)}</span><button class="copy-btn" onclick="copy('${esc(r.shj)}')">📋</button></td><td><span class="cell-10">${esc(r.user)}</span><button class="copy-btn" onclick="copy('${esc(r.user)}')">📋</button></td><td><span class="cell-10">${esc(r.password)}</span><button class="copy-btn" onclick="copy('${esc(r.password)}')">📋</button></td><td><span class="cell-10">${esc(r.note)}</span><button class="copy-btn" onclick="copy('${esc(r.note)}')">📋</button></td><td><button class="edit-btn" onclick="openEdit('${t}',${actualIdx})">✏️</button><button class="del-btn" onclick="deleteRow('${t}',${actualIdx})">🗑️</button></td>`;
       } else if(t === 'dm') {
-        tr.innerHTML = `<td>${i+1}</td><td><span class="cell-content">${esc(r.product)}</span><button class="copy-btn" onclick="copy('${esc(r.product)}')">📋</button></td><td><span class="cell-content">${esc(r.size)}</span><button class="copy-btn" onclick="copy('${esc(r.size)}')">📋</button></td><td><span class="cell-content">${esc(r.brand)}</span><button class="copy-btn" onclick="copy('${esc(r.brand)}')">📋</button></td><td><span class="cell-content">${esc(r.country)}</span><button class="copy-btn" onclick="copy('${esc(r.country)}')">📋</button></td><td><span class="cell-content">${esc(r.barcode)}</span><button class="copy-btn" onclick="copy('${esc(r.barcode)}')">📋</button></td><td><button class="edit-btn" onclick="openEdit('${t}',${actualIdx})">✏️</button><button class="del-btn" onclick="deleteRow('${t}',${actualIdx})">🗑️</button></td>`;
+        tr.innerHTML = `<td>${i+1}</td><td title="${esc(r.product)}"><span class="cell-30">${esc(r.product)}</span></td><td><span class="cell-10">${esc(r.size)}</span><button class="copy-btn" onclick="copy('${esc(r.size)}')">📋</button></td><td><span class="cell-10">${esc(r.brand)}</span><button class="copy-btn" onclick="copy('${esc(r.brand)}')">📋</button></td><td><span class="cell-10">${esc(r.country)}</span><button class="copy-btn" onclick="copy('${esc(r.country)}')">📋</button></td><td><span class="cell-10">${esc(r.barcode)}</span><button class="copy-btn" onclick="copy('${esc(r.barcode)}')">📋</button></td><td><button class="edit-btn" onclick="openEdit('${t}',${actualIdx})">✏️</button><button class="del-btn" onclick="deleteRow('${t}',${actualIdx})">🗑️</button></td>`;
       } else if(t === 'import') {
         tr.innerHTML = `<td>${i+1}</td><td>${esc(r.name)}<button class="copy-btn" onclick="copy('${esc(r.name)}')">📋</button></td><td>${esc(r.desc)}</td><td><button class="edit-btn" onclick="openEdit('${t}',${actualIdx})">✏️</button><button class="del-btn" onclick="deleteRow('${t}',${actualIdx})">🗑️</button></td>`;
       } else if(t === 'links') {
-        tr.innerHTML = `<td>${i+1}</td><td>${esc(r.title)}<button class="copy-btn" onclick="copy('${esc(r.title)}')">📋</button></td><td><a href="${esc(r.url)}" target="_blank" style="color:#00d4ff;">${esc(r.url)}</a><button class="copy-btn" onclick="copy('${esc(r.url)}')">📋</button></td><td><button class="edit-btn" onclick="openEdit('${t}',${actualIdx})">✏️</button><button class="del-btn" onclick="deleteRow('${t}',${actualIdx})">🗑️</button></td>`;
+        tr.innerHTML = `<td>${i+1}</td><td title="${esc(r.title)}"><span class="cell-30">${esc(r.title)}</span></td><td><a href="${esc(r.url)}" target="_blank" style="color:#00d4ff;">${esc(r.url)}</a><button class="copy-btn" onclick="copy('${esc(r.url)}')">📋</button></td><td><button class="edit-btn" onclick="openEdit('${t}',${actualIdx})">✏️</button><button class="del-btn" onclick="deleteRow('${t}',${actualIdx})">🗑️</button></td>`;
       }
       body.appendChild(tr);
     });
@@ -295,13 +305,13 @@ function removeDuplicates() {
   });
   rows.pw = unique;
   renderTable();
+  saveToSheets();
   showToast(`🧹 Removed ${initialCount - unique.length} duplicates!`);
 }
 
 function openModal(id) {
   editingIdx = -1;
   document.getElementById('modal-title').textContent = "➕ Add New Entry";
-  document.getElementById('modal-btn').textContent = "Add";
   const fields = document.getElementById('add-form-fields');
   if(currentTab === 'pw') fields.innerHTML = `<div class="form-g"><label>Company</label><input id="in-1"></div><div class="form-g"><label>Shj Code</label><input id="in-2"></div><div class="form-g"><label>User</label><input id="in-3"></div><div class="form-g"><label>Password</label><input id="in-4"></div><div class="form-g"><label>Dubai Code</label><input id="in-5"></div>`;
   else if(currentTab === 'dm') fields.innerHTML = `<div class="form-g"><label>Product Name</label><input id="in-1"></div><div class="form-g"><label>Size/Weight</label><input id="in-2"></div><div class="form-g"><label>Brand Name</label><input id="in-3"></div><div class="form-g"><label>Country</label><input id="in-4"></div><div class="form-g"><label>Barcode</label><input id="in-5"></div>`;
@@ -313,7 +323,6 @@ function openModal(id) {
 function openEdit(tab, idx) {
   editingIdx = idx;
   document.getElementById('modal-title').textContent = "✏️ Edit Entry";
-  document.getElementById('modal-btn').textContent = "Update";
   const fields = document.getElementById('add-form-fields');
   const r = rows[tab][idx];
   if(tab === 'pw') fields.innerHTML = `<div class="form-g"><label>Company</label><input id="in-1" value="${esc(r.company)}"></div><div class="form-g"><label>Shj Code</label><input id="in-2" value="${esc(r.shj)}"></div><div class="form-g"><label>User</label><input id="in-3" value="${esc(r.user)}"></div><div class="form-g"><label>Password</label><input id="in-4" value="${esc(r.password)}"></div><div class="form-g"><label>Dubai Code</label><input id="in-5" value="${esc(r.note)}"></div>`;
@@ -323,7 +332,7 @@ function openEdit(tab, idx) {
   document.getElementById('add-modal').style.display = 'flex';
 }
 
-function addEntry() {
+async function addEntry() {
   const v1 = document.getElementById('in-1').value.trim();
   if(!v1) return alert("Required field empty");
   const newRow = {};
@@ -331,20 +340,30 @@ function addEntry() {
   else if(currentTab === 'dm') { newRow.product = v1; newRow.size = document.getElementById('in-2').value; newRow.brand = document.getElementById('in-3').value; newRow.country = document.getElementById('in-4').value; newRow.barcode = document.getElementById('in-5').value; }
   else if(currentTab === 'import') { newRow.name = v1; newRow.desc = document.getElementById('in-2').value; }
   else if(currentTab === 'links') { newRow.title = v1; newRow.url = document.getElementById('in-2').value; }
+  
   if(editingIdx > -1) rows[currentTab][editingIdx] = newRow;
   else rows[currentTab].push(newRow);
-  renderTable(); closeModal('add-modal');
+  
+  renderTable(); 
+  closeModal('add-modal');
+  await saveToSheets(); // Auto Save to Sheets
 }
 
-function deleteRow(t, idx) { if(confirm("Delete?")) { rows[t].splice(idx, 1); renderTable(); } }
+async function deleteRow(t, idx) { 
+  if(confirm("Delete?")) { 
+    rows[t].splice(idx, 1); 
+    renderTable(); 
+    await saveToSheets(); // Auto Save to Sheets
+  } 
+}
 
 async function saveToSheets() {
-  document.getElementById('status-text').textContent = "⏳ Saving Data...";
+  document.getElementById('status-text').textContent = "⏳ Saving to Google Sheets...";
   try {
     const res = await fetch(API_URL, { method: 'POST', body: JSON.stringify({ action: 'save', username: currentUser.username, rows: rows }) });
     const data = await res.json();
-    if(data.status === "ok") { document.getElementById('status-text').textContent = "✅ Data Saved"; showToast("💾 Saved Successfully!"); }
-  } catch(e) { document.getElementById('status-text').textContent = "❌ Save Error"; }
+    if(data.status === "ok") { document.getElementById('status-text').textContent = "✅ Synced with Sheets"; showToast("💾 Data Synced!"); }
+  } catch(e) { document.getElementById('status-text').textContent = "❌ Sync Error"; }
 }
 
 function exportToExcel() {
@@ -356,18 +375,20 @@ function exportToExcel() {
 
 function importFromExcel() { document.getElementById('file-input').click(); }
 
-function handleFileImport(event) {
+async function handleFileImport(event) {
   const file = event.target.files[0];
   if(!file) return;
   const reader = new FileReader();
-  reader.onload = (e) => {
+  reader.onload = async (e) => {
     try {
       const data = new Uint8Array(e.target.result);
       const workbook = XLSX.read(data, { type: 'array' });
       const sheet = workbook.Sheets[workbook.SheetNames[0]];
       const json = XLSX.utils.sheet_to_json(sheet);
       rows[currentTab] = json;
-      renderTable(); showToast("📥 Imported!");
+      renderTable(); 
+      showToast("📥 Imported!");
+      await saveToSheets(); // Auto Save to Sheets
     } catch(err) { alert("Import failed: " + err.message); }
   };
   reader.readAsArrayBuffer(file);
