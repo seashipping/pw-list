@@ -9,25 +9,33 @@
 *{box-sizing:border-box;margin:0;padding:0;}
 body{font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;background:#1a1a2e;color:#eee;height:100vh;display:flex;flex-direction:column;overflow:hidden;}
 
-/* ── LOGIN SCREEN ── */
+/* ── LOGIN ── */
 #login-screen{position:fixed;inset:0;background:#1a1a2e;display:flex;align-items:center;justify-content:center;z-index:9999;}
-.login-box{background:#16213e;border:2px solid #e94560;border-radius:20px;padding:40px;text-align:center;max-width:400px;width:90%;box-shadow: 0 0 20px rgba(233, 69, 96, 0.2);}
+.login-box{background:#16213e;border:2px solid #e94560;border-radius:20px;padding:40px;text-align:center;max-width:400px;width:90%;box-shadow:0 0 20px rgba(233,69,96,0.2);}
 .login-box h1{color:#2dd4ff;font-size:1.5rem;margin-bottom:10px;display:flex;align-items:center;justify-content:center;gap:10px;}
 .login-box p{color:#aaa;font-size:0.8rem;margin-bottom:20px;text-transform:uppercase;letter-spacing:1px;}
 .lf{margin-bottom:15px;text-align:left;}
 .lf label{display:block;color:#cfd8e3;font-size:0.75rem;font-weight:bold;margin-bottom:5px;}
+.inp-wrap{position:relative;}
 .lf input{width:100%;padding:12px;border-radius:10px;border:2px solid #2a2a4a;background:#0f3460;color:#fff;font-size:1rem;outline:none;transition:0.3s;}
 .lf input:focus{border-color:#e94560;box-shadow:0 0 10px rgba(233, 69, 96, 0.3);}
+.eye-btn{position:absolute;right:10px;top:50%;transform:translateY(-50%);background:none;border:none;color:#aaa;font-size:1.2rem;cursor:pointer;padding:5px;}
 .btn-login{width:100%;padding:14px;background:linear-gradient(90deg,#c026d3,#2dd4ff);color:#fff;border:none;border-radius:30px;font-size:1rem;font-weight:bold;cursor:pointer;margin-top:10px;transition:0.3s;}
 .btn-login:hover{transform:scale(1.02);box-shadow:0 0 15px rgba(45, 212, 255, 0.5);}
 #login-err{color:#e94560;font-size:0.8rem;margin-bottom:10px;min-height:18px;}
 
-/* ── APP INTERFACE ── */
+/* ── APP ── */
 #app{display:none;flex-direction:column;height:100%;}
 header{background:#16213e;padding:15px 20px;border-bottom:2px solid #e94560;display:flex;justify-content:space-between;align-items:center;}
 .header-title{color:#2dd4ff;font-weight:bold;font-size:1.2rem;display:flex;align-items:center;gap:10px;}
 .user-info{display:flex;align-items:center;gap:15px;}
 .user-badge{background:#0f3460;padding:5px 12px;border-radius:20px;font-size:0.8rem;color:#c026d3;font-weight:bold;border:1px solid #c026d3;}
+
+/* ── TABS ── */
+.tab-container{background:#0f3460;display:flex;border-bottom:2px solid #e94560;overflow-x:auto;}
+.tab-btn{padding:12px 20px;border:none;background:transparent;color:#7ec8e3;cursor:pointer;font-weight:bold;white-space:nowrap;border-bottom:3px solid transparent;transition:0.3s;}
+.tab-btn.active{color:#fff;border-bottom-color:#e94560;background:#16213e;}
+.tab-btn:hover{background:#1a2a4a;}
 
 /* ── TOOLBAR ── */
 .toolbar{background:#0f3460;padding:10px 20px;display:flex;gap:10px;align-items:center;flex-wrap:wrap;}
@@ -36,7 +44,11 @@ header{background:#16213e;padding:15px 20px;border-bottom:2px solid #e94560;disp
 .btn-save{background:#27ae60;color:#fff;}
 .btn-export{background:#f39c12;color:#fff;}
 .btn-logout{background:#2a2a4a;color:#aaa;}
+.btn-admin{background:#8e44ad;color:#fff;}
 .toolbar button:hover{opacity:0.8;transform:translateY(-2px);}
+
+/* ── STATUS ── */
+#status{padding:8px 20px;font-size:0.8rem;background:#1a1a2e;color:#cfd8e3;border-bottom:1px solid #2dd4ff22;}
 
 /* ── SEARCH ── */
 .search-bar{padding:10px 20px;background:#1a1a2e;display:flex;gap:10px;}
@@ -55,14 +67,28 @@ tr:hover{background:rgba(233, 69, 96, 0.1);}
 
 /* ── MODALS ── */
 .modal{display:none;position:fixed;inset:0;background:rgba(0,0,0,0.8);z-index:1000;align-items:center;justify-content:center;}
-.modal-content{background:#16213e;border:2px solid #e94560;border-radius:15px;padding:25px;width:90%;max-width:450px;}
+.modal-content{background:#16213e;border:2px solid #e94560;border-radius:15px;padding:25px;width:90%;max-width:500px;max-height:80vh;overflow-y:auto;}
 .modal-h{color:#2dd4ff;margin-bottom:15px;font-size:1.1rem;}
 .form-g{margin-bottom:12px;}
 .form-g label{display:block;font-size:0.75rem;color:#aaa;margin-bottom:4px;}
-.form-g input{width:100%;padding:10px;background:#0f3460;border:1px solid #2a2a4a;border-radius:8px;color:#fff;outline:none;}
+.form-g input, .form-g select{width:100%;padding:10px;background:#0f3460;border:1px solid #2a2a4a;border-radius:8px;color:#fff;outline:none;}
 .modal-f{display:flex;gap:10px;margin-top:20px;}
 .modal-f button{flex:1;padding:10px;border-radius:8px;border:none;font-weight:bold;cursor:pointer;}
 
+/* ── ADMIN PANEL ── */
+#admin-section{display:none;flex-direction:column;flex:1;overflow:hidden;}
+#admin-section.show{display:flex;}
+.admin-content{flex:1;overflow-y:auto;padding:20px;}
+.admin-card{background:#0f3460;border:1px solid #2dd4ff55;border-radius:10px;padding:15px;margin-bottom:20px;}
+.admin-card h3{color:#2dd4ff;margin-bottom:10px;font-size:1rem;}
+.user-item{background:#16213e;border:1px solid #2a2a4a;border-radius:8px;padding:10px;margin-bottom:8px;display:flex;justify-content:space-between;align-items:center;}
+.user-name{color:#2dd4ff;font-weight:bold;}
+.user-role{color:#aaa;font-size:0.75rem;}
+.audit-item{background:#16213e;border-left:3px solid #2dd4ff;border-radius:4px;padding:10px;margin-bottom:8px;font-size:0.8rem;}
+.audit-time{color:#aaa;font-size:0.7rem;}
+.audit-user{color:#c026d3;font-weight:bold;}
+
+/* ── TOAST ── */
 #toast{position:fixed;bottom:20px;right:20px;background:#27ae60;color:#fff;padding:12px 20px;border-radius:10px;display:none;z-index:2000;}
 </style>
 </head>
@@ -80,7 +106,10 @@ tr:hover{background:rgba(233, 69, 96, 0.1);}
     </div>
     <div class="lf">
       <label>PASSWORD</label>
-      <input type="password" id="l-pass" placeholder="••••••••">
+      <div class="inp-wrap">
+        <input type="password" id="l-pass" placeholder="••••••••">
+        <button class="eye-btn" onclick="togglePass('l-pass')">👁️</button>
+      </div>
     </div>
     <button class="btn-login" onclick="handleLogin()">LOGIN NOW</button>
     <p style="margin-top:20px;color:#e94560;font-size:0.7rem;letter-spacing:2px;">PRIVATE & CONFIDENTIAL</p>
@@ -97,233 +126,283 @@ tr:hover{background:rgba(233, 69, 96, 0.1);}
     </div>
   </header>
 
+  <!-- TABS -->
+  <div class="tab-container">
+    <button class="tab-btn active" onclick="switchTab('pw')">📋 Passwords</button>
+    <button class="tab-btn" onclick="switchTab('dm')">📦 DM Barcodes</button>
+    <button class="tab-btn" onclick="switchTab('import')">📥 Import Codes</button>
+    <button class="tab-btn" onclick="switchTab('links')">🔗 Links</button>
+    <button class="tab-btn" id="admin-tab" onclick="switchTab('admin')" style="display:none;margin-left:auto;">⚙️ Admin</button>
+  </div>
+
   <div class="toolbar">
-    <button class="btn-add" onclick="openModal('add-modal')">➕ Add User PW</button>
-    <button class="btn-save" onclick="saveToSheets()">💾 Save to Excel</button>
-    <button class="btn-export" onclick="exportToExcel()">📤 Export Excel</button>
+    <button class="btn-add" onclick="openModal('add-modal')">➕ Add Entry</button>
+    <button class="btn-save" onclick="saveToSheets()">💾 Save</button>
+    <button class="btn-export" onclick="exportToExcel()">📤 Export</button>
     <button style="background:#8e44ad;color:#fff;" onclick="openModal('pass-modal')">🔑 Change Pass</button>
     <button style="background:#34495e;color:#fff;" onclick="loadFromSheets()">🔄 Reload</button>
   </div>
 
+  <div id="status">⏳ Loading...</div>
+
   <div class="search-bar">
-    <input type="text" id="search-input" placeholder="🔍 Search Company, User, or Dubai Code..." oninput="renderTable()">
+    <input type="text" id="search-input" placeholder="🔍 Universal Search (Passwords, Links, Barcodes...)" oninput="renderTable()">
     <button onclick="document.getElementById('search-input').value='';renderTable()" style="background:#e94560;color:#fff;border:none;padding:8px 15px;border-radius:20px;cursor:pointer;">Clear</button>
   </div>
 
-  <div class="table-container">
+  <!-- TABLES -->
+  <div id="pw-tab" class="table-container">
     <table>
       <thead>
-        <tr>
-          <th style="width:50px">#</th>
-          <th>Company Name</th>
-          <th>Shj Code</th>
-          <th>User Name</th>
-          <th>Password</th>
-          <th>Dubai Code</th>
-          <th style="width:80px">Action</th>
-        </tr>
+        <tr><th style="width:50px">#</th><th>Company</th><th>Shj Code</th><th>User</th><th>Password</th><th>Dubai Code</th><th style="width:80px">Action</th></tr>
       </thead>
-      <tbody id="data-body"></tbody>
+      <tbody id="pw-body"></tbody>
     </table>
-    <div id="no-data" style="text-align:center;padding:40px;color:#555;display:none;">No data found.</div>
+    <div id="pw-empty" style="text-align:center;padding:40px;color:#555;display:none;">No data</div>
   </div>
-</div>
 
-<!-- ══ ADD MODAL ══ -->
-<div id="add-modal" class="modal">
-  <div class="modal-content">
-    <div class="modal-h">➕ Add New Entry</div>
-    <div class="form-g"><label>Company Name</label><input type="text" id="in-co"></div>
-    <div class="form-g"><label>Shj Code</label><input type="text" id="in-shj"></div>
-    <div class="form-g"><label>User Name</label><input type="text" id="in-user"></div>
-    <div class="form-g"><label>Password</label><input type="text" id="in-pw"></div>
-    <div class="form-g"><label>Dubai Code</label><input type="text" id="in-note"></div>
-    <div class="modal-f">
-      <button class="btn-save" onclick="addEntry()">Add Entry</button>
-      <button class="btn-logout" onclick="closeModal('add-modal')">Cancel</button>
+  <div id="dm-tab" class="table-container" style="display:none;">
+    <table>
+      <thead><tr><th style="width:50px">#</th><th>Barcode</th><th>Description</th><th style="width:80px">Action</th></tr></thead>
+      <tbody id="dm-body"></tbody>
+    </table>
+    <div id="dm-empty" style="text-align:center;padding:40px;color:#555;display:none;">No data</div>
+  </div>
+
+  <div id="import-tab" class="table-container" style="display:none;">
+    <table>
+      <thead><tr><th style="width:50px">#</th><th>Code</th><th>Description</th><th style="width:80px">Action</th></tr></thead>
+      <tbody id="import-body"></tbody>
+    </table>
+    <div id="import-empty" style="text-align:center;padding:40px;color:#555;display:none;">No data</div>
+  </div>
+
+  <div id="links-tab" class="table-container" style="display:none;">
+    <table>
+      <thead><tr><th style="width:50px">#</th><th>Title</th><th>URL</th><th style="width:80px">Action</th></tr></thead>
+      <tbody id="links-body"></tbody>
+    </table>
+    <div id="links-empty" style="text-align:center;padding:40px;color:#555;display:none;">No data</div>
+  </div>
+
+  <!-- ADMIN -->
+  <div id="admin-section">
+    <div class="admin-content">
+      <div class="admin-card">
+        <h3>👥 User Management</h3>
+        <div class="form-g"><label>New Username</label><input type="text" id="new-username"></div>
+        <div class="form-g"><label>Password</label><input type="password" id="new-password"></div>
+        <div class="form-g"><label>Role</label><select id="new-role"><option value="user">User</option><option value="admin">Admin</option></select></div>
+        <button class="btn-add" style="width:100%;padding:8px;" onclick="addNewUser()">➕ Add User</button>
+        <div id="users-list" style="margin-top:15px;"></div>
+      </div>
+      <div class="admin-card"><h3>📊 Audit Log</h3><div id="audit-list"></div></div>
     </div>
   </div>
 </div>
 
-<!-- ══ CHANGE PASS MODAL ══ -->
+<!-- MODALS -->
+<div id="add-modal" class="modal">
+  <div class="modal-content">
+    <div class="modal-h">➕ Add New Entry</div>
+    <div id="add-form-fields"></div>
+    <div class="modal-f"><button class="btn-save" onclick="addEntry()">Add</button><button class="btn-logout" onclick="closeModal('add-modal')">Cancel</button></div>
+  </div>
+</div>
+
 <div id="pass-modal" class="modal">
   <div class="modal-content">
     <div class="modal-h">🔑 Change Password</div>
     <div class="form-g"><label>New Password</label><input type="password" id="new-pass"></div>
-    <div class="form-g"><label>Confirm Password</label><input type="password" id="confirm-pass"></div>
+    <div class="form-g"><label>Confirm</label><input type="password" id="confirm-pass"></div>
     <div id="pass-err" style="color:#e94560;font-size:0.8rem;margin-bottom:10px;"></div>
-    <div class="modal-f">
-      <button class="btn-save" onclick="handleChangePass()">Update</button>
-      <button class="btn-logout" onclick="closeModal('pass-modal')">Cancel</button>
-    </div>
+    <div class="modal-f"><button class="btn-save" onclick="handleChangePass()">Update</button><button class="btn-logout" onclick="closeModal('pass-modal')">Cancel</button></div>
   </div>
 </div>
 
 <div id="toast"></div>
 
 <script>
-// ⚠️ IMPORTANT: REPLACE THIS WITH YOUR DEPLOYED WEB APP URL
-const API_URL = "https://script.google.com/macros/s/YOUR_DEPLOYMENT_ID/exec";
+const API_URL = "https://script.google.com/macros/s/AKfycbzP0NQm1C8-kltfq5BEzkGtP5Htv54sGx4XqDNGOxJFGxZqJUBqYvQOeYZTpVW9BMaY0A/exec";
 
-let rows = [];
+let rows = { pw: [], dm: [], import: [], links: [] };
 let currentUser = null;
+let currentTab = 'pw';
+
+// Load saved username
+window.onload = () => {
+  const savedUser = localStorage.getItem('tos_username');
+  if(savedUser) document.getElementById('l-user').value = savedUser;
+};
+
+function togglePass(id) {
+  const inp = document.getElementById(id);
+  inp.type = inp.type === 'password' ? 'text' : 'password';
+}
 
 async function handleLogin() {
   const u = document.getElementById('l-user').value.trim();
   const p = document.getElementById('l-pass').value;
   const err = document.getElementById('login-err');
-  
-  if(!u || !p) { err.textContent = "Please enter credentials"; return; }
+  if(!u || !p) { err.textContent = "Enter credentials"; return; }
   
   err.textContent = "⏳ Authenticating...";
   try {
-    const res = await fetch(API_URL, {
-      method: 'POST',
-      body: JSON.stringify({ action: 'login', username: u, password: p })
-    });
+    const res = await fetch(API_URL, { method: 'POST', body: JSON.stringify({ action: 'login', username: u, password: p }) });
     const data = await res.json();
     if(data.success) {
       currentUser = data.user;
+      localStorage.setItem('tos_username', u); // Save username
       document.getElementById('login-screen').style.display = 'none';
       document.getElementById('app').style.display = 'flex';
       document.getElementById('user-badge').textContent = `👤 ${currentUser.username}`;
+      if(currentUser.role === 'admin') document.getElementById('admin-tab').style.display = 'block';
       loadFromSheets();
-    } else {
-      err.textContent = "❌ " + (data.error || "Login Failed");
-    }
-  } catch(e) {
-    err.textContent = "❌ Failed to connect to server";
-    console.error(e);
-  }
+    } else err.textContent = "❌ " + (data.error || "Login Failed");
+  } catch(e) { err.textContent = "❌ Connection Error"; }
 }
 
-function handleLogout() {
-  if(confirm("Logout?")) location.reload();
-}
+function handleLogout() { if(confirm("Logout?")) location.reload(); }
 
 async function loadFromSheets() {
-  document.getElementById('status').textContent = "⏳ Loading data from Excel...";
+  document.getElementById('status').textContent = "⏳ Loading...";
   try {
     const res = await fetch(API_URL + "?t=" + Date.now());
     const data = await res.json();
-    if(data.status === "ok") {
-      rows = data.rows || [];
-      renderTable();
-      document.getElementById('status').textContent = `✅ ${rows.length} entries loaded`;
-    }
-  } catch(e) {
-    document.getElementById('status').textContent = "❌ Failed to load data";
-  }
+    if(data.status === "ok") { rows = data; renderTable(); document.getElementById('status').textContent = "✅ Loaded"; }
+  } catch(e) { document.getElementById('status').textContent = "❌ Load Error"; }
+}
+
+function switchTab(tab) {
+  currentTab = tab;
+  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+  event.target.classList.add('active');
+  ['pw','dm','import','links'].forEach(t => document.getElementById(t+'-tab').style.display = tab === t ? 'block' : 'none');
+  document.getElementById('admin-section').style.display = tab === 'admin' ? 'flex' : 'none';
+  if(tab === 'admin') { loadUsers(); loadAuditLog(); }
+  renderTable();
 }
 
 function renderTable() {
   const q = document.getElementById('search-input').value.toLowerCase();
-  const body = document.getElementById('data-body');
-  body.innerHTML = "";
-  
-  const filtered = rows.filter(r => 
-    r.company.toLowerCase().includes(q) || 
-    r.user.toLowerCase().includes(q) || 
-    r.note.toLowerCase().includes(q)
-  );
-  
-  document.getElementById('no-data').style.display = filtered.length ? 'none' : 'block';
-  
-  filtered.forEach((r, i) => {
-    const tr = document.createElement('tr');
-    tr.innerHTML = `
-      <td style="color:#555;text-align:center">${i+1}</td>
-      <td class="co-name">${esc(r.company)}</td>
-      <td>${esc(r.shj)} <button class="copy-btn" onclick="copy('${esc(r.shj)}')">📋</button></td>
-      <td>${esc(r.user)} <button class="copy-btn" onclick="copy('${esc(r.user)}')">📋</button></td>
-      <td>${esc(r.password)} <button class="copy-btn" onclick="copy('${esc(r.password)}')">📋</button></td>
-      <td>${esc(r.note)}</td>
-      <td><button class="del-btn" onclick="deleteRow(${rows.indexOf(r)})">🗑️</button></td>
-    `;
-    body.appendChild(tr);
+  ['pw','dm','import','links'].forEach(t => {
+    const data = rows[t] || [];
+    const body = document.getElementById(t+'-body');
+    body.innerHTML = "";
+    const filtered = data.filter(r => JSON.stringify(r).toLowerCase().includes(q));
+    document.getElementById(t+'-empty').style.display = filtered.length ? 'none' : 'block';
+    filtered.forEach((r, i) => {
+      const tr = document.createElement('tr');
+      if(t === 'pw') tr.innerHTML = `<td>${i+1}</td><td class="co-name">${esc(r.company)}</td><td>${esc(r.shj)} <button class="copy-btn" onclick="copy('${esc(r.shj)}')">📋</button></td><td>${esc(r.user)}</td><td>${esc(r.password)}</td><td>${esc(r.note)}</td><td><button class="del-btn" onclick="deleteRow('pw',${data.indexOf(r)})">🗑️</button></td>`;
+      else if(t === 'dm') tr.innerHTML = `<td>${i+1}</td><td>${esc(r.name)}</td><td>${esc(r.desc)}</td><td><button class="del-btn" onclick="deleteRow('dm',${data.indexOf(r)})">🗑️</button></td>`;
+      else if(t === 'import') tr.innerHTML = `<td>${i+1}</td><td>${esc(r.name)}</td><td>${esc(r.desc)}</td><td><button class="del-btn" onclick="deleteRow('import',${data.indexOf(r)})">🗑️</button></td>`;
+      else if(t === 'links') tr.innerHTML = `<td>${i+1}</td><td>${esc(r.title)}</td><td><a href="${esc(r.url)}" target="_blank" style="color:#2dd4ff">${esc(r.url)}</a></td><td><button class="del-btn" onclick="deleteRow('links',${data.indexOf(r)})">🗑️</button></td>`;
+      body.appendChild(tr);
+    });
   });
 }
 
-function addEntry() {
-  const co = document.getElementById('in-co').value.trim();
-  const shj = document.getElementById('in-shj').value.trim();
-  const user = document.getElementById('in-user').value.trim();
-  const pw = document.getElementById('in-pw').value.trim();
-  const note = document.getElementById('in-note').value.trim();
-  
-  if(!co) return alert("Company name is required");
-  
-  rows.push({ company: co, shj, user, password: pw, note });
-  renderTable();
-  closeModal('add-modal');
-  showToast("Entry added locally. Click Save to sync.");
-  
-  // Clear inputs
-  ['in-co','in-shj','in-user','in-pw','in-note'].forEach(id => document.getElementById(id).value = "");
+function openModal(id) {
+  if(id === 'add-modal') {
+    const fields = document.getElementById('add-form-fields');
+    if(currentTab === 'pw') fields.innerHTML = `<div class="form-g"><label>Company</label><input id="in-1"></div><div class="form-g"><label>Shj Code</label><input id="in-2"></div><div class="form-g"><label>User</label><input id="in-3"></div><div class="form-g"><label>Password</label><input id="in-4"></div><div class="form-g"><label>Dubai Code</label><input id="in-5"></div>`;
+    else if(currentTab === 'dm' || currentTab === 'import') fields.innerHTML = `<div class="form-g"><label>Name/Code</label><input id="in-1"></div><div class="form-g"><label>Description</label><input id="in-2"></div>`;
+    else if(currentTab === 'links') fields.innerHTML = `<div class="form-g"><label>Title</label><input id="in-1"></div><div class="form-g"><label>URL</label><input id="in-2"></div>`;
+  }
+  document.getElementById(id).style.display = 'flex';
 }
 
-function deleteRow(idx) {
-  if(!confirm("Delete this entry?")) return;
-  rows.splice(idx, 1);
-  renderTable();
-  showToast("Entry deleted locally.");
+function addEntry() {
+  const v1 = document.getElementById('in-1').value.trim();
+  const v2 = document.getElementById('in-2')?.value.trim();
+  if(!v1) return alert("Required field empty");
+  if(currentTab === 'pw') rows.pw.push({ company: v1, shj: v2, user: document.getElementById('in-3').value, password: document.getElementById('in-4').value, note: document.getElementById('in-5').value });
+  else if(currentTab === 'dm') rows.dm.push({ name: v1, desc: v2 });
+  else if(currentTab === 'import') rows.import.push({ name: v1, desc: v2 });
+  else if(currentTab === 'links') rows.links.push({ title: v1, url: v2 });
+  renderTable(); closeModal('add-modal');
 }
+
+function deleteRow(t, idx) { if(confirm("Delete?")) { rows[t].splice(idx, 1); renderTable(); } }
 
 async function saveToSheets() {
-  document.getElementById('status').textContent = "⏳ Saving to Excel...";
+  document.getElementById('status').textContent = "⏳ Saving...";
   try {
-    const res = await fetch(API_URL, {
-      method: 'POST',
-      body: JSON.stringify({ action: 'save', username: currentUser.username, rows: rows })
-    });
+    const res = await fetch(API_URL, { method: 'POST', body: JSON.stringify({ action: 'save', username: currentUser.username, rows: rows }) });
     const data = await res.json();
-    if(data.status === "ok") {
-      document.getElementById('status').textContent = "✅ Data synced with Excel";
-      showToast("💾 Saved to Google Sheets!");
-    }
-  } catch(e) {
-    document.getElementById('status').textContent = "❌ Sync failed";
-  }
+    if(data.status === "ok") { document.getElementById('status').textContent = "✅ Saved"; showToast("💾 Saved!"); }
+  } catch(e) { document.getElementById('status').textContent = "❌ Save Error"; }
 }
 
 async function handleChangePass() {
   const p1 = document.getElementById('new-pass').value;
   const p2 = document.getElementById('confirm-pass').value;
   if(p1 !== p2) return document.getElementById('pass-err').textContent = "Passwords don't match";
-  
   try {
-    const res = await fetch(API_URL, {
-      method: 'POST',
-      body: JSON.stringify({ action: 'changePass', username: currentUser.username, newPass: p1 })
-    });
+    const res = await fetch(API_URL, { method: 'POST', body: JSON.stringify({ action: 'changePass', username: currentUser.username, newPass: p1 }) });
+    const data = await res.json();
+    if(data.status === "ok") { closeModal('pass-modal'); showToast("🔑 Updated!"); }
+  } catch(e) { alert("Error"); }
+}
+
+async function loadUsers() {
+  try {
+    const res = await fetch(API_URL, { method: 'POST', body: JSON.stringify({ action: 'getUsers', username: currentUser.username }) });
     const data = await res.json();
     if(data.status === "ok") {
-      closeModal('pass-modal');
-      showToast("🔑 Password updated!");
+      const list = document.getElementById('users-list'); list.innerHTML = "";
+      data.users.forEach(u => {
+        const item = document.createElement('div'); item.className = 'user-item';
+        item.innerHTML = `<div><div class="user-name">${esc(u.username)}</div><div class="user-role">${u.role}</div></div><button class="del-btn" style="padding:4px 8px;font-size:0.7rem;" onclick="deleteUser('${esc(u.username)}')">🗑️</button>`;
+        list.appendChild(item);
+      });
     }
-  } catch(e) { alert("Failed to update password"); }
+  } catch(e) {}
+}
+
+async function addNewUser() {
+  const u = document.getElementById('new-username').value.trim(), p = document.getElementById('new-password').value, r = document.getElementById('new-role').value;
+  if(!u || !p) return alert("Enter credentials");
+  try {
+    const res = await fetch(API_URL, { method: 'POST', body: JSON.stringify({ action: 'addUser', username: currentUser.username, newUsername: u, newPassword: p, role: r }) });
+    const data = await res.json();
+    if(data.status === "ok") { document.getElementById('new-username').value = ""; document.getElementById('new-password').value = ""; showToast("✅ Added!"); loadUsers(); }
+  } catch(e) {}
+}
+
+async function deleteUser(u) {
+  if(!confirm("Delete user?")) return;
+  try {
+    const res = await fetch(API_URL, { method: 'POST', body: JSON.stringify({ action: 'deleteUser', username: currentUser.username, targetUsername: u }) });
+    const data = await res.json();
+    if(data.status === "ok") { showToast("✅ Deleted!"); loadUsers(); }
+  } catch(e) {}
+}
+
+async function loadAuditLog() {
+  try {
+    const res = await fetch(API_URL, { method: 'POST', body: JSON.stringify({ action: 'getAuditLog', username: currentUser.username }) });
+    const data = await res.json();
+    if(data.status === "ok") {
+      const list = document.getElementById('audit-list'); list.innerHTML = "";
+      if(!data.logs || data.logs.length === 0) { list.innerHTML = '<div style="color:#555;">No logs</div>'; return; }
+      data.logs.reverse().slice(0, 50).forEach(log => {
+        const item = document.createElement('div'); item.className = 'audit-item';
+        item.innerHTML = `<div class="audit-time">${new Date(log.timestamp).toLocaleString()}</div><div class="audit-user">👤 ${esc(log.user)}</div><div>${log.action}: ${esc(log.details)}</div>`;
+        list.appendChild(item);
+      });
+    }
+  } catch(e) {}
 }
 
 function exportToExcel() {
-  const ws = XLSX.utils.json_to_sheet(rows);
-  const wb = XLSX.utils.book_new();
-  XLSX.utils.book_append_sheet(wb, ws, "Passwords");
-  XLSX.writeFile(wb, "TOS_USER_PW_LIST.xlsx");
+  const ws = XLSX.utils.json_to_sheet(rows[currentTab] || []);
+  const wb = XLSX.utils.book_new(); XLSX.utils.book_append_sheet(wb, ws, currentTab);
+  XLSX.writeFile(wb, `TOS_${currentTab}.xlsx`);
 }
 
-function copy(text) {
-  navigator.clipboard.writeText(text).then(() => showToast("📋 Copied!"));
-}
-
-function showToast(msg) {
-  const t = document.getElementById('toast');
-  t.textContent = msg;
-  t.style.display = 'block';
-  t.classList.add('show');
-  setTimeout(() => { t.style.display = 'none'; t.classList.remove('show'); }, 3000);
-}
-
-function openModal(id) { document.getElementById(id).style.display = 'flex'; }
+function copy(t) { navigator.clipboard.writeText(t).then(() => showToast("📋 Copied!")); }
+function showToast(msg) { const t = document.getElementById('toast'); t.textContent = msg; t.style.display = 'block'; setTimeout(() => { t.style.display = 'none'; }, 3000); }
 function closeModal(id) { document.getElementById(id).style.display = 'none'; }
 function esc(s) { const d = document.createElement('div'); d.textContent = s; return d.innerHTML; }
 </script>
