@@ -16,67 +16,58 @@ body{font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;background:#000
 .lf{margin-bottom:15px;text-align:left;}
 .lf label{display:block;color:#00d4ff;font-size:0.75rem;font-weight:bold;margin-bottom:5px;}
 .lf input{width:100%;padding:12px;border-radius:10px;border:2px solid #00d4ff;background:#000;color:#00d4ff;font-size:1rem;outline:none;}
-.eye-btn{position:absolute;right:10px;top:50%;transform:translateY(-50%);background:none;border:none;color:#00d4ff;font-size:1.2rem;cursor:pointer;}
-.btn-login{width:100%;padding:14px;background:linear-gradient(90deg,#00d4ff,#ffa500);color:#000;border:none;border-radius:30px;font-size:1.1rem;font-weight:bold;cursor:pointer;margin-top:15px;}
+.btn-login{width:100%;padding:14px;background:linear-gradient(90deg,#00d4ff,#00ff88);color:#000;border:none;border-radius:30px;font-size:1.1rem;font-weight:bold;cursor:pointer;margin-top:15px;}
 .footer-neon{margin-top:30px;padding:15px;border:2px solid #ff0055;border-radius:15px;background:rgba(255,0,85,0.05);box-shadow:0 0 15px rgba(255,0,85,0.2);}
-.footer-neon .line1{color:#fff;font-weight:bold;font-size:0.9rem;text-shadow:0 0 8px #ff0055;margin-bottom:5px;}
+.footer-neon .line1{color:#fff;font-weight:bold;font-size:0.9rem;text-shadow:0 0 8px #ff0055;}
 .footer-neon .line2{color:#00d4ff;font-weight:bold;font-size:0.75rem;text-shadow:0 0 8px #00d4ff;}
 
 /* ── APP ── */
 #app{display:none;flex-direction:column;height:100%;}
 header{background:#111;padding:15px 20px;border-bottom:3px solid #00d4ff;display:flex;justify-content:space-between;align-items:center;}
 .header-title{color:#00d4ff;font-weight:bold;font-size:1.2rem;display:flex;align-items:center;gap:10px;}
-.header-title .by{color:#ffa500;font-size:0.85rem;font-weight:bold;background:rgba(255,165,0,0.1);padding:3px 12px;border-radius:15px;border:2px solid #ffa500;text-shadow:0 0 5px #ffa500;}
+.header-title .by{color:#00ffcc;font-size:0.85rem;font-weight:bold;background:rgba(0,255,204,0.1);padding:3px 12px;border-radius:15px;border:2px solid #00ffcc;text-shadow:0 0 8px #00ffcc;}
 .header-right{display:flex;align-items:center;gap:15px;}
-.user-badge{background:#000;padding:8px 15px;border-radius:20px;font-size:0.8rem;color:#00d4ff;font-weight:bold;border:2px solid #00d4ff;}
+.company-badge{background:rgba(0,255,0,0.1);color:#00ff00;padding:8px 18px;border-radius:20px;font-weight:bold;border:2px solid #00ff00;font-size:0.9rem;box-shadow:0 0 10px rgba(0,255,0,0.2);}
+.btn-logout-pro{background:linear-gradient(90deg,#ff0055,#c0392b);color:#fff;border:none;padding:10px 20px;border-radius:25px;font-weight:bold;cursor:pointer;display:flex;align-items:center;gap:8px;transition:0.3s;box-shadow:0 0 15px rgba(255,0,85,0.3);}
+.btn-logout-pro:hover{transform:scale(1.05);box-shadow:0 0 25px rgba(255,0,85,0.6);}
 
 /* ── TABS ── */
 .tab-container{background:#111;display:flex;border-bottom:2px solid #00d4ff;overflow-x:auto;}
-.tab-btn{padding:12px 25px;border:none;background:transparent;color:#7ec8e3;cursor:pointer;font-weight:bold;white-space:nowrap;border-bottom:3px solid transparent;transition:0.4s ease;position:relative;overflow:hidden;}
-.tab-btn.active{color:#fff;border-bottom-color:#ffa500;background:rgba(255,165,0,0.1);transform:translateY(-2px);}
-.tab-btn.active::after{content:'';position:absolute;bottom:0;left:0;width:100%;height:3px;background:#ffa500;box-shadow:0 0 10px #ffa500;}
+.tab-btn{padding:12px 25px;border:none;background:transparent;color:#7ec8e3;cursor:pointer;font-weight:bold;white-space:nowrap;border-bottom:3px solid transparent;transition:0.3s ease-in-out;position:relative;}
+.tab-btn.active{color:#fff;transform:translateY(-2px);}
+.tab-btn::after{content:'';position:absolute;bottom:0;left:50%;width:0;height:4px;background:#ff0000;transition:0.3s ease-in-out;transform:translateX(-50%);}
+.tab-btn.active::after{width:100%;box-shadow:0 0 10px #ff0000;}
 
-/* ── TOOLBAR ── */
+/* ── TOOLBAR & STATUS ── */
 .toolbar{background:#000;padding:15px 20px;display:flex;gap:12px;align-items:center;flex-wrap:wrap;border-bottom:1px solid #00d4ff33;}
-.toolbar button{padding:10px 18px;border-radius:8px;border:2px solid #fff;background:#000;color:#fff;font-weight:bold;cursor:pointer;font-size:0.85rem;display:flex;align-items:center;gap:8px;transition:0.3s;}
-.toolbar button:hover{background:#fff;color:#000;transform:scale(1.05);}
-.btn-logout{border-color:#ff0055 !important;color:#ff0055 !important;}
-.btn-logout:hover{background:#ff0055 !important;color:#fff !important;}
-
-/* ── STATUS ── */
+.toolbar button{padding:10px 18px;border-radius:8px;border:2px solid #fff;background:#000;color:#fff;font-weight:bold;cursor:pointer;font-size:0.85rem;transition:0.3s;}
+.toolbar button:hover{background:#fff;color:#000;}
 #status-bar{padding:10px 20px;background:#111;display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid #00d4ff22;}
-#status-text{font-size:0.85rem;color:#00d4ff;font-weight:bold;}
-#total-count{background:#ffa500;color:#000;padding:3px 10px;border-radius:12px;font-size:0.75rem;font-weight:bold;}
-
-/* ── SEARCH ── */
-.search-bar{padding:12px 20px;background:#000;display:flex;gap:10px;border-bottom:1px solid #00d4ff22;}
-.search-bar input{flex:1;padding:12px 18px;border-radius:8px;border:2px solid #00d4ff;background:#111;color:#fff;outline:none;font-size:1rem;}
-.search-bar input:focus{border-color:#ffa500;box-shadow:0 0 10px rgba(255,165,0,0.3);}
+#total-count{background:#00d4ff;color:#000;padding:3px 10px;border-radius:12px;font-size:0.75rem;font-weight:bold;}
 
 /* ── TABLE ── */
 .table-container{flex:1;overflow:auto;padding:15px 20px 20px;background:#000;}
-table{width:100%;border-collapse:collapse;background:#111;border-radius:10px;overflow:hidden;border:1px solid #333;}
+table{width:100%;border-collapse:collapse;background:#111;border-radius:10px;overflow:hidden;border:1px solid #333;table-layout:fixed;}
 th{background:#222;color:#00d4ff;padding:14px;text-align:left;font-size:0.85rem;border-bottom:2px solid #00d4ff;text-transform:uppercase;}
-td{padding:12px;border-bottom:1px solid #222;font-size:0.95rem;color:#eee;}
-tr:hover{background:#1a1a1a;}
-.copy-btn{background:transparent;border:1px solid #00d4ff;color:#00d4ff;padding:5px 10px;border-radius:5px;cursor:pointer;font-size:0.75rem;margin-left:8px;transition:0.2s;}
+td{padding:10px 12px;border-bottom:1px solid #222;font-size:0.95rem;color:#eee;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;vertical-align:middle;}
+.cell-content{display:inline-block;width:100px;overflow:hidden;text-overflow:ellipsis;vertical-align:middle;}
+.copy-btn{background:transparent;border:1px solid #00d4ff;color:#00d4ff;padding:4px 8px;border-radius:5px;cursor:pointer;font-size:0.7rem;margin-left:5px;vertical-align:middle;}
 .copy-btn:hover{background:#00d4ff;color:#000;}
-.edit-btn{background:#ffa500;color:#000;border:none;padding:6px 12px;border-radius:5px;cursor:pointer;font-weight:bold;margin-right:8px;}
+.edit-btn{background:#00d4ff;color:#000;border:none;padding:6px 12px;border-radius:5px;cursor:pointer;font-weight:bold;margin-right:5px;}
 .del-btn{background:#ff0055;color:#fff;border:none;padding:6px 12px;border-radius:5px;cursor:pointer;}
 
 /* ── MODALS ── */
 .modal{display:none;position:fixed;inset:0;background:rgba(0,0,0,0.9);z-index:1000;align-items:center;justify-content:center;}
-.modal-content{background:#111;border:2px solid #00d4ff;border-radius:15px;padding:30px;width:90%;max-width:550px;box-shadow:0 0 30px rgba(0,212,255,0.2);}
+.modal-content{background:#111;border:2px solid #00d4ff;border-radius:15px;padding:30px;width:90%;max-width:550px;}
 .form-g{margin-bottom:15px;}
 .form-g label{display:block;font-size:0.8rem;color:#00d4ff;margin-bottom:6px;font-weight:bold;}
-.form-g input, .form-g select{width:100%;padding:12px;background:#000;border:1px solid #444;border-radius:8px;color:#fff;outline:none;}
-.form-g input:focus{border-color:#00d4ff;}
+.form-g input{width:100%;padding:12px;background:#000;border:1px solid #444;border-radius:8px;color:#fff;outline:none;}
 .modal-f{display:flex;gap:15px;margin-top:25px;}
 .modal-f button{flex:1;padding:12px;border-radius:8px;border:none;font-weight:bold;cursor:pointer;}
 .btn-ok{background:#00d4ff;color:#000;}
 .btn-cancel{background:#333;color:#fff;}
 
-#toast{position:fixed;bottom:20px;right:20px;background:#ffa500;color:#000;padding:15px 25px;border-radius:10px;display:none;z-index:2000;font-weight:bold;box-shadow:0 4px 15px rgba(255,165,0,0.3);}
+#toast{position:fixed;bottom:20px;right:20px;background:#00d4ff;color:#000;padding:15px 25px;border-radius:10px;display:none;z-index:2000;font-weight:bold;}
 </style>
 </head>
 <body>
@@ -94,7 +85,7 @@ tr:hover{background:#1a1a1a;}
       <label>PASSWORD</label>
       <div style="position:relative">
         <input type="password" id="l-pass" placeholder="••••••••">
-        <button class="eye-btn" onclick="togglePass('l-pass')">👁️</button>
+        <button onclick="togglePass('l-pass')" style="position:absolute;right:10px;top:50%;transform:translateY(-50%);background:none;border:none;color:#00d4ff;cursor:pointer;">👁️</button>
       </div>
     </div>
     <button class="btn-login" onclick="handleLogin()">LOGIN NOW</button>
@@ -115,8 +106,8 @@ tr:hover{background:#1a1a1a;}
       </div>
     </div>
     <div class="header-right">
-      <span class="user-badge" id="user-badge">👤 Loading...</span>
-      <button class="btn-logout" onclick="handleLogout()">🚪 Logout</button>
+      <div class="company-badge">🚢 SEA SHIPPING LLC</div>
+      <button class="btn-logout-pro" onclick="handleLogout()">🚪 Logout</button>
     </div>
   </header>
 
@@ -134,20 +125,22 @@ tr:hover{background:#1a1a1a;}
     <button onclick="exportToExcel()">📤 Export</button>
     <button onclick="importFromExcel()">📥 Import</button>
     <button onclick="loadFromSheets()">🔄 Reload</button>
+    <button onclick="removeDuplicates()" style="border-color:#00ffcc;color:#00ffcc;">🧹 Remove Duplicates</button>
   </div>
 
   <div id="status-bar">
-    <div id="status-text">⏳ System Ready</div>
+    <div id="status-text" style="color:#00d4ff;font-weight:bold;">⏳ System Ready</div>
     <div id="total-count">Total: 0</div>
   </div>
 
   <div class="search-bar">
-    <input type="text" id="search-input" placeholder="🔍 Universal Search (সব ডাটা সার্চ করুন...)" oninput="renderTable()">
+    <input type="text" id="search-input" placeholder="🔍 Universal Search (Passwords, Links, Barcodes...)" oninput="renderTable()">
   </div>
 
   <!-- TABLES -->
   <div id="pw-tab" class="table-container">
     <table>
+      <colgroup><col style="width:50px"><col style="width:150px"><col style="width:160px"><col style="width:160px"><col style="width:160px"><col style="width:160px"><col style="width:120px"></colgroup>
       <thead><tr><th>#</th><th>Company</th><th>Shj Code</th><th>User</th><th>Password</th><th>Dubai Code</th><th>Action</th></tr></thead>
       <tbody id="pw-body"></tbody>
     </table>
@@ -155,13 +148,15 @@ tr:hover{background:#1a1a1a;}
 
   <div id="dm-tab" class="table-container" style="display:none;">
     <table>
-      <thead><tr><th>#</th><th>Products Name</th><th>Size/Weight</th><th>Brand Name</th><th>Country</th><th>Barcode</th><th>Action</th></tr></thead>
+      <colgroup><col style="width:50px"><col style="width:150px"><col style="width:120px"><col style="width:120px"><col style="width:120px"><col style="width:150px"><col style="width:120px"></colgroup>
+      <thead><tr><th>#</th><th>Products</th><th>Size</th><th>Brand</th><th>Country</th><th>Barcode</th><th>Action</th></tr></thead>
       <tbody id="dm-body"></tbody>
     </table>
   </div>
 
   <div id="import-tab" class="table-container" style="display:none;">
     <table>
+      <colgroup><col style="width:50px"><col style="width:200px"><col style="width:auto"><col style="width:120px"></colgroup>
       <thead><tr><th>#</th><th>Code</th><th>Description</th><th>Action</th></tr></thead>
       <tbody id="import-body"></tbody>
     </table>
@@ -169,6 +164,7 @@ tr:hover{background:#1a1a1a;}
 
   <div id="links-tab" class="table-container" style="display:none;">
     <table>
+      <colgroup><col style="width:50px"><col style="width:200px"><col style="width:auto"><col style="width:150px"></colgroup>
       <thead><tr><th>#</th><th>Title</th><th>URL</th><th>Action</th></tr></thead>
       <tbody id="links-body"></tbody>
     </table>
@@ -186,14 +182,9 @@ tr:hover{background:#1a1a1a;}
       </div>
       <div id="users-list" style="margin-top:20px;"></div>
     </div>
-    <div style="background:#111;padding:20px;border-radius:10px;border:1px solid #333;">
-      <h3 style="color:#ffa500;margin-bottom:15px;">📊 Audit Log</h3>
-      <div id="audit-list"></div>
-    </div>
   </div>
 </div>
 
-<!-- MODALS -->
 <div id="add-modal" class="modal">
   <div class="modal-content">
     <div id="modal-title" style="color:#00d4ff;font-size:1.2rem;font-weight:bold;margin-bottom:20px;">➕ Add New Entry</div>
@@ -263,7 +254,7 @@ function switchTab(tab) {
   event.target.classList.add('active');
   ['pw','dm','import','links'].forEach(t => document.getElementById(t+'-tab').style.display = tab === t ? 'block' : 'none');
   document.getElementById('admin-section').style.display = tab === 'admin' ? 'flex' : 'none';
-  if(tab === 'admin') { loadUsers(); loadAuditLog(); }
+  if(tab === 'admin') { loadUsers(); }
   renderTable();
 }
 
@@ -280,11 +271,11 @@ function renderTable() {
       const actualIdx = data.indexOf(r);
       const tr = document.createElement('tr');
       if(t === 'pw') {
-        tr.innerHTML = `<td>${i+1}</td><td>${esc(r.company)}<button class="copy-btn" onclick="copy('${esc(r.company)}')">📋</button></td><td>${esc(r.shj)}<button class="copy-btn" onclick="copy('${esc(r.shj)}')">📋</button></td><td>${esc(r.user)}<button class="copy-btn" onclick="copy('${esc(r.user)}')">📋</button></td><td>${esc(r.password)}<button class="copy-btn" onclick="copy('${esc(r.password)}')">📋</button></td><td>${esc(r.note)}<button class="copy-btn" onclick="copy('${esc(r.note)}')">📋</button></td><td><button class="edit-btn" onclick="openEdit('${t}',${actualIdx})">✏️</button><button class="del-btn" onclick="deleteRow('${t}',${actualIdx})">🗑️</button></td>`;
+        tr.innerHTML = `<td>${i+1}</td><td><span class="cell-content">${esc(r.company)}</span><button class="copy-btn" onclick="copy('${esc(r.company)}')">📋</button></td><td><span class="cell-content">${esc(r.shj)}</span><button class="copy-btn" onclick="copy('${esc(r.shj)}')">📋</button></td><td><span class="cell-content">${esc(r.user)}</span><button class="copy-btn" onclick="copy('${esc(r.user)}')">📋</button></td><td><span class="cell-content">${esc(r.password)}</span><button class="copy-btn" onclick="copy('${esc(r.password)}')">📋</button></td><td><span class="cell-content">${esc(r.note)}</span><button class="copy-btn" onclick="copy('${esc(r.note)}')">📋</button></td><td><button class="edit-btn" onclick="openEdit('${t}',${actualIdx})">✏️</button><button class="del-btn" onclick="deleteRow('${t}',${actualIdx})">🗑️</button></td>`;
       } else if(t === 'dm') {
-        tr.innerHTML = `<td>${i+1}</td><td>${esc(r.product)}<button class="copy-btn" onclick="copy('${esc(r.product)}')">📋</button></td><td>${esc(r.size)}<button class="copy-btn" onclick="copy('${esc(r.size)}')">📋</button></td><td>${esc(r.brand)}<button class="copy-btn" onclick="copy('${esc(r.brand)}')">📋</button></td><td>${esc(r.country)}<button class="copy-btn" onclick="copy('${esc(r.country)}')">📋</button></td><td>${esc(r.barcode)}<button class="copy-btn" onclick="copy('${esc(r.barcode)}')">📋</button></td><td><button class="edit-btn" onclick="openEdit('${t}',${actualIdx})">✏️</button><button class="del-btn" onclick="deleteRow('${t}',${actualIdx})">🗑️</button></td>`;
+        tr.innerHTML = `<td>${i+1}</td><td><span class="cell-content">${esc(r.product)}</span><button class="copy-btn" onclick="copy('${esc(r.product)}')">📋</button></td><td><span class="cell-content">${esc(r.size)}</span><button class="copy-btn" onclick="copy('${esc(r.size)}')">📋</button></td><td><span class="cell-content">${esc(r.brand)}</span><button class="copy-btn" onclick="copy('${esc(r.brand)}')">📋</button></td><td><span class="cell-content">${esc(r.country)}</span><button class="copy-btn" onclick="copy('${esc(r.country)}')">📋</button></td><td><span class="cell-content">${esc(r.barcode)}</span><button class="copy-btn" onclick="copy('${esc(r.barcode)}')">📋</button></td><td><button class="edit-btn" onclick="openEdit('${t}',${actualIdx})">✏️</button><button class="del-btn" onclick="deleteRow('${t}',${actualIdx})">🗑️</button></td>`;
       } else if(t === 'import') {
-        tr.innerHTML = `<td>${i+1}</td><td>${esc(r.name)}<button class="copy-btn" onclick="copy('${esc(r.name)}')">📋</button></td><td>${esc(r.desc)}<button class="copy-btn" onclick="copy('${esc(r.desc)}')">📋</button></td><td><button class="edit-btn" onclick="openEdit('${t}',${actualIdx})">✏️</button><button class="del-btn" onclick="deleteRow('${t}',${actualIdx})">🗑️</button></td>`;
+        tr.innerHTML = `<td>${i+1}</td><td>${esc(r.name)}<button class="copy-btn" onclick="copy('${esc(r.name)}')">📋</button></td><td>${esc(r.desc)}</td><td><button class="edit-btn" onclick="openEdit('${t}',${actualIdx})">✏️</button><button class="del-btn" onclick="deleteRow('${t}',${actualIdx})">🗑️</button></td>`;
       } else if(t === 'links') {
         tr.innerHTML = `<td>${i+1}</td><td>${esc(r.title)}<button class="copy-btn" onclick="copy('${esc(r.title)}')">📋</button></td><td><a href="${esc(r.url)}" target="_blank" style="color:#00d4ff;">${esc(r.url)}</a><button class="copy-btn" onclick="copy('${esc(r.url)}')">📋</button></td><td><button class="edit-btn" onclick="openEdit('${t}',${actualIdx})">✏️</button><button class="del-btn" onclick="deleteRow('${t}',${actualIdx})">🗑️</button></td>`;
       }
@@ -292,6 +283,19 @@ function renderTable() {
     });
   });
   document.getElementById('total-count').textContent = `Total: ${total}`;
+}
+
+function removeDuplicates() {
+  const initialCount = rows.pw.length;
+  const unique = [];
+  const seen = new Set();
+  rows.pw.forEach(r => {
+    const key = `${r.company}|${r.shj}|${r.user}|${r.password}|${r.note}`.toLowerCase();
+    if(!seen.has(key)) { seen.add(key); unique.push(r); }
+  });
+  rows.pw = unique;
+  renderTable();
+  showToast(`🧹 Removed ${initialCount - unique.length} duplicates!`);
 }
 
 function openModal(id) {
@@ -402,22 +406,6 @@ async function deleteUser(u) {
     const res = await fetch(API_URL, { method: 'POST', body: JSON.stringify({ action: 'deleteUser', username: currentUser.username, targetUsername: u }) });
     const data = await res.json();
     if(data.status === "ok") { showToast("✅ Deleted!"); loadUsers(); }
-  } catch(e) {}
-}
-
-async function loadAuditLog() {
-  try {
-    const res = await fetch(API_URL, { method: 'POST', body: JSON.stringify({ action: 'getAuditLog', username: currentUser.username }) });
-    const data = await res.json();
-    if(data.status === "ok") {
-      const list = document.getElementById('audit-list'); list.innerHTML = "";
-      data.logs.reverse().slice(0, 50).forEach(log => {
-        const item = document.createElement('div');
-        item.style.fontSize = '0.8rem'; item.style.padding = '8px'; item.style.borderBottom = '1px solid #222';
-        item.innerHTML = `<span style="color:#555;">${new Date(log.timestamp).toLocaleString()}</span> <span style="color:#00d4ff;">👤 ${esc(log.user)}</span>: ${log.action} - ${esc(log.details)}`;
-        list.appendChild(item);
-      });
-    }
   } catch(e) {}
 }
 
