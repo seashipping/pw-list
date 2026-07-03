@@ -7,89 +7,76 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.min.js"></script>
 <style>
 *{box-sizing:border-box;margin:0;padding:0;}
-body{font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;background:#1a1a2e;color:#eee;height:100vh;display:flex;flex-direction:column;overflow:hidden;}
+body{font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;background:#000;color:#fff;height:100vh;display:flex;flex-direction:column;overflow:hidden;}
 
 /* ── LOGIN ── */
-#login-screen{position:fixed;inset:0;background:#1a1a2e;display:flex;align-items:center;justify-content:center;z-index:9999;}
-.login-box{background:#16213e;border:2px solid #e94560;border-radius:20px;padding:40px;text-align:center;max-width:400px;width:90%;box-shadow:0 0 20px rgba(233,69,96,0.2);}
-.login-box h1{color:#2dd4ff;font-size:1.5rem;margin-bottom:10px;display:flex;align-items:center;justify-content:center;gap:10px;}
-.login-box p{color:#aaa;font-size:0.8rem;margin-bottom:20px;text-transform:uppercase;letter-spacing:1px;}
+#login-screen{position:fixed;inset:0;background:#000;display:flex;align-items:center;justify-content:center;z-index:9999;}
+.login-box{background:#111;border:2px solid #00d4ff;border-radius:20px;padding:40px;text-align:center;max-width:440px;width:95%;box-shadow:0 0 30px rgba(0,212,255,0.3);}
+.login-box h1{color:#00d4ff;font-size:1.6rem;margin-bottom:20px;text-shadow:0 0 10px rgba(0,212,255,0.5);}
 .lf{margin-bottom:15px;text-align:left;}
-.lf label{display:block;color:#cfd8e3;font-size:0.75rem;font-weight:bold;margin-bottom:5px;}
-.inp-wrap{position:relative;}
-.lf input{width:100%;padding:12px;border-radius:10px;border:2px solid #2a2a4a;background:#0f3460;color:#fff;font-size:1rem;outline:none;transition:0.3s;}
-.lf input:focus{border-color:#e94560;box-shadow:0 0 10px rgba(233, 69, 96, 0.3);}
-.eye-btn{position:absolute;right:10px;top:50%;transform:translateY(-50%);background:none;border:none;color:#aaa;font-size:1.2rem;cursor:pointer;padding:5px;}
-.btn-login{width:100%;padding:14px;background:linear-gradient(90deg,#c026d3,#2dd4ff);color:#fff;border:none;border-radius:30px;font-size:1rem;font-weight:bold;cursor:pointer;margin-top:10px;transition:0.3s;}
-.btn-login:hover{transform:scale(1.02);box-shadow:0 0 15px rgba(45, 212, 255, 0.5);}
-#login-err{color:#e94560;font-size:0.8rem;margin-bottom:10px;min-height:18px;}
+.lf label{display:block;color:#00d4ff;font-size:0.75rem;font-weight:bold;margin-bottom:5px;}
+.lf input{width:100%;padding:12px;border-radius:10px;border:2px solid #00d4ff;background:#000;color:#00d4ff;font-size:1rem;outline:none;}
+.eye-btn{position:absolute;right:10px;top:50%;transform:translateY(-50%);background:none;border:none;color:#00d4ff;font-size:1.2rem;cursor:pointer;}
+.btn-login{width:100%;padding:14px;background:linear-gradient(90deg,#00d4ff,#ffa500);color:#000;border:none;border-radius:30px;font-size:1.1rem;font-weight:bold;cursor:pointer;margin-top:15px;}
+.footer-neon{margin-top:30px;padding:15px;border:2px solid #ff0055;border-radius:15px;background:rgba(255,0,85,0.05);box-shadow:0 0 15px rgba(255,0,85,0.2);}
+.footer-neon .line1{color:#fff;font-weight:bold;font-size:0.9rem;text-shadow:0 0 8px #ff0055;margin-bottom:5px;}
+.footer-neon .line2{color:#00d4ff;font-weight:bold;font-size:0.75rem;text-shadow:0 0 8px #00d4ff;}
 
 /* ── APP ── */
 #app{display:none;flex-direction:column;height:100%;}
-header{background:#16213e;padding:15px 20px;border-bottom:2px solid #e94560;display:flex;justify-content:space-between;align-items:center;}
-.header-title{color:#2dd4ff;font-weight:bold;font-size:1.2rem;display:flex;align-items:center;gap:10px;}
-.user-info{display:flex;align-items:center;gap:15px;}
-.user-badge{background:#0f3460;padding:5px 12px;border-radius:20px;font-size:0.8rem;color:#c026d3;font-weight:bold;border:1px solid #c026d3;}
+header{background:#111;padding:15px 20px;border-bottom:3px solid #00d4ff;display:flex;justify-content:space-between;align-items:center;}
+.header-title{color:#00d4ff;font-weight:bold;font-size:1.2rem;display:flex;align-items:center;gap:10px;}
+.header-title .by{color:#ffa500;font-size:0.85rem;font-weight:bold;background:rgba(255,165,0,0.1);padding:3px 12px;border-radius:15px;border:2px solid #ffa500;text-shadow:0 0 5px #ffa500;}
+.header-right{display:flex;align-items:center;gap:15px;}
+.user-badge{background:#000;padding:8px 15px;border-radius:20px;font-size:0.8rem;color:#00d4ff;font-weight:bold;border:2px solid #00d4ff;}
 
 /* ── TABS ── */
-.tab-container{background:#0f3460;display:flex;border-bottom:2px solid #e94560;overflow-x:auto;}
-.tab-btn{padding:12px 20px;border:none;background:transparent;color:#7ec8e3;cursor:pointer;font-weight:bold;white-space:nowrap;border-bottom:3px solid transparent;transition:0.3s;}
-.tab-btn.active{color:#fff;border-bottom-color:#e94560;background:#16213e;}
-.tab-btn:hover{background:#1a2a4a;}
+.tab-container{background:#111;display:flex;border-bottom:2px solid #00d4ff;overflow-x:auto;}
+.tab-btn{padding:12px 25px;border:none;background:transparent;color:#7ec8e3;cursor:pointer;font-weight:bold;white-space:nowrap;border-bottom:3px solid transparent;transition:0.4s ease;position:relative;overflow:hidden;}
+.tab-btn.active{color:#fff;border-bottom-color:#ffa500;background:rgba(255,165,0,0.1);transform:translateY(-2px);}
+.tab-btn.active::after{content:'';position:absolute;bottom:0;left:0;width:100%;height:3px;background:#ffa500;box-shadow:0 0 10px #ffa500;}
 
 /* ── TOOLBAR ── */
-.toolbar{background:#0f3460;padding:10px 20px;display:flex;gap:10px;align-items:center;flex-wrap:wrap;}
-.toolbar button{padding:8px 15px;border-radius:20px;border:none;font-weight:bold;cursor:pointer;font-size:0.85rem;display:flex;align-items:center;gap:5px;transition:0.3s;}
-.btn-add{background:#e94560;color:#fff;}
-.btn-save{background:#27ae60;color:#fff;}
-.btn-export{background:#f39c12;color:#fff;}
-.btn-logout{background:#2a2a4a;color:#aaa;}
-.btn-admin{background:#8e44ad;color:#fff;}
-.toolbar button:hover{opacity:0.8;transform:translateY(-2px);}
+.toolbar{background:#000;padding:15px 20px;display:flex;gap:12px;align-items:center;flex-wrap:wrap;border-bottom:1px solid #00d4ff33;}
+.toolbar button{padding:10px 18px;border-radius:8px;border:2px solid #fff;background:#000;color:#fff;font-weight:bold;cursor:pointer;font-size:0.85rem;display:flex;align-items:center;gap:8px;transition:0.3s;}
+.toolbar button:hover{background:#fff;color:#000;transform:scale(1.05);}
+.btn-logout{border-color:#ff0055 !important;color:#ff0055 !important;}
+.btn-logout:hover{background:#ff0055 !important;color:#fff !important;}
 
 /* ── STATUS ── */
-#status{padding:8px 20px;font-size:0.8rem;background:#1a1a2e;color:#cfd8e3;border-bottom:1px solid #2dd4ff22;}
+#status-bar{padding:10px 20px;background:#111;display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid #00d4ff22;}
+#status-text{font-size:0.85rem;color:#00d4ff;font-weight:bold;}
+#total-count{background:#ffa500;color:#000;padding:3px 10px;border-radius:12px;font-size:0.75rem;font-weight:bold;}
 
 /* ── SEARCH ── */
-.search-bar{padding:10px 20px;background:#1a1a2e;display:flex;gap:10px;}
-.search-bar input{flex:1;padding:10px 15px;border-radius:25px;border:1px solid #2dd4ff55;background:#0f3460;color:#fff;outline:none;}
-.search-bar input:focus{border-color:#2dd4ff;}
+.search-bar{padding:12px 20px;background:#000;display:flex;gap:10px;border-bottom:1px solid #00d4ff22;}
+.search-bar input{flex:1;padding:12px 18px;border-radius:8px;border:2px solid #00d4ff;background:#111;color:#fff;outline:none;font-size:1rem;}
+.search-bar input:focus{border-color:#ffa500;box-shadow:0 0 10px rgba(255,165,0,0.3);}
 
 /* ── TABLE ── */
-.table-container{flex:1;overflow:auto;padding:0 20px 20px;}
-table{width:100%;border-collapse:collapse;background:#16213e;border-radius:10px;overflow:hidden;}
-th{background:#0f3460;color:#2dd4ff;padding:12px;text-align:left;font-size:0.85rem;border-bottom:2px solid #e94560;}
-td{padding:10px 12px;border-bottom:1px solid #2a2a4a;font-size:0.9rem;}
-tr:hover{background:rgba(233, 69, 96, 0.1);}
-.co-name{font-weight:bold;color:#00fbfe;}
-.copy-btn{background:#0a1a3a;border:1px solid #2dd4ff66;color:#2dd4ff;padding:4px 8px;border-radius:5px;cursor:pointer;font-size:0.7rem;}
-.del-btn{background:#e94560;color:#fff;border:none;padding:5px 10px;border-radius:5px;cursor:pointer;}
+.table-container{flex:1;overflow:auto;padding:15px 20px 20px;background:#000;}
+table{width:100%;border-collapse:collapse;background:#111;border-radius:10px;overflow:hidden;border:1px solid #333;}
+th{background:#222;color:#00d4ff;padding:14px;text-align:left;font-size:0.85rem;border-bottom:2px solid #00d4ff;text-transform:uppercase;}
+td{padding:12px;border-bottom:1px solid #222;font-size:0.95rem;color:#eee;}
+tr:hover{background:#1a1a1a;}
+.copy-btn{background:transparent;border:1px solid #00d4ff;color:#00d4ff;padding:5px 10px;border-radius:5px;cursor:pointer;font-size:0.75rem;margin-left:8px;transition:0.2s;}
+.copy-btn:hover{background:#00d4ff;color:#000;}
+.edit-btn{background:#ffa500;color:#000;border:none;padding:6px 12px;border-radius:5px;cursor:pointer;font-weight:bold;margin-right:8px;}
+.del-btn{background:#ff0055;color:#fff;border:none;padding:6px 12px;border-radius:5px;cursor:pointer;}
 
 /* ── MODALS ── */
-.modal{display:none;position:fixed;inset:0;background:rgba(0,0,0,0.8);z-index:1000;align-items:center;justify-content:center;}
-.modal-content{background:#16213e;border:2px solid #e94560;border-radius:15px;padding:25px;width:90%;max-width:500px;max-height:80vh;overflow-y:auto;}
-.modal-h{color:#2dd4ff;margin-bottom:15px;font-size:1.1rem;}
-.form-g{margin-bottom:12px;}
-.form-g label{display:block;font-size:0.75rem;color:#aaa;margin-bottom:4px;}
-.form-g input, .form-g select{width:100%;padding:10px;background:#0f3460;border:1px solid #2a2a4a;border-radius:8px;color:#fff;outline:none;}
-.modal-f{display:flex;gap:10px;margin-top:20px;}
-.modal-f button{flex:1;padding:10px;border-radius:8px;border:none;font-weight:bold;cursor:pointer;}
+.modal{display:none;position:fixed;inset:0;background:rgba(0,0,0,0.9);z-index:1000;align-items:center;justify-content:center;}
+.modal-content{background:#111;border:2px solid #00d4ff;border-radius:15px;padding:30px;width:90%;max-width:550px;box-shadow:0 0 30px rgba(0,212,255,0.2);}
+.form-g{margin-bottom:15px;}
+.form-g label{display:block;font-size:0.8rem;color:#00d4ff;margin-bottom:6px;font-weight:bold;}
+.form-g input, .form-g select{width:100%;padding:12px;background:#000;border:1px solid #444;border-radius:8px;color:#fff;outline:none;}
+.form-g input:focus{border-color:#00d4ff;}
+.modal-f{display:flex;gap:15px;margin-top:25px;}
+.modal-f button{flex:1;padding:12px;border-radius:8px;border:none;font-weight:bold;cursor:pointer;}
+.btn-ok{background:#00d4ff;color:#000;}
+.btn-cancel{background:#333;color:#fff;}
 
-/* ── ADMIN PANEL ── */
-#admin-section{display:none;flex-direction:column;flex:1;overflow:hidden;}
-#admin-section.show{display:flex;}
-.admin-content{flex:1;overflow-y:auto;padding:20px;}
-.admin-card{background:#0f3460;border:1px solid #2dd4ff55;border-radius:10px;padding:15px;margin-bottom:20px;}
-.admin-card h3{color:#2dd4ff;margin-bottom:10px;font-size:1rem;}
-.user-item{background:#16213e;border:1px solid #2a2a4a;border-radius:8px;padding:10px;margin-bottom:8px;display:flex;justify-content:space-between;align-items:center;}
-.user-name{color:#2dd4ff;font-weight:bold;}
-.user-role{color:#aaa;font-size:0.75rem;}
-.audit-item{background:#16213e;border-left:3px solid #2dd4ff;border-radius:4px;padding:10px;margin-bottom:8px;font-size:0.8rem;}
-.audit-time{color:#aaa;font-size:0.7rem;}
-.audit-user{color:#c026d3;font-weight:bold;}
-
-/* ── TOAST ── */
-#toast{position:fixed;bottom:20px;right:20px;background:#27ae60;color:#fff;padding:12px 20px;border-radius:10px;display:none;z-index:2000;}
+#toast{position:fixed;bottom:20px;right:20px;background:#ffa500;color:#000;padding:15px 25px;border-radius:10px;display:none;z-index:2000;font-weight:bold;box-shadow:0 4px 15px rgba(255,165,0,0.3);}
 </style>
 </head>
 <body>
@@ -98,7 +85,6 @@ tr:hover{background:rgba(233, 69, 96, 0.1);}
 <div id="login-screen">
   <div class="login-box">
     <h1>🔐 USER PW LIST V.1</h1>
-    <p>OFFICIAL SYSTEM ACCESS</p>
     <div id="login-err"></div>
     <div class="lf">
       <label>USERNAME</label>
@@ -106,27 +92,34 @@ tr:hover{background:rgba(233, 69, 96, 0.1);}
     </div>
     <div class="lf">
       <label>PASSWORD</label>
-      <div class="inp-wrap">
+      <div style="position:relative">
         <input type="password" id="l-pass" placeholder="••••••••">
         <button class="eye-btn" onclick="togglePass('l-pass')">👁️</button>
       </div>
     </div>
     <button class="btn-login" onclick="handleLogin()">LOGIN NOW</button>
-    <p style="margin-top:20px;color:#e94560;font-size:0.7rem;letter-spacing:2px;">PRIVATE & CONFIDENTIAL</p>
+    <div class="footer-neon">
+      <div class="line1">শুধুমাত্র SEA SHIPPING LLC ব্যবহার যোগ্য</div>
+      <div class="line2">রিলিজ-জুলাই'২০২৬</div>
+    </div>
   </div>
 </div>
 
 <!-- ══ APP ══ -->
 <div id="app">
   <header>
-    <div class="header-title">🔐 USER PW LIST V.1</div>
-    <div class="user-info">
+    <div class="header-left">
+      <div class="header-title">
+        🔐 USER PW LIST V.1
+        <span class="by">By-Idris Mansoor</span>
+      </div>
+    </div>
+    <div class="header-right">
       <span class="user-badge" id="user-badge">👤 Loading...</span>
-      <button class="btn-logout" onclick="handleLogout()">Logout</button>
+      <button class="btn-logout" onclick="handleLogout()">🚪 Logout</button>
     </div>
   </header>
 
-  <!-- TABS -->
   <div class="tab-container">
     <button class="tab-btn active" onclick="switchTab('pw')">📋 Passwords</button>
     <button class="tab-btn" onclick="switchTab('dm')">📦 DM Barcodes</button>
@@ -136,67 +129,66 @@ tr:hover{background:rgba(233, 69, 96, 0.1);}
   </div>
 
   <div class="toolbar">
-    <button class="btn-add" onclick="openModal('add-modal')">➕ Add Entry</button>
-    <button class="btn-save" onclick="saveToSheets()">💾 Save</button>
-    <button class="btn-export" onclick="exportToExcel()">📤 Export</button>
-    <button style="background:#8e44ad;color:#fff;" onclick="openModal('pass-modal')">🔑 Change Pass</button>
-    <button style="background:#34495e;color:#fff;" onclick="loadFromSheets()">🔄 Reload</button>
+    <button onclick="openModal('add-modal')">➕ Add Entry</button>
+    <button onclick="saveToSheets()">💾 Save</button>
+    <button onclick="exportToExcel()">📤 Export</button>
+    <button onclick="importFromExcel()">📥 Import</button>
+    <button onclick="loadFromSheets()">🔄 Reload</button>
   </div>
 
-  <div id="status">⏳ Loading...</div>
+  <div id="status-bar">
+    <div id="status-text">⏳ System Ready</div>
+    <div id="total-count">Total: 0</div>
+  </div>
 
   <div class="search-bar">
-    <input type="text" id="search-input" placeholder="🔍 Universal Search (Passwords, Links, Barcodes...)" oninput="renderTable()">
-    <button onclick="document.getElementById('search-input').value='';renderTable()" style="background:#e94560;color:#fff;border:none;padding:8px 15px;border-radius:20px;cursor:pointer;">Clear</button>
+    <input type="text" id="search-input" placeholder="🔍 Universal Search (সব ডাটা সার্চ করুন...)" oninput="renderTable()">
   </div>
 
   <!-- TABLES -->
   <div id="pw-tab" class="table-container">
     <table>
-      <thead>
-        <tr><th style="width:50px">#</th><th>Company</th><th>Shj Code</th><th>User</th><th>Password</th><th>Dubai Code</th><th style="width:80px">Action</th></tr>
-      </thead>
+      <thead><tr><th>#</th><th>Company</th><th>Shj Code</th><th>User</th><th>Password</th><th>Dubai Code</th><th>Action</th></tr></thead>
       <tbody id="pw-body"></tbody>
     </table>
-    <div id="pw-empty" style="text-align:center;padding:40px;color:#555;display:none;">No data</div>
   </div>
 
   <div id="dm-tab" class="table-container" style="display:none;">
     <table>
-      <thead><tr><th style="width:50px">#</th><th>Barcode</th><th>Description</th><th style="width:80px">Action</th></tr></thead>
+      <thead><tr><th>#</th><th>Products Name</th><th>Size/Weight</th><th>Brand Name</th><th>Country</th><th>Barcode</th><th>Action</th></tr></thead>
       <tbody id="dm-body"></tbody>
     </table>
-    <div id="dm-empty" style="text-align:center;padding:40px;color:#555;display:none;">No data</div>
   </div>
 
   <div id="import-tab" class="table-container" style="display:none;">
     <table>
-      <thead><tr><th style="width:50px">#</th><th>Code</th><th>Description</th><th style="width:80px">Action</th></tr></thead>
+      <thead><tr><th>#</th><th>Code</th><th>Description</th><th>Action</th></tr></thead>
       <tbody id="import-body"></tbody>
     </table>
-    <div id="import-empty" style="text-align:center;padding:40px;color:#555;display:none;">No data</div>
   </div>
 
   <div id="links-tab" class="table-container" style="display:none;">
     <table>
-      <thead><tr><th style="width:50px">#</th><th>Title</th><th>URL</th><th style="width:80px">Action</th></tr></thead>
+      <thead><tr><th>#</th><th>Title</th><th>URL</th><th>Action</th></tr></thead>
       <tbody id="links-body"></tbody>
     </table>
-    <div id="links-empty" style="text-align:center;padding:40px;color:#555;display:none;">No data</div>
   </div>
 
   <!-- ADMIN -->
-  <div id="admin-section">
-    <div class="admin-content">
-      <div class="admin-card">
-        <h3>👥 User Management</h3>
-        <div class="form-g"><label>New Username</label><input type="text" id="new-username"></div>
-        <div class="form-g"><label>Password</label><input type="password" id="new-password"></div>
-        <div class="form-g"><label>Role</label><select id="new-role"><option value="user">User</option><option value="admin">Admin</option></select></div>
-        <button class="btn-add" style="width:100%;padding:8px;" onclick="addNewUser()">➕ Add User</button>
-        <div id="users-list" style="margin-top:15px;"></div>
+  <div id="admin-section" class="table-container" style="display:none;flex-direction:column;gap:20px;">
+    <div style="background:#111;padding:20px;border-radius:10px;border:1px solid #333;">
+      <h3 style="color:#00d4ff;margin-bottom:15px;">👥 User Management</h3>
+      <div style="display:flex;gap:10px;flex-wrap:wrap;">
+        <input type="text" id="new-username" placeholder="Username" style="padding:10px;background:#000;border:1px solid #444;color:#fff;border-radius:5px;">
+        <input type="password" id="new-password" placeholder="Password" style="padding:10px;background:#000;border:1px solid #444;color:#fff;border-radius:5px;">
+        <select id="new-role" style="padding:10px;background:#000;border:1px solid #444;color:#fff;border-radius:5px;"><option value="user">User</option><option value="admin">Admin</option></select>
+        <button onclick="addNewUser()" style="padding:10px 20px;background:#00d4ff;color:#000;border:none;border-radius:5px;font-weight:bold;cursor:pointer;">Add User</button>
       </div>
-      <div class="admin-card"><h3>📊 Audit Log</h3><div id="audit-list"></div></div>
+      <div id="users-list" style="margin-top:20px;"></div>
+    </div>
+    <div style="background:#111;padding:20px;border-radius:10px;border:1px solid #333;">
+      <h3 style="color:#ffa500;margin-bottom:15px;">📊 Audit Log</h3>
+      <div id="audit-list"></div>
     </div>
   </div>
 </div>
@@ -204,32 +196,25 @@ tr:hover{background:rgba(233, 69, 96, 0.1);}
 <!-- MODALS -->
 <div id="add-modal" class="modal">
   <div class="modal-content">
-    <div class="modal-h">➕ Add New Entry</div>
+    <div id="modal-title" style="color:#00d4ff;font-size:1.2rem;font-weight:bold;margin-bottom:20px;">➕ Add New Entry</div>
     <div id="add-form-fields"></div>
-    <div class="modal-f"><button class="btn-save" onclick="addEntry()">Add</button><button class="btn-logout" onclick="closeModal('add-modal')">Cancel</button></div>
+    <div class="modal-f">
+      <button class="btn-ok" id="modal-btn" onclick="addEntry()">Add</button>
+      <button class="btn-cancel" onclick="closeModal('add-modal')">Cancel</button>
+    </div>
   </div>
 </div>
 
-<div id="pass-modal" class="modal">
-  <div class="modal-content">
-    <div class="modal-h">🔑 Change Password</div>
-    <div class="form-g"><label>New Password</label><input type="password" id="new-pass"></div>
-    <div class="form-g"><label>Confirm</label><input type="password" id="confirm-pass"></div>
-    <div id="pass-err" style="color:#e94560;font-size:0.8rem;margin-bottom:10px;"></div>
-    <div class="modal-f"><button class="btn-save" onclick="handleChangePass()">Update</button><button class="btn-logout" onclick="closeModal('pass-modal')">Cancel</button></div>
-  </div>
-</div>
-
+<input type="file" id="file-input" accept=".xlsx,.xls" style="display:none;" onchange="handleFileImport(event)">
 <div id="toast"></div>
 
 <script>
 const API_URL = "https://script.google.com/macros/s/AKfycbzP0NQm1C8-kltfq5BEzkGtP5Htv54sGx4XqDNGOxJFGxZqJUBqYvQOeYZTpVW9BMaY0A/exec";
-
 let rows = { pw: [], dm: [], import: [], links: [] };
 let currentUser = null;
 let currentTab = 'pw';
+let editingIdx = -1;
 
-// Load saved username
 window.onload = () => {
   const savedUser = localStorage.getItem('tos_username');
   if(savedUser) document.getElementById('l-user').value = savedUser;
@@ -245,14 +230,13 @@ async function handleLogin() {
   const p = document.getElementById('l-pass').value;
   const err = document.getElementById('login-err');
   if(!u || !p) { err.textContent = "Enter credentials"; return; }
-  
   err.textContent = "⏳ Authenticating...";
   try {
     const res = await fetch(API_URL, { method: 'POST', body: JSON.stringify({ action: 'login', username: u, password: p }) });
     const data = await res.json();
     if(data.success) {
       currentUser = data.user;
-      localStorage.setItem('tos_username', u); // Save username
+      localStorage.setItem('tos_username', u);
       document.getElementById('login-screen').style.display = 'none';
       document.getElementById('app').style.display = 'flex';
       document.getElementById('user-badge').textContent = `👤 ${currentUser.username}`;
@@ -265,12 +249,12 @@ async function handleLogin() {
 function handleLogout() { if(confirm("Logout?")) location.reload(); }
 
 async function loadFromSheets() {
-  document.getElementById('status').textContent = "⏳ Loading...";
+  document.getElementById('status-text').textContent = "⏳ Loading Data...";
   try {
     const res = await fetch(API_URL + "?t=" + Date.now());
     const data = await res.json();
-    if(data.status === "ok") { rows = data; renderTable(); document.getElementById('status').textContent = "✅ Loaded"; }
-  } catch(e) { document.getElementById('status').textContent = "❌ Load Error"; }
+    if(data.status === "ok") { rows = data; renderTable(); document.getElementById('status-text').textContent = "✅ System Synced"; }
+  } catch(e) { document.getElementById('status-text').textContent = "❌ Load Error"; }
 }
 
 function switchTab(tab) {
@@ -285,64 +269,105 @@ function switchTab(tab) {
 
 function renderTable() {
   const q = document.getElementById('search-input').value.toLowerCase();
+  let total = 0;
   ['pw','dm','import','links'].forEach(t => {
     const data = rows[t] || [];
     const body = document.getElementById(t+'-body');
     body.innerHTML = "";
     const filtered = data.filter(r => JSON.stringify(r).toLowerCase().includes(q));
-    document.getElementById(t+'-empty').style.display = filtered.length ? 'none' : 'block';
+    if(currentTab === t) total = filtered.length;
     filtered.forEach((r, i) => {
+      const actualIdx = data.indexOf(r);
       const tr = document.createElement('tr');
-      if(t === 'pw') tr.innerHTML = `<td>${i+1}</td><td class="co-name">${esc(r.company)}</td><td>${esc(r.shj)} <button class="copy-btn" onclick="copy('${esc(r.shj)}')">📋</button></td><td>${esc(r.user)}</td><td>${esc(r.password)}</td><td>${esc(r.note)}</td><td><button class="del-btn" onclick="deleteRow('pw',${data.indexOf(r)})">🗑️</button></td>`;
-      else if(t === 'dm') tr.innerHTML = `<td>${i+1}</td><td>${esc(r.name)}</td><td>${esc(r.desc)}</td><td><button class="del-btn" onclick="deleteRow('dm',${data.indexOf(r)})">🗑️</button></td>`;
-      else if(t === 'import') tr.innerHTML = `<td>${i+1}</td><td>${esc(r.name)}</td><td>${esc(r.desc)}</td><td><button class="del-btn" onclick="deleteRow('import',${data.indexOf(r)})">🗑️</button></td>`;
-      else if(t === 'links') tr.innerHTML = `<td>${i+1}</td><td>${esc(r.title)}</td><td><a href="${esc(r.url)}" target="_blank" style="color:#2dd4ff">${esc(r.url)}</a></td><td><button class="del-btn" onclick="deleteRow('links',${data.indexOf(r)})">🗑️</button></td>`;
+      if(t === 'pw') {
+        tr.innerHTML = `<td>${i+1}</td><td>${esc(r.company)}<button class="copy-btn" onclick="copy('${esc(r.company)}')">📋</button></td><td>${esc(r.shj)}<button class="copy-btn" onclick="copy('${esc(r.shj)}')">📋</button></td><td>${esc(r.user)}<button class="copy-btn" onclick="copy('${esc(r.user)}')">📋</button></td><td>${esc(r.password)}<button class="copy-btn" onclick="copy('${esc(r.password)}')">📋</button></td><td>${esc(r.note)}<button class="copy-btn" onclick="copy('${esc(r.note)}')">📋</button></td><td><button class="edit-btn" onclick="openEdit('${t}',${actualIdx})">✏️</button><button class="del-btn" onclick="deleteRow('${t}',${actualIdx})">🗑️</button></td>`;
+      } else if(t === 'dm') {
+        tr.innerHTML = `<td>${i+1}</td><td>${esc(r.product)}<button class="copy-btn" onclick="copy('${esc(r.product)}')">📋</button></td><td>${esc(r.size)}<button class="copy-btn" onclick="copy('${esc(r.size)}')">📋</button></td><td>${esc(r.brand)}<button class="copy-btn" onclick="copy('${esc(r.brand)}')">📋</button></td><td>${esc(r.country)}<button class="copy-btn" onclick="copy('${esc(r.country)}')">📋</button></td><td>${esc(r.barcode)}<button class="copy-btn" onclick="copy('${esc(r.barcode)}')">📋</button></td><td><button class="edit-btn" onclick="openEdit('${t}',${actualIdx})">✏️</button><button class="del-btn" onclick="deleteRow('${t}',${actualIdx})">🗑️</button></td>`;
+      } else if(t === 'import') {
+        tr.innerHTML = `<td>${i+1}</td><td>${esc(r.name)}<button class="copy-btn" onclick="copy('${esc(r.name)}')">📋</button></td><td>${esc(r.desc)}<button class="copy-btn" onclick="copy('${esc(r.desc)}')">📋</button></td><td><button class="edit-btn" onclick="openEdit('${t}',${actualIdx})">✏️</button><button class="del-btn" onclick="deleteRow('${t}',${actualIdx})">🗑️</button></td>`;
+      } else if(t === 'links') {
+        tr.innerHTML = `<td>${i+1}</td><td>${esc(r.title)}<button class="copy-btn" onclick="copy('${esc(r.title)}')">📋</button></td><td><a href="${esc(r.url)}" target="_blank" style="color:#00d4ff;">${esc(r.url)}</a><button class="copy-btn" onclick="copy('${esc(r.url)}')">📋</button></td><td><button class="edit-btn" onclick="openEdit('${t}',${actualIdx})">✏️</button><button class="del-btn" onclick="deleteRow('${t}',${actualIdx})">🗑️</button></td>`;
+      }
       body.appendChild(tr);
     });
   });
+  document.getElementById('total-count').textContent = `Total: ${total}`;
 }
 
 function openModal(id) {
-  if(id === 'add-modal') {
-    const fields = document.getElementById('add-form-fields');
-    if(currentTab === 'pw') fields.innerHTML = `<div class="form-g"><label>Company</label><input id="in-1"></div><div class="form-g"><label>Shj Code</label><input id="in-2"></div><div class="form-g"><label>User</label><input id="in-3"></div><div class="form-g"><label>Password</label><input id="in-4"></div><div class="form-g"><label>Dubai Code</label><input id="in-5"></div>`;
-    else if(currentTab === 'dm' || currentTab === 'import') fields.innerHTML = `<div class="form-g"><label>Name/Code</label><input id="in-1"></div><div class="form-g"><label>Description</label><input id="in-2"></div>`;
-    else if(currentTab === 'links') fields.innerHTML = `<div class="form-g"><label>Title</label><input id="in-1"></div><div class="form-g"><label>URL</label><input id="in-2"></div>`;
-  }
+  editingIdx = -1;
+  document.getElementById('modal-title').textContent = "➕ Add New Entry";
+  document.getElementById('modal-btn').textContent = "Add";
+  const fields = document.getElementById('add-form-fields');
+  if(currentTab === 'pw') fields.innerHTML = `<div class="form-g"><label>Company</label><input id="in-1"></div><div class="form-g"><label>Shj Code</label><input id="in-2"></div><div class="form-g"><label>User</label><input id="in-3"></div><div class="form-g"><label>Password</label><input id="in-4"></div><div class="form-g"><label>Dubai Code</label><input id="in-5"></div>`;
+  else if(currentTab === 'dm') fields.innerHTML = `<div class="form-g"><label>Product Name</label><input id="in-1"></div><div class="form-g"><label>Size/Weight</label><input id="in-2"></div><div class="form-g"><label>Brand Name</label><input id="in-3"></div><div class="form-g"><label>Country</label><input id="in-4"></div><div class="form-g"><label>Barcode</label><input id="in-5"></div>`;
+  else if(currentTab === 'import') fields.innerHTML = `<div class="form-g"><label>Code</label><input id="in-1"></div><div class="form-g"><label>Description</label><input id="in-2"></div>`;
+  else if(currentTab === 'links') fields.innerHTML = `<div class="form-g"><label>Title</label><input id="in-1"></div><div class="form-g"><label>URL</label><input id="in-2"></div>`;
   document.getElementById(id).style.display = 'flex';
+}
+
+function openEdit(tab, idx) {
+  editingIdx = idx;
+  document.getElementById('modal-title').textContent = "✏️ Edit Entry";
+  document.getElementById('modal-btn').textContent = "Update";
+  const fields = document.getElementById('add-form-fields');
+  const r = rows[tab][idx];
+  if(tab === 'pw') fields.innerHTML = `<div class="form-g"><label>Company</label><input id="in-1" value="${esc(r.company)}"></div><div class="form-g"><label>Shj Code</label><input id="in-2" value="${esc(r.shj)}"></div><div class="form-g"><label>User</label><input id="in-3" value="${esc(r.user)}"></div><div class="form-g"><label>Password</label><input id="in-4" value="${esc(r.password)}"></div><div class="form-g"><label>Dubai Code</label><input id="in-5" value="${esc(r.note)}"></div>`;
+  else if(tab === 'dm') fields.innerHTML = `<div class="form-g"><label>Product Name</label><input id="in-1" value="${esc(r.product)}"></div><div class="form-g"><label>Size/Weight</label><input id="in-2" value="${esc(r.size)}"></div><div class="form-g"><label>Brand Name</label><input id="in-3" value="${esc(r.brand)}"></div><div class="form-g"><label>Country</label><input id="in-4" value="${esc(r.country)}"></div><div class="form-g"><label>Barcode</label><input id="in-5" value="${esc(r.barcode)}"></div>`;
+  else if(tab === 'import') fields.innerHTML = `<div class="form-g"><label>Code</label><input id="in-1" value="${esc(r.name)}"></div><div class="form-g"><label>Description</label><input id="in-2" value="${esc(r.desc)}"></div>`;
+  else if(tab === 'links') fields.innerHTML = `<div class="form-g"><label>Title</label><input id="in-1" value="${esc(r.title)}"></div><div class="form-g"><label>URL</label><input id="in-2" value="${esc(r.url)}"></div>`;
+  document.getElementById('add-modal').style.display = 'flex';
 }
 
 function addEntry() {
   const v1 = document.getElementById('in-1').value.trim();
-  const v2 = document.getElementById('in-2')?.value.trim();
   if(!v1) return alert("Required field empty");
-  if(currentTab === 'pw') rows.pw.push({ company: v1, shj: v2, user: document.getElementById('in-3').value, password: document.getElementById('in-4').value, note: document.getElementById('in-5').value });
-  else if(currentTab === 'dm') rows.dm.push({ name: v1, desc: v2 });
-  else if(currentTab === 'import') rows.import.push({ name: v1, desc: v2 });
-  else if(currentTab === 'links') rows.links.push({ title: v1, url: v2 });
+  const newRow = {};
+  if(currentTab === 'pw') { newRow.company = v1; newRow.shj = document.getElementById('in-2').value; newRow.user = document.getElementById('in-3').value; newRow.password = document.getElementById('in-4').value; newRow.note = document.getElementById('in-5').value; }
+  else if(currentTab === 'dm') { newRow.product = v1; newRow.size = document.getElementById('in-2').value; newRow.brand = document.getElementById('in-3').value; newRow.country = document.getElementById('in-4').value; newRow.barcode = document.getElementById('in-5').value; }
+  else if(currentTab === 'import') { newRow.name = v1; newRow.desc = document.getElementById('in-2').value; }
+  else if(currentTab === 'links') { newRow.title = v1; newRow.url = document.getElementById('in-2').value; }
+  if(editingIdx > -1) rows[currentTab][editingIdx] = newRow;
+  else rows[currentTab].push(newRow);
   renderTable(); closeModal('add-modal');
 }
 
 function deleteRow(t, idx) { if(confirm("Delete?")) { rows[t].splice(idx, 1); renderTable(); } }
 
 async function saveToSheets() {
-  document.getElementById('status').textContent = "⏳ Saving...";
+  document.getElementById('status-text').textContent = "⏳ Saving Data...";
   try {
     const res = await fetch(API_URL, { method: 'POST', body: JSON.stringify({ action: 'save', username: currentUser.username, rows: rows }) });
     const data = await res.json();
-    if(data.status === "ok") { document.getElementById('status').textContent = "✅ Saved"; showToast("💾 Saved!"); }
-  } catch(e) { document.getElementById('status').textContent = "❌ Save Error"; }
+    if(data.status === "ok") { document.getElementById('status-text').textContent = "✅ Data Saved"; showToast("💾 Saved Successfully!"); }
+  } catch(e) { document.getElementById('status-text').textContent = "❌ Save Error"; }
 }
 
-async function handleChangePass() {
-  const p1 = document.getElementById('new-pass').value;
-  const p2 = document.getElementById('confirm-pass').value;
-  if(p1 !== p2) return document.getElementById('pass-err').textContent = "Passwords don't match";
-  try {
-    const res = await fetch(API_URL, { method: 'POST', body: JSON.stringify({ action: 'changePass', username: currentUser.username, newPass: p1 }) });
-    const data = await res.json();
-    if(data.status === "ok") { closeModal('pass-modal'); showToast("🔑 Updated!"); }
-  } catch(e) { alert("Error"); }
+function exportToExcel() {
+  const ws = XLSX.utils.json_to_sheet(rows[currentTab] || []);
+  const wb = XLSX.utils.book_new(); XLSX.utils.book_append_sheet(wb, ws, currentTab);
+  XLSX.writeFile(wb, `TOS_${currentTab}_${new Date().getTime()}.xlsx`);
+  showToast("📤 Exported!");
+}
+
+function importFromExcel() { document.getElementById('file-input').click(); }
+
+function handleFileImport(event) {
+  const file = event.target.files[0];
+  if(!file) return;
+  const reader = new FileReader();
+  reader.onload = (e) => {
+    try {
+      const data = new Uint8Array(e.target.result);
+      const workbook = XLSX.read(data, { type: 'array' });
+      const sheet = workbook.Sheets[workbook.SheetNames[0]];
+      const json = XLSX.utils.sheet_to_json(sheet);
+      rows[currentTab] = json;
+      renderTable(); showToast("📥 Imported!");
+    } catch(err) { alert("Import failed: " + err.message); }
+  };
+  reader.readAsArrayBuffer(file);
+  event.target.value = '';
 }
 
 async function loadUsers() {
@@ -352,8 +377,9 @@ async function loadUsers() {
     if(data.status === "ok") {
       const list = document.getElementById('users-list'); list.innerHTML = "";
       data.users.forEach(u => {
-        const item = document.createElement('div'); item.className = 'user-item';
-        item.innerHTML = `<div><div class="user-name">${esc(u.username)}</div><div class="user-role">${u.role}</div></div><button class="del-btn" style="padding:4px 8px;font-size:0.7rem;" onclick="deleteUser('${esc(u.username)}')">🗑️</button>`;
+        const item = document.createElement('div');
+        item.style.display = 'flex'; item.style.justifyContent = 'space-between'; item.style.padding = '10px'; item.style.borderBottom = '1px solid #222';
+        item.innerHTML = `<div><span style="color:#00d4ff;font-weight:bold;">${esc(u.username)}</span> <span style="color:#555;font-size:0.8rem;">(${u.role})</span></div><button onclick="deleteUser('${esc(u.username)}')" style="background:#ff0055;color:#fff;border:none;padding:4px 8px;border-radius:5px;cursor:pointer;">🗑️</button>`;
         list.appendChild(item);
       });
     }
@@ -385,20 +411,14 @@ async function loadAuditLog() {
     const data = await res.json();
     if(data.status === "ok") {
       const list = document.getElementById('audit-list'); list.innerHTML = "";
-      if(!data.logs || data.logs.length === 0) { list.innerHTML = '<div style="color:#555;">No logs</div>'; return; }
       data.logs.reverse().slice(0, 50).forEach(log => {
-        const item = document.createElement('div'); item.className = 'audit-item';
-        item.innerHTML = `<div class="audit-time">${new Date(log.timestamp).toLocaleString()}</div><div class="audit-user">👤 ${esc(log.user)}</div><div>${log.action}: ${esc(log.details)}</div>`;
+        const item = document.createElement('div');
+        item.style.fontSize = '0.8rem'; item.style.padding = '8px'; item.style.borderBottom = '1px solid #222';
+        item.innerHTML = `<span style="color:#555;">${new Date(log.timestamp).toLocaleString()}</span> <span style="color:#00d4ff;">👤 ${esc(log.user)}</span>: ${log.action} - ${esc(log.details)}`;
         list.appendChild(item);
       });
     }
   } catch(e) {}
-}
-
-function exportToExcel() {
-  const ws = XLSX.utils.json_to_sheet(rows[currentTab] || []);
-  const wb = XLSX.utils.book_new(); XLSX.utils.book_append_sheet(wb, ws, currentTab);
-  XLSX.writeFile(wb, `TOS_${currentTab}.xlsx`);
 }
 
 function copy(t) { navigator.clipboard.writeText(t).then(() => showToast("📋 Copied!")); }
