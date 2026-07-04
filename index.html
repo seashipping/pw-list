@@ -41,13 +41,15 @@ header{background:#111;padding:15px 20px;border-bottom:3px solid #00d4ff;display
 .toolbar button{padding:10px 18px;border-radius:8px;border:2px solid #fff;background:#000;color:#fff;font-weight:bold;cursor:pointer;font-size:0.85rem;transition:0.3s;}
 .toolbar button:hover{background:#fff;color:#000;}
 
-/* ── TAB BUTTONS IN TOOLBAR ── */
+/* ── TAB BUTTONS CENTERED ── */
 .tab-group{display:flex;gap:8px;margin:0 auto;}
 .tab-btn-pro{padding:10px 18px;border-radius:8px;border:2px solid #00d4ff;background:#000;color:#00d4ff;font-weight:bold;cursor:pointer;font-size:0.85rem;transition:0.3s;}
 .tab-btn-pro.active{background:#00d4ff;color:#000;box-shadow:0 0 10px #00d4ff;}
 
-/* ── SEARCH BOX ── */
+/* ── SEARCH CONTAINER ── */
 .search-container{padding:20px;background:#000;display:flex;justify-content:center;align-items:center;gap:15px;}
+.btn-add-main{padding:12px 25px;background:#000;color:#00ffcc;border:2px solid #00ffcc;border-radius:30px;font-weight:bold;cursor:pointer;transition:0.3s;white-space:nowrap;}
+.btn-add-main:hover{background:#00ffcc;color:#000;box-shadow:0 0 15px #00ffcc;}
 .search-wrapper{position:relative;width:100%;max-width:800px;}
 .search-wrapper input{width:100%;padding:15px 20px 15px 50px;border-radius:30px;border:2px solid #00d4ff;background:#111;color:#fff;font-size:1.1rem;outline:none;transition:0.3s;box-shadow:0 0 15px rgba(0,212,255,0.1);}
 .search-wrapper input:focus{border-color:#00ffcc;box-shadow:0 0 25px rgba(0,255,204,0.3);}
@@ -125,7 +127,6 @@ td{padding:12px;border-bottom:1px solid #222;font-size:0.95rem;color:#eee;overfl
     </div>
   </header>
 
-  <!-- PINNED LINKS SECTION -->
   <div class="pinned-links">
     <span>📌 QUICK LINKS:</span>
     <div id="pin-container" style="display:flex;gap:10px;"></div>
@@ -133,13 +134,11 @@ td{padding:12px;border-bottom:1px solid #222;font-size:0.95rem;color:#eee;overfl
   </div>
 
   <div class="toolbar">
-    <button onclick="openModal('add-modal')">➕ Add Entry</button>
     <button onclick="exportToExcel()">📤 Export</button>
     <button onclick="importFromExcel()">📥 Import</button>
     <button onclick="loadFromSheets()">🔄 Reload</button>
     <button onclick="removeDuplicates()" style="border-color:#00ffcc;color:#00ffcc;">🧹 Remove Duplicates</button>
     
-    <!-- TAB BUTTONS CENTERED -->
     <div class="tab-group">
       <button class="tab-btn-pro active" onclick="switchTab('pw')">Passwords</button>
       <button class="tab-btn-pro" onclick="switchTab('dm')">DM Barcodes</button>
@@ -154,6 +153,7 @@ td{padding:12px;border-bottom:1px solid #222;font-size:0.95rem;color:#eee;overfl
   </div>
 
   <div class="search-container">
+    <button class="btn-add-main" onclick="openModal('add-modal')">➕ Add Entry</button>
     <div class="search-wrapper">
       <input type="text" id="search-input" placeholder="Universal Search (Passwords, Links, Barcodes...)" oninput="renderTable()">
     </div>
@@ -172,7 +172,7 @@ td{padding:12px;border-bottom:1px solid #222;font-size:0.95rem;color:#eee;overfl
   <div id="dm-tab" class="table-container" style="display:none;">
     <table>
       <colgroup><col style="width:50px"><col style="width:200px"><col style="width:120px"><col style="width:120px"><col style="width:120px"><col style="width:180px"><col style="width:120px"></colgroup>
-      <thead><tr><th>#</th><th>Products</th><th>Size</th><th>Brand</th><th>Country</th><th>Barcode</th><th>Action</th></tr></thead>
+      <thead><tr><th>#</th><th>Product Name</th><th>Size</th><th>Country</th><th>Brand</th><th>Barcode</th><th>Action</th></tr></thead>
       <tbody id="dm-body"></tbody>
     </table>
   </div>
@@ -193,7 +193,6 @@ td{padding:12px;border-bottom:1px solid #222;font-size:0.95rem;color:#eee;overfl
     </table>
   </div>
 
-  <!-- ADMIN -->
   <div id="admin-section" class="table-container" style="display:none;flex-direction:column;gap:20px;">
     <div style="background:#111;padding:20px;border-radius:10px;border:1px solid #333;">
       <h3 style="color:#00d4ff;margin-bottom:15px;">👥 User Management</h3>
@@ -208,7 +207,6 @@ td{padding:12px;border-bottom:1px solid #222;font-size:0.95rem;color:#eee;overfl
   </div>
 </div>
 
-<!-- PINNED LINKS EDIT MODAL -->
 <div id="pin-modal" class="modal">
   <div class="modal-content" style="max-width:650px;">
     <h3 style="color:#00ffcc;margin-bottom:15px;">⚙️ Edit Quick Links (Max 10)</h3>
@@ -362,7 +360,7 @@ function renderTable() {
       if(t === 'pw') {
         tr.innerHTML = `<td>${i+1}</td><td title="${esc(r.company)}"><span class="cell-30">${esc(r.company)}</span></td><td><span class="cell-10">${esc(r.shj)}</span><button class="copy-btn" onclick="copy('${esc(r.shj)}')">📋</button></td><td><span class="cell-10">${esc(r.user)}</span><button class="copy-btn" onclick="copy('${esc(r.user)}')">📋</button></td><td><span class="cell-10">${esc(r.password)}</span><button class="copy-btn" onclick="copy('${esc(r.password)}')">📋</button></td><td><span class="cell-10">${esc(r.note)}</span><button class="copy-btn" onclick="copy('${esc(r.note)}')">📋</button></td><td><button class="edit-btn" onclick="openEdit('${t}',${actualIdx})">✏️</button><button class="del-btn" onclick="deleteRow('${t}',${actualIdx})">🗑️</button></td>`;
       } else if(t === 'dm') {
-        tr.innerHTML = `<td>${i+1}</td><td title="${esc(r.product)}"><span class="cell-30">${esc(r.product)}</span></td><td><span class="cell-10">${esc(r.size)}</span><button class="copy-btn" onclick="copy('${esc(r.size)}')">📋</button></td><td><span class="cell-10">${esc(r.brand)}</span><button class="copy-btn" onclick="copy('${esc(r.brand)}')">📋</button></td><td><span class="cell-10">${esc(r.country)}</span><button class="copy-btn" onclick="copy('${esc(r.country)}')">📋</button></td><td><span class="cell-10">${esc(r.barcode)}</span><button class="copy-btn" onclick="copy('${esc(r.barcode)}')">📋</button></td><td><button class="edit-btn" onclick="openEdit('${t}',${actualIdx})">✏️</button><button class="del-btn" onclick="deleteRow('${t}',${actualIdx})">🗑️</button></td>`;
+        tr.innerHTML = `<td>${i+1}</td><td title="${esc(r.product)}"><span class="cell-30">${esc(r.product)}</span></td><td><span class="cell-10">${esc(r.size)}</span><button class="copy-btn" onclick="copy('${esc(r.size)}')">📋</button></td><td><span class="cell-10">${esc(r.country)}</span><button class="copy-btn" onclick="copy('${esc(r.country)}')">📋</button></td><td><span class="cell-10">${esc(r.brand)}</span><button class="copy-btn" onclick="copy('${esc(r.brand)}')">📋</button></td><td><span class="cell-10">${esc(r.barcode)}</span><button class="copy-btn" onclick="copy('${esc(r.barcode)}')">📋</button></td><td><button class="edit-btn" onclick="openEdit('${t}',${actualIdx})">✏️</button><button class="del-btn" onclick="deleteRow('${t}',${actualIdx})">🗑️</button></td>`;
       } else if(t === 'import') {
         tr.innerHTML = `<td>${i+1}</td><td>${esc(r.name)}<button class="copy-btn" onclick="copy('${esc(r.name)}')">📋</button></td><td>${esc(r.desc)}</td><td><button class="edit-btn" onclick="openEdit('${t}',${actualIdx})">✏️</button><button class="del-btn" onclick="deleteRow('${t}',${actualIdx})">🗑️</button></td>`;
       } else if(t === 'links') {
@@ -394,7 +392,7 @@ function openModal(id) {
   document.getElementById('modal-title').textContent = "➕ Add New Entry";
   const fields = document.getElementById('add-form-fields');
   if(currentTab === 'pw') fields.innerHTML = `<div class="form-g"><label>Company</label><input id="in-1"></div><div class="form-g"><label>Shj Code</label><input id="in-2"></div><div class="form-g"><label>User</label><input id="in-3"></div><div class="form-g"><label>Password</label><input id="in-4"></div><div class="form-g"><label>Dubai Code</label><input id="in-5"></div>`;
-  else if(currentTab === 'dm') fields.innerHTML = `<div class="form-g"><label>Product Name</label><input id="in-1"></div><div class="form-g"><label>Size/Weight</label><input id="in-2"></div><div class="form-g"><label>Brand Name</label><input id="in-3"></div><div class="form-g"><label>Country</label><input id="in-4"></div><div class="form-g"><label>Barcode</label><input id="in-5"></div>`;
+  else if(currentTab === 'dm') fields.innerHTML = `<div class="form-g"><label>Product Name</label><input id="in-1"></div><div class="form-g"><label>Size/Weight</label><input id="in-2"></div><div class="form-g"><label>Country</label><input id="in-3"></div><div class="form-g"><label>Brand Name</label><input id="in-4"></div><div class="form-g"><label>Barcode</label><input id="in-5"></div>`;
   else if(currentTab === 'import') fields.innerHTML = `<div class="form-g"><label>Code</label><input id="in-1"></div><div class="form-g"><label>Description</label><input id="in-2"></div>`;
   else if(currentTab === 'links') fields.innerHTML = `<div class="form-g"><label>Title</label><input id="in-1"></div><div class="form-g"><label>URL</label><input id="in-2"></div>`;
   document.getElementById(id).style.display = 'flex';
@@ -406,7 +404,7 @@ function openEdit(tab, idx) {
   const fields = document.getElementById('add-form-fields');
   const r = rows[tab][idx];
   if(tab === 'pw') fields.innerHTML = `<div class="form-g"><label>Company</label><input id="in-1" value="${esc(r.company)}"></div><div class="form-g"><label>Shj Code</label><input id="in-2" value="${esc(r.shj)}"></div><div class="form-g"><label>User</label><input id="in-3" value="${esc(r.user)}"></div><div class="form-g"><label>Password</label><input id="in-4" value="${esc(r.password)}"></div><div class="form-g"><label>Dubai Code</label><input id="in-5" value="${esc(r.note)}"></div>`;
-  else if(tab === 'dm') fields.innerHTML = `<div class="form-g"><label>Product Name</label><input id="in-1" value="${esc(r.product)}"></div><div class="form-g"><label>Size/Weight</label><input id="in-2" value="${esc(r.size)}"></div><div class="form-g"><label>Brand Name</label><input id="in-3" value="${esc(r.brand)}"></div><div class="form-g"><label>Country</label><input id="in-4" value="${esc(r.country)}"></div><div class="form-g"><label>Barcode</label><input id="in-5" value="${esc(r.barcode)}"></div>`;
+  else if(tab === 'dm') fields.innerHTML = `<div class="form-g"><label>Product Name</label><input id="in-1" value="${esc(r.product)}"></div><div class="form-g"><label>Size/Weight</label><input id="in-2" value="${esc(r.size)}"></div><div class="form-g"><label>Country</label><input id="in-3" value="${esc(r.country)}"></div><div class="form-g"><label>Brand Name</label><input id="in-4" value="${esc(r.brand)}"></div><div class="form-g"><label>Barcode</label><input id="in-5" value="${esc(r.barcode)}"></div>`;
   else if(tab === 'import') fields.innerHTML = `<div class="form-g"><label>Code</label><input id="in-1" value="${esc(r.name)}"></div><div class="form-g"><label>Description</label><input id="in-2" value="${esc(r.desc)}"></div>`;
   else if(tab === 'links') fields.innerHTML = `<div class="form-g"><label>Title</label><input id="in-1" value="${esc(r.title)}"></div><div class="form-g"><label>URL</label><input id="in-2" value="${esc(r.url)}"></div>`;
   document.getElementById('add-modal').style.display = 'flex';
@@ -417,7 +415,7 @@ async function addEntry() {
   if(!v1) return alert("Required field empty");
   const newRow = {};
   if(currentTab === 'pw') { newRow.company = v1; newRow.shj = document.getElementById('in-2').value; newRow.user = document.getElementById('in-3').value; newRow.password = document.getElementById('in-4').value; newRow.note = document.getElementById('in-5').value; }
-  else if(currentTab === 'dm') { newRow.product = v1; newRow.size = document.getElementById('in-2').value; newRow.brand = document.getElementById('in-3').value; newRow.country = document.getElementById('in-4').value; newRow.barcode = document.getElementById('in-5').value; }
+  else if(currentTab === 'dm') { newRow.product = v1; newRow.size = document.getElementById('in-2').value; newRow.country = document.getElementById('in-3').value; newRow.brand = document.getElementById('in-4').value; newRow.barcode = document.getElementById('in-5').value; }
   else if(currentTab === 'import') { newRow.name = v1; newRow.desc = document.getElementById('in-2').value; }
   else if(currentTab === 'links') { newRow.title = v1; newRow.url = document.getElementById('in-2').value; }
   
