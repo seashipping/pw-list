@@ -73,6 +73,8 @@ td{padding:12px;border-bottom:1px solid #222;font-size:0.95rem;color:#eee;overfl
 .copy-btn:hover{background:#00d4ff;color:#000;}
 .edit-btn{background:#00d4ff;color:#000;border:none;padding:6px 12px;border-radius:5px;cursor:pointer;font-weight:bold;margin-right:5px;}
 .del-btn{background:#ff0055;color:#fff;border:none;padding:6px 12px;border-radius:5px;cursor:pointer;}
+.link-text{color:#00d4ff;text-decoration:none;font-weight:bold;}
+.link-text:hover{text-decoration:underline;}
 
 /* ── MODALS ── */
 .modal{display:none;position:fixed;inset:0;background:rgba(0,0,0,0.9);z-index:1000;align-items:center;justify-content:center;}
@@ -389,7 +391,7 @@ function renderTable() {
     } else if(currentTab === 'import') {
       html += `<td>${r.name}</td><td>${r.desc}</td>`;
     } else if(currentTab === 'links') {
-      html += `<td><span class="cell-30">${r.title}</span></td><td>${r.url} <button class="copy-btn" onclick="copy('${r.url}')">📋</button></td>`;
+      html += `<td><span class="cell-30"><a href="${r.url}" target="_blank" class="link-text">${r.title}</a></span></td><td>${r.url} <button class="copy-btn" onclick="copy('${r.url}')">📋</button></td>`;
     }
     
     html += `<td>
@@ -448,8 +450,12 @@ async function addEntry() {
     newRow[k] = document.getElementById(`f-${k}`).value.trim();
   });
   
-  if(editingIdx > -1) rows[currentTab][editingIdx] = newRow;
-  else rows[currentTab].unshift(newRow);
+  if(editingIdx > -1) {
+    rows[currentTab][editingIdx] = newRow;
+  } else {
+    // NEW ENTRY ADDS TO END (BOTTOM)
+    rows[currentTab].push(newRow);
+  }
   
   closeModal('add-modal');
   renderTable();
@@ -502,10 +508,14 @@ function removeDuplicates() {
 }
 
 function exportToExcel() {
-  const ws = XLSX.utils.json_to_sheet(rows[currentTab]);
-  const wb = XLSX.utils.book_new();
-  XLSX.utils.book_append_sheet(wb, ws, currentTab);
-  XLSX.writeFile(wb, `TOS_${currentTab}_${new Date().toLocaleDateString()}.xlsx`);
+  try {
+    const ws = XLSX.utils.json_to_sheet(rows[currentTab]);
+    const wb = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(wb, ws, currentTab);
+    XLSX.writeFile(wb, `TOS_${currentTab}_${new Date().toLocaleDateString()}.xlsx`);
+  } catch(e) {
+    alert("Export Error: " + e.message);
+  }
 }
 
 function importFromExcel() {
