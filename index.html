@@ -3,8 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
-<title>USER PW LIST V.16</title>
-<!-- SheetJS library loaded with explicit script tag and fallback check -->
+<title>USER PW LIST V.17</title>
 <script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
 <style>
 *{box-sizing:border-box;margin:0;padding:0;}
@@ -29,7 +28,7 @@ header{background:#111;padding:15px 20px;border-bottom:3px solid #00d4ff;display
 .header-title .by{color:#00ffcc;font-size:0.85rem;font-weight:bold;background:rgba(0,255,204,0.1);padding:3px 12px;border-radius:15px;border:2px solid #00ffcc;text-shadow:0 0 8px #00ffcc;}
 .header-right{display:flex;align-items:center;gap:15px;}
 .company-badge{background:rgba(0,255,0,0.1);color:#00ff00;padding:8px 18px;border-radius:20px;font-weight:bold;border:2px solid #00ff00;font-size:0.9rem;box-shadow:0 0 10px rgba(0,255,0,0.2);}
-.btn-logout-pro{background:linear-gradient(90deg,#ff0055,#c0392b);color:#fff;border:none;padding:10px 20px;border-radius:25px;font-weight:bold;cursor:pointer;display:flex;align-items:center;gap:8px;}
+.btn-logout-pro{background:linear-gradient(90deg,#ff0055,#c0392b);color:#fff;border:none;padding:10px 20px;border-radius:25px;font-weight:bold;cursor:pointer;}
 
 /* ── PINNED LINKS ── */
 .pinned-links{background:#000;padding:8px 20px;display:flex;gap:10px;align-items:center;border-bottom:1px solid #00d4ff33;overflow-x:auto;}
@@ -58,13 +57,14 @@ header{background:#111;padding:15px 20px;border-bottom:3px solid #00d4ff;display
 .table-container{flex:1;overflow:auto;padding:0 20px 20px;background:#000;}
 table{width:100%;border-collapse:collapse;background:#111;border-radius:10px;overflow:hidden;border:1px solid #333;table-layout:fixed;}
 th{background:#222;color:#00d4ff;padding:14px;text-align:left;font-size:0.85rem;border-bottom:2px solid #00d4ff;text-transform:uppercase;}
-td{padding:12px;border-bottom:1px solid #222;font-size:0.95rem;color:#eee;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
+td{padding:12px;border-bottom:1px solid #222;font-size:0.95rem;color:#eee;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;vertical-align:middle;}
 .cell-30{display:inline-block;width:250px;overflow:hidden;text-overflow:ellipsis;vertical-align:middle;}
 .cell-10{display:inline-block;width:120px;overflow:hidden;text-overflow:ellipsis;vertical-align:middle;}
 .copy-btn{background:transparent;border:1px solid #00d4ff;color:#00d4ff;padding:4px 8px;border-radius:5px;cursor:pointer;font-size:0.7rem;margin-left:5px;}
 .edit-btn{background:#00d4ff;color:#000;border:none;padding:6px 12px;border-radius:5px;cursor:pointer;font-weight:bold;margin-right:5px;}
 .del-btn{background:#ff0055;color:#fff;border:none;padding:6px 12px;border-radius:5px;cursor:pointer;}
-.link-text{color:#00d4ff;text-decoration:none;font-weight:bold;}
+.link-text{color:#00d4ff;text-decoration:none;font-weight:bold;cursor:pointer;}
+.link-text:hover{text-decoration:underline;}
 
 /* ── MODALS ── */
 .modal{display:none;position:fixed;inset:0;background:rgba(0,0,0,0.9);z-index:1000;align-items:center;justify-content:center;}
@@ -154,6 +154,7 @@ td{padding:12px;border-bottom:1px solid #222;font-size:0.95rem;color:#eee;overfl
     <button class="btn-clear" onclick="clearSearch()">Clear</button>
   </div>
 
+  <!-- PASSWORD TABLE -->
   <div id="pw-tab" class="table-container">
     <table>
       <colgroup><col style="width:50px"><col style="width:280px"><col style="width:150px"><col style="width:150px"><col style="width:150px"><col style="width:150px"><col style="width:120px"></colgroup>
@@ -162,16 +163,18 @@ td{padding:12px;border-bottom:1px solid #222;font-size:0.95rem;color:#eee;overfl
     </table>
   </div>
 
+  <!-- DM BARCODE TABLE -->
   <div id="dm-tab" class="table-container" style="display:none;">
     <table>
-      <colgroup><col style="width:50px"><col style="width:200px"><col style="width:120px"><col style="width:120px"><col style="width:120px"><col style="width:180px"><col style="width:120px"></colgroup>
-      <thead><tr><th>#</th><th>Product</th><th>Size</th><th>Country</th><th>Brand</th><th>Barcode</th><th>Action</th></tr></thead>
+      <colgroup><col style="width:50px"><col style="width:200px"><col style="width:100px"><col style="width:120px"><col style="width:120px"><col style="width:180px"><col style="width:120px"></colgroup>
+      <thead><tr><th>#</th><th>Product Name</th><th>Size</th><th>Country</th><th>Brand</th><th>Barcode</th><th>Action</th></tr></thead>
       <tbody id="dm-body"></tbody>
     </table>
   </div>
 
   <div id="import-tab" class="table-container" style="display:none;">
     <table>
+      <colgroup><col style="width:50px"><col style="width:250px"><col style="width:auto"><col style="width:120px"></colgroup>
       <thead><tr><th>#</th><th>Code</th><th>Description</th><th>Action</th></tr></thead>
       <tbody id="import-body"></tbody>
     </table>
@@ -179,6 +182,7 @@ td{padding:12px;border-bottom:1px solid #222;font-size:0.95rem;color:#eee;overfl
 
   <div id="links-tab" class="table-container" style="display:none;">
     <table>
+      <colgroup><col style="width:50px"><col style="width:300px"><col style="width:auto"><col style="width:120px"></colgroup>
       <thead><tr><th>#</th><th>Title</th><th>URL</th><th>Action</th></tr></thead>
       <tbody id="links-body"></tbody>
     </table>
@@ -346,13 +350,19 @@ function renderTable() {
     } else if(currentTab === 'import') {
       html += `<td>${r.name}</td><td>${r.desc}</td>`;
     } else if(currentTab === 'links') {
-      html += `<td><a href="${r.url}" target="_blank" class="link-text">${r.title}</a></td><td>${r.url}</td>`;
+      html += `<td><span class="link-text" onclick="openLink('${r.url}')">${r.title}</span></td><td>${r.url} <button class="copy-btn" onclick="copy('${r.url}')">📋</button></td>`;
     }
     
     html += `<td><button class="edit-btn" onclick="editEntryModal(${i})">✏️</button><button class="del-btn" onclick="deleteEntry(${i})">🗑️</button></td>`;
     tr.innerHTML = html;
     body.appendChild(tr);
   });
+}
+
+function openLink(url) {
+  if(!url) return;
+  const target = url.startsWith('http') ? url : 'https://' + url;
+  window.open(target, '_blank');
 }
 
 function openModal(id, isEdit = false) {
@@ -388,7 +398,7 @@ async function addEntry() {
   config[currentTab].forEach(k => { newRow[k] = document.getElementById(`f-${k}`).value.trim(); });
   
   if(editingIdx > -1) rows[currentTab][editingIdx] = newRow;
-  else rows[currentTab].push(newRow); // ADD TO BOTTOM
+  else rows[currentTab].push(newRow);
   
   closeModal('add-modal');
   renderTable();
@@ -419,7 +429,7 @@ function switchTab(t) {
 
 function exportToExcel() {
   if (typeof XLSX === 'undefined') {
-    alert("XLSX Library is not loaded. Please check your internet connection.");
+    alert("XLSX Library not loaded.");
     return;
   }
   try {
@@ -427,9 +437,7 @@ function exportToExcel() {
     const wb = XLSX.utils.book_new();
     XLSX.utils.book_append_sheet(wb, ws, currentTab);
     XLSX.writeFile(wb, `TOS_${currentTab}.xlsx`);
-  } catch(e) {
-    alert("Export Error: " + e.message);
-  }
+  } catch(e) { alert("Error: " + e.message); }
 }
 
 function importFromExcel() { document.getElementById('file-input').click(); }
