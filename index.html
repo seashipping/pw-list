@@ -2,17 +2,17 @@
 <html lang="bn">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
-<title>USER PW LIST V.19 - PREMIUM</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>USER PW LIST V.25 - ALIGN & COPY FIX</title>
 <script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
 <style>
 :root {
     --neon-blue: #00d4ff;
     --neon-green: #00ffcc;
     --neon-red: #ff0055;
-    --bg-dark: #0a0a0a;
-    --panel-bg: #111111;
-    --text-main: #e0e0e0;
+    --bg-dark: #000000;
+    --panel-bg: #0a0a0a;
+    --text-main: #ffffff;
 }
 
 *{box-sizing:border-box;margin:0;padding:0;}
@@ -20,302 +20,151 @@ body{font-family:'Segoe UI', Roboto, Helvetica, Arial, sans-serif;background:var
 
 /* ── LOGIN ── */
 #login-screen{position:fixed;inset:0;background:var(--bg-dark);display:flex;align-items:center;justify-content:center;z-index:9999;}
-.login-box{background:var(--panel-bg);border:2px solid var(--neon-blue);border-radius:20px;padding:40px;text-align:center;max-width:440px;width:95%;box-shadow:0 0 30px rgba(0,212,255,0.2);}
-.login-box h1{color:var(--neon-blue);font-size:1.6rem;margin-bottom:20px;text-shadow:0 0 10px rgba(0,212,255,0.5);}
+.login-box{background:var(--panel-bg);border:2px solid var(--neon-blue);border-radius:20px;padding:30px;text-align:center;max-width:400px;width:90%;box-shadow:0 0 30px rgba(0,212,255,0.1);}
+.login-box h1{color:var(--neon-blue);font-size:1.4rem;margin-bottom:20px;text-transform:uppercase;}
 .lf{margin-bottom:15px;text-align:left;}
-.lf label{display:block;color:var(--neon-blue);font-size:0.75rem;font-weight:bold;margin-bottom:5px;letter-spacing:1px;}
-.lf input{width:100%;padding:12px;border-radius:10px;border:2px solid var(--neon-blue);background:#000;color:var(--neon-blue);font-size:1rem;outline:none;transition:0.3s;}
-.lf input:focus{box-shadow:0 0 15px rgba(0,212,255,0.3);}
-.btn-login{width:100%;padding:14px;background:linear-gradient(90deg, var(--neon-blue), var(--neon-green));color:#000;border:none;border-radius:30px;font-size:1.1rem;font-weight:bold;cursor:pointer;margin-top:15px;transition:0.3s;}
-.btn-login:hover{transform:scale(1.02);box-shadow:0 0 20px var(--neon-blue);}
-.footer-neon{margin-top:30px;padding:15px;border:2px solid var(--neon-red);border-radius:15px;background:rgba(255,0,85,0.05);box-shadow:0 0 15px rgba(255,0,85,0.1);}
-.footer-neon .line1{color:#fff;font-weight:bold;font-size:0.9rem;text-shadow:0 0 8px var(--neon-red);}
-.footer-neon .line2{color:var(--neon-red);font-weight:bold;font-size:0.85rem;text-shadow:0 0 8px var(--neon-red);margin-top:5px;}
+.lf label{display:block;color:var(--neon-blue);font-size:0.75rem;font-weight:bold;margin-bottom:5px;}
+.lf input{width:100%;padding:12px;border-radius:10px;border:2px solid var(--neon-blue);background:#000;color:var(--neon-blue);font-size:1rem;outline:none;}
+.btn-login{width:100%;padding:14px;background:linear-gradient(90deg, var(--neon-blue), var(--neon-green));color:#000;border:none;border-radius:30px;font-size:1.1rem;font-weight:bold;cursor:pointer;margin-top:10px;}
+.footer-neon{margin-top:20px;padding:12px;border:1px solid #fff;border-radius:15px;background:transparent;}
+.footer-neon .line1{color:#ffffff !important;font-weight:bold;font-size:0.85rem;}
+.footer-neon .line2{color:#ffffff !important;font-weight:bold;font-size:0.8rem;margin-top:5px;}
 
 /* ── APP ── */
 #app{display:none;flex-direction:column;height:100%;}
-header{background:var(--panel-bg);padding:15px 25px;border-bottom:3px solid var(--neon-blue);display:flex;justify-content:space-between;align-items:center;box-shadow:0 4px 15px rgba(0,0,0,0.5);}
-.header-title{color:var(--neon-blue);font-weight:bold;font-size:1.3rem;display:flex;align-items:center;gap:12px;text-shadow:0 0 10px rgba(0,212,255,0.3);}
-.header-title .by{color:var(--neon-green);font-size:0.85rem;font-weight:bold;background:rgba(0,255,204,0.1);padding:4px 15px;border-radius:20px;border:2px solid var(--neon-green);text-shadow:0 0 8px var(--neon-green);}
-.header-right{display:flex;align-items:center;gap:15px;}
-.company-badge{background:rgba(0,255,0,0.05);color:#00ff00;padding:8px 20px;border-radius:25px;font-weight:bold;border:2px solid #00ff00;font-size:0.9rem;text-shadow:0 0 5px #00ff00;}
-.btn-logout-pro{background:linear-gradient(90deg, var(--neon-red), #900);color:#fff;border:none;padding:10px 20px;border-radius:25px;font-weight:bold;cursor:pointer;transition:0.3s;}
-.btn-logout-pro:hover{box-shadow:0 0 15px var(--neon-red);}
-
-/* ── PINNED LINKS ── */
-.pinned-links{background:#000;padding:10px 25px;display:flex;gap:12px;align-items:center;border-bottom:1px solid rgba(0,212,255,0.2);overflow-x:auto;}
-.pinned-links span{font-size:0.8rem;color:var(--neon-blue);font-weight:bold;white-space:nowrap;letter-spacing:1px;}
-.pin-btn{padding:6px 15px;background:var(--panel-bg);border:1px solid var(--neon-green);color:var(--neon-green);border-radius:20px;font-size:0.8rem;text-decoration:none;font-weight:bold;transition:0.3s;white-space:nowrap;}
-.pin-btn:hover{background:var(--neon-green);color:#000;box-shadow:0 0 10px var(--neon-green);}
+header{background:var(--panel-bg);padding:10px 15px;border-bottom:2px solid var(--neon-blue);display:flex;justify-content:space-between;align-items:center;}
+.header-title{color:var(--neon-blue);font-weight:bold;font-size:1rem;display:flex;flex-direction:column;gap:2px;text-align:left;}
+.header-title .by{color:var(--neon-green);font-size:0.7rem;font-weight:bold;border:1px solid var(--neon-green);padding:1px 8px;border-radius:10px;width:fit-content;}
+.user-info{color:var(--neon-green);font-size:0.8rem;font-weight:bold;margin-right:10px;}
+.btn-logout-pro{background:var(--neon-red);color:#fff;border:none;padding:6px 12px;border-radius:15px;font-size:0.8rem;font-weight:bold;cursor:pointer;}
 
 /* ── TOOLBAR ── */
-.toolbar{background:#000;padding:15px 25px;display:flex;gap:15px;align-items:center;flex-wrap:wrap;border-bottom:1px solid rgba(0,212,255,0.1);}
-.toolbar button{padding:10px 20px;border-radius:10px;border:2px solid #fff;background:#000;color:#fff;font-weight:bold;cursor:pointer;font-size:0.85rem;transition:0.3s;}
-.toolbar button:hover{background:#fff;color:#000;}
-
-/* ── TAB BUTTONS ── */
-.tab-group{display:flex;gap:10px;margin:0 auto;}
-.tab-btn-pro{padding:12px 22px;border-radius:10px;border:2px solid var(--neon-blue);background:#000;color:var(--neon-blue);font-weight:bold;cursor:pointer;font-size:0.9rem;transition:0.3s;position:relative;}
+.toolbar{background:#000;padding:10px 15px;display:flex;gap:10px;align-items:center;flex-wrap:nowrap;overflow-x:auto;border-bottom:1px solid rgba(0,212,255,0.1);}
+.toolbar button{padding:8px 12px;border-radius:8px;border:1px solid #fff;background:#000;color:#fff;font-weight:bold;cursor:pointer;font-size:0.75rem;white-space:nowrap;}
+.tab-group{display:flex;gap:5px;margin:0 auto;}
+.tab-btn-pro{padding:8px 12px;border-radius:8px;border:1px solid var(--neon-blue);background:#000;color:var(--neon-blue);font-weight:bold;cursor:pointer;font-size:0.75rem;}
 .tab-btn-pro.active{color:#fff;background:rgba(0,212,255,0.1);border-color:#fff;}
-.tab-btn-pro.active::after{content:'';position:absolute;bottom:-18px;left:0;width:100%;height:4px;background:var(--neon-red);box-shadow:0 0 15px var(--neon-red);border-radius:2px;}
 
 /* ── SEARCH ── */
-.search-container{padding:20px 25px;background:#000;display:flex;justify-content:center;align-items:center;gap:20px;}
-.btn-add-main{padding:14px 30px;background:#000;color:var(--neon-green);border:2px solid var(--neon-green);border-radius:35px;font-weight:bold;cursor:pointer;transition:0.3s;text-transform:uppercase;letter-spacing:1px;}
-.btn-add-main:hover{background:var(--neon-green);color:#000;box-shadow:0 0 20px var(--neon-green);}
-.search-wrapper{position:relative;width:100%;max-width:850px;}
-.search-wrapper input{width:100%;padding:16px 25px 16px 60px;border-radius:35px;border:2px solid var(--neon-blue);background:var(--panel-bg);color:#fff;font-size:1.1rem;outline:none;transition:0.3s;box-shadow:0 0 15px rgba(0,212,255,0.1);}
-.search-wrapper input:focus{border-color:var(--neon-green);box-shadow:0 0 25px rgba(0,255,204,0.2);}
-.search-wrapper::before{content:'🔍';position:absolute;left:25px;top:50%;transform:translateY(-50%);font-size:1.3rem;opacity:0.8;}
-.btn-clear{background:#333;color:#fff;border:1px solid #555;padding:12px 25px;border-radius:25px;cursor:pointer;font-weight:bold;transition:0.3s;}
-.btn-clear:hover{background:#444;}
+.search-container{padding:15px;background:#000;display:flex;flex-direction:column;gap:10px;}
+.btn-add-main{width:100%;padding:12px;background:#000;color:var(--neon-green);border:1px solid var(--neon-green);border-radius:25px;font-weight:bold;cursor:pointer;text-transform:uppercase;font-size:0.85rem;}
+.search-wrapper{position:relative;width:100%;}
+.search-wrapper input{width:100%;padding:12px 15px 12px 40px;border-radius:25px;border:1px solid var(--neon-blue);background:var(--panel-bg);color:#fff;font-size:1rem;outline:none;text-align:left;}
+.search-wrapper::before{content:'🔍';position:absolute;left:15px;top:50%;transform:translateY(-50%);font-size:1rem;opacity:0.8;}
 
-/* ── TABLE ── */
-.table-container{flex:1;overflow:auto;padding:0 25px 25px;background:#000;}
-table{width:100%;border-collapse:separate;border-spacing:0;background:var(--panel-bg);border-radius:15px;overflow:hidden;border:1px solid #333;table-layout:fixed;}
-th{background:#1a1a1a;color:var(--neon-blue);padding:16px;text-align:left;font-size:0.85rem;border-bottom:2px solid var(--neon-blue);text-transform:uppercase;letter-spacing:1px;font-weight:800;}
-td{padding:14px 16px;border-bottom:1px solid #222;font-size:0.95rem;color:#eee;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;vertical-align:middle;}
-tr:hover{background:rgba(255,255,255,0.03);}
+/* ── DATA CONTAINER ── */
+.data-container{flex:1;overflow-y:auto;padding:10px;background:#000;}
 
-.col-id{width:60px;text-align:center;color:var(--neon-green);font-weight:bold;}
-.col-action{width:130px;text-align:center;}
+/* ── TABLE VIEW (PC ONLY) ── */
+.table-view{display:none;width:100%;border-collapse:collapse;background:var(--panel-bg);border-radius:10px;overflow:hidden;}
+.table-view th{background:#111;color:var(--neon-blue);padding:12px;text-align:left;font-size:0.8rem;border-bottom:2px solid var(--neon-blue);text-transform:uppercase;}
+.table-view td{padding:10px;border-bottom:1px solid #1a1a1a;font-size:0.9rem;color:#eee;vertical-align:middle;text-align:left;}
 
-.copy-btn{background:transparent;border:1px solid var(--neon-blue);color:var(--neon-blue);padding:5px 10px;border-radius:6px;cursor:pointer;font-size:0.75rem;margin-left:8px;transition:0.2s;}
-.copy-btn:hover{background:var(--neon-blue);color:#000;}
-.edit-btn{background:var(--neon-blue);color:#000;border:none;padding:8px 14px;border-radius:6px;cursor:pointer;font-weight:bold;margin-right:8px;transition:0.2s;}
-.del-btn{background:var(--neon-red);color:#fff;border:none;padding:8px 14px;border-radius:6px;cursor:pointer;transition:0.2s;}
-.edit-btn:hover{opacity:0.8;transform:translateY(-1px);}
-.del-btn:hover{opacity:0.8;transform:translateY(-1px);}
+/* ── CARD VIEW (MOBILE/TABLET) ── */
+.card-list{display:grid;grid-template-columns:1fr;gap:15px;}
+.data-card{background:var(--panel-bg);border:1px solid #222;border-radius:15px;padding:15px;position:relative;border-left:4px solid var(--neon-blue);text-align:left;}
+.card-header{font-size:1rem;font-weight:bold;color:#fff;margin-bottom:10px;border-bottom:1px solid #222;padding-bottom:8px;display:flex;justify-content:space-between;align-items:center;}
+.card-row{display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;font-size:0.85rem;}
+.card-label{color:var(--neon-blue);font-weight:bold;font-size:0.7rem;text-transform:uppercase;text-align:left;}
+.card-value{color:#eee;font-weight:500;display:flex;align-items:center;gap:8px;max-width:70%;justify-content:flex-end;}
+.card-value span{overflow:hidden;text-overflow:ellipsis;white-space:nowrap;text-align:right;}
 
-.link-text{color:var(--neon-blue);text-decoration:none;font-weight:bold;cursor:pointer;border-bottom:1px dashed var(--neon-blue);}
-.link-text:hover{color:var(--neon-green);border-color:var(--neon-green);}
+/* ── BUTTONS ── */
+.copy-btn-sm{background:transparent;border:1px solid var(--neon-blue);color:var(--neon-blue);padding:4px 8px;border-radius:5px;font-size:0.7rem;cursor:pointer;}
+.card-copy-btn{background:var(--neon-green) !important;color:#000 !important;font-weight:bold;padding:5px 12px;border-radius:15px;font-size:0.7rem;border:none;cursor:pointer;}
+.btn-edit-sm{background:var(--neon-blue);color:#000;border:none;padding:4px 8px;border-radius:4px;font-size:0.7rem;font-weight:bold;cursor:pointer;}
+.btn-del-sm{background:var(--neon-red);color:#fff;border:none;padding:4px 8px;border-radius:4px;font-size:0.7rem;font-weight:bold;cursor:pointer;}
 
-/* ── STATUS ── */
-#status-bar{padding:12px 25px;background:var(--panel-bg);display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid rgba(0,212,255,0.1);}
-#status-text{color:var(--neon-blue);font-weight:bold;font-size:0.9rem;}
+/* ── USER HIGHLIGHT ── */
+.user-highlight {
+    color: var(--neon-green) !important;
+    font-weight: bold !important;
+}
 
-/* ── MODALS ── */
-.modal{display:none;position:fixed;inset:0;background:rgba(0,0,0,0.9);z-index:1000;align-items:center;justify-content:center;backdrop-filter:blur(5px);}
-.modal-content{background:var(--panel-bg);border:2px solid var(--neon-blue);border-radius:20px;padding:35px;width:90%;max-width:580px;box-shadow:0 0 50px rgba(0,212,255,0.2);}
-.form-g{margin-bottom:18px;}
-.form-g label{display:block;font-size:0.85rem;color:var(--neon-blue);margin-bottom:8px;font-weight:bold;letter-spacing:0.5px;}
-.form-g input{width:100%;padding:14px;background:#000;border:1px solid #444;border-radius:10px;color:#fff;outline:none;font-size:1rem;transition:0.3s;}
-.form-g input:focus{border-color:var(--neon-blue);box-shadow:0 0 10px rgba(0,212,255,0.2);}
-.modal-f{display:flex;gap:20px;margin-top:30px;}
-.modal-f button{flex:1;padding:14px;border-radius:10px;border:none;font-weight:bold;cursor:pointer;font-size:1rem;transition:0.3s;}
-.btn-ok{background:linear-gradient(90deg, var(--neon-green), #00c090);color:#000;}
-.btn-cancel{background:#333;color:#fff;}
-.btn-ok:hover{transform:translateY(-2px);box-shadow:0 5px 15px rgba(0,255,204,0.3);}
+/* ── MEDIA QUERIES ── */
+@media (min-width: 1024px) {
+    .header-title{font-size:1.3rem;flex-direction:row;align-items:center;}
+    .search-container{flex-direction:row;padding:20px 25px;}
+    .btn-add-main{width:auto;padding:14px 30px;}
+    .table-view{display:table;}
+    .card-list{display:none;}
+    .toolbar{padding:15px 25px;overflow-x:visible;}
+}
 
-#toast{position:fixed;bottom:30px;right:30px;background:var(--neon-blue);color:#000;padding:16px 28px;border-radius:12px;display:none;z-index:2000;font-weight:bold;box-shadow:0 10px 30px rgba(0,0,0,0.5);animation:slideIn 0.3s ease-out;}
-@keyframes slideIn { from{transform:translateX(100%);} to{transform:translateX(0);} }
-
-/* ── ALIGNMENT CLASSES ── */
-.text-center{text-align:center;}
-.text-left{text-align:left;}
-.fw-bold{font-weight:bold;}
-.text-neon{color:var(--neon-blue);}
+#status-bar{padding:8px 15px;background:var(--panel-bg);border-bottom:1px solid rgba(0,212,255,0.1);font-size:0.8rem;text-align:left;}
+#toast{position:fixed;bottom:20px;left:50%;transform:translateX(-50%);background:var(--neon-blue);color:#000;padding:12px 25px;border-radius:25px;display:none;z-index:2000;font-weight:bold;}
+.modal-content{width:95%;padding:20px;background:var(--panel-bg);border:2px solid var(--neon-blue);border-radius:15px;text-align:left;}
 </style>
 </head>
 <body>
 
-<!-- ══ LOGIN ══ -->
 <div id="login-screen">
   <div class="login-box">
     <h1>🔐 USER PW LIST V.1</h1>
-    <div id="login-err" style="color:var(--neon-red);margin-bottom:15px;font-size:0.95rem;font-weight:bold;"></div>
+    <div id="login-err" style="color:var(--neon-red);margin-bottom:10px;font-size:0.85rem;font-weight:bold;"></div>
     <div class="lf">
       <label>USERNAME</label>
-      <input type="text" id="l-user" placeholder="Username" autocomplete="off" onkeydown="if(event.key==='Enter') handleLogin()">
+      <input type="text" id="l-user" placeholder="Username" autocomplete="on">
     </div>
     <div class="lf">
       <label>PASSWORD</label>
       <div style="position:relative">
-        <input type="password" id="l-pass" placeholder="••••••••" onkeydown="if(event.key==='Enter') handleLogin()">
-        <button onclick="togglePass('l-pass')" style="position:absolute;right:15px;top:50%;transform:translateY(-50%);background:none;border:none;color:var(--neon-blue);cursor:pointer;font-size:1.2rem;">👁️</button>
+        <input type="password" id="l-pass" placeholder="Password">
+        <button onclick="togglePass('l-pass')" style="position:absolute;right:10px;top:50%;transform:translateY(-50%);background:none;border:none;color:var(--neon-blue);cursor:pointer;font-size:1.2rem;">👁️</button>
       </div>
     </div>
-    <button class="btn-login" id="login-btn" onclick="handleLogin()">LOGIN NOW</button>
+    <button class="btn-login" onclick="handleLogin()">LOGIN NOW</button>
     <div class="footer-neon">
-      <div class="line1">শুধুমাত্র SEA SHIPPING LLC ব্যবহার যোগ্য</div>
-      <div class="line2">রিলিজ-জুলাই-২০২৬</div>
+      <div class="line1">SEA SHIPPING LLC</div>
+      <div class="line2">Release-July 2026</div>
     </div>
   </div>
 </div>
 
-<!-- ══ APP ══ -->
 <div id="app">
   <header>
-    <div class="header-left">
-      <div class="header-title">
-        🔐 USER PW LIST V.1
-        <span class="by">By-Idris Mansoor</span>
-      </div>
-    </div>
-    <div class="header-right">
-      <div class="company-badge">© SEA SHIPPING LLC - Release-July 2026</div>
-      <button class="btn-logout-pro" onclick="handleLogout()">🚪 Logout</button>
+    <div class="header-title">🔐 USER PW LIST V.1 <span class="by">By-Idris Mansoor</span></div>
+    <div class="header-right" style="display:flex;align-items:center;">
+      <span class="user-info" id="display-user"></span>
+      <button class="btn-logout-pro" onclick="handleLogout()">Logout</button>
     </div>
   </header>
 
-  <div class="pinned-links">
-    <span>📌 QUICK LINKS:</span>
-    <div id="pin-container" style="display:flex;gap:12px;"></div>
-    <button onclick="editPinnedLinks()" style="background:none;border:none;color:#555;font-size:0.75rem;cursor:pointer;margin-left:auto;font-weight:bold;">⚙️ EDIT LINKS</button>
-  </div>
-
   <div class="toolbar">
-    <button onclick="exportToExcel()">📤 Export Excel</button>
-    <button onclick="importFromExcel()">📥 Import Excel</button>
-    <button onclick="loadFromSheets()">🔄 Sync Sheets</button>
-    <button onclick="removeDuplicates()" style="border-color:var(--neon-green);color:var(--neon-green);">🧹 Clean Duplicates</button>
-    
+    <button onclick="exportToExcel()">📤 Export</button>
+    <button onclick="importFromExcel()">📥 Import</button>
+    <button onclick="loadFromSheets()">🔄 Sync</button>
     <div class="tab-group">
-      <button class="tab-btn-pro active" onclick="switchTab('pw')">Passwords</button>
-      <button class="tab-btn-pro" onclick="switchTab('dm')">DM Barcodes</button>
-      <button class="tab-btn-pro" onclick="switchTab('import')">Import Codes</button>
-      <button class="tab-btn-pro" onclick="switchTab('links')">Links</button>
-      <button class="tab-btn-pro" id="admin-tab" onclick="switchTab('admin')" style="display:none;border-color:var(--neon-red);color:var(--neon-red);">Admin</button>
+      <button class="tab-btn-pro active" onclick="switchTab('pw')">PW</button>
+      <button class="tab-btn-pro" onclick="switchTab('dm')">DM</button>
+      <button class="tab-btn-pro" onclick="switchTab('import')">IMP</button>
+      <button class="tab-btn-pro" onclick="switchTab('links')">LINK</button>
     </div>
   </div>
 
-  <div id="status-bar">
-    <div id="status-text">⏳ System Ready</div>
-  </div>
+  <div id="status-bar"><div id="status-text">⏳ System Ready</div></div>
 
   <div class="search-container">
-    <button class="btn-add-main" onclick="openModal('add-modal')">➕ Add New Entry</button>
-    <div class="search-wrapper">
-      <input type="text" id="search-input" placeholder="Search across all fields..." oninput="renderTable()">
-    </div>
-    <button class="btn-clear" onclick="clearSearch()">Clear Text</button>
+    <button class="btn-add-main" onclick="openModal('add-modal')">➕ Add New</button>
+    <div class="search-wrapper"><input type="text" id="search-input" placeholder="Search..." oninput="renderData()"></div>
   </div>
 
-  <!-- PASSWORD TABLE -->
-  <div id="pw-tab" class="table-container">
-    <table>
-      <colgroup>
-        <col class="col-id">
-        <col style="width:280px">
-        <col style="width:160px">
-        <col style="width:160px">
-        <col style="width:160px">
-        <col style="width:180px">
-        <col class="col-action">
-      </colgroup>
-      <thead>
-        <tr>
-          <th class="text-center">#</th>
-          <th>Company Name</th>
-          <th>Shj Code</th>
-          <th>Username</th>
-          <th>Password</th>
-          <th>Dubai Code / Note</th>
-          <th class="text-center">Action</th>
-        </tr>
-      </thead>
-      <tbody id="pw-body"></tbody>
+  <div class="data-container">
+    <table class="table-view" id="data-table">
+      <thead id="table-head"></thead>
+      <tbody id="table-body"></tbody>
     </table>
-  </div>
-
-  <!-- DM BARCODE TABLE -->
-  <div id="dm-tab" class="table-container" style="display:none;">
-    <table>
-      <colgroup>
-        <col class="col-id">
-        <col style="width:250px">
-        <col style="width:120px">
-        <col style="width:150px">
-        <col style="width:150px">
-        <col style="width:200px">
-        <col class="col-action">
-      </colgroup>
-      <thead>
-        <tr>
-          <th class="text-center">#</th>
-          <th>Product Name</th>
-          <th>Size</th>
-          <th>Country</th>
-          <th>Brand</th>
-          <th>Barcode</th>
-          <th class="text-center">Action</th>
-        </tr>
-      </thead>
-      <tbody id="dm-body"></tbody>
-    </table>
-  </div>
-
-  <!-- IMPORT CODES TABLE -->
-  <div id="import-tab" class="table-container" style="display:none;">
-    <table>
-      <colgroup>
-        <col class="col-id">
-        <col style="width:250px">
-        <col style="width:auto">
-        <col class="col-action">
-      </colgroup>
-      <thead>
-        <tr>
-          <th class="text-center">#</th>
-          <th>Code</th>
-          <th>Description</th>
-          <th class="text-center">Action</th>
-        </tr>
-      </thead>
-      <tbody id="import-body"></tbody>
-    </table>
-  </div>
-
-  <!-- LINKS TABLE -->
-  <div id="links-tab" class="table-container" style="display:none;">
-    <table>
-      <colgroup>
-        <col class="col-id">
-        <col style="width:300px">
-        <col style="width:auto">
-        <col class="col-action">
-      </colgroup>
-      <thead>
-        <tr>
-          <th class="text-center">#</th>
-          <th>Title / Site Name</th>
-          <th>URL Address</th>
-          <th class="text-center">Action</th>
-        </tr>
-      </thead>
-      <tbody id="links-body"></tbody>
-    </table>
-  </div>
-
-  <!-- ADMIN SECTION -->
-  <div id="admin-section" class="table-container" style="display:none;">
-    <div style="background:var(--panel-bg);padding:30px;border-radius:15px;border:1px solid #333;max-width:800px;margin:20px auto;">
-      <h3 style="color:var(--neon-blue);margin-bottom:20px;display:flex;align-items:center;gap:10px;">👥 User Management Panel</h3>
-      <div id="users-list"></div>
-    </div>
+    <div class="card-list" id="card-list"></div>
   </div>
 </div>
 
-<!-- ADD/EDIT MODAL -->
-<div id="add-modal" class="modal">
+<div id="add-modal" class="modal" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,0.9);z-index:1000;align-items:center;justify-content:center;">
   <div class="modal-content">
-    <div id="modal-title" style="color:var(--neon-blue);font-size:1.3rem;font-weight:bold;margin-bottom:25px;text-transform:uppercase;letter-spacing:1px;">➕ Add New Entry</div>
+    <h3 id="modal-title" style="color:var(--neon-blue);margin-bottom:15px;">Add Entry</h3>
     <div id="add-form-fields"></div>
-    <div class="modal-f">
-      <button class="btn-ok" onclick="addEntry()">💾 Save Data</button>
-      <button class="btn-cancel" onclick="closeModal('add-modal')">Cancel</button>
-    </div>
-  </div>
-</div>
-
-<!-- PINNED LINKS MODAL -->
-<div id="pin-modal" class="modal">
-  <div class="modal-content" style="max-width:650px;">
-    <h3 style="color:var(--neon-green);margin-bottom:20px;text-transform:uppercase;letter-spacing:1px;">⚙️ Edit Quick Links (Max 10)</h3>
-    <div id="pin-inputs" style="max-height:400px;overflow-y:auto;padding-right:10px;"></div>
-    <div class="modal-f">
-      <button class="btn-ok" onclick="savePinnedLinks()">💾 Save Links</button>
-      <button class="btn-cancel" onclick="closeModal('pin-modal')">Cancel</button>
+    <div style="display:flex;gap:10px;margin-top:20px;">
+      <button style="flex:1;padding:12px;background:var(--neon-green);color:#000;border:none;border-radius:10px;font-weight:bold;cursor:pointer;" onclick="addEntry()">Save</button>
+      <button style="flex:1;padding:12px;background:#333;color:#fff;border:none;border-radius:10px;font-weight:bold;cursor:pointer;" onclick="closeModal('add-modal')">Cancel</button>
     </div>
   </div>
 </div>
@@ -324,329 +173,176 @@ tr:hover{background:rgba(255,255,255,0.03);}
 <div id="toast"></div>
 
 <script>
-// IMPORTANT: Update this URL if you create a new deployment
 const API_URL = "https://script.google.com/macros/s/AKfycbzPPK40EUUUVrR9Ucm-TKnlaDYU47ipW3cYjeHT2PgJhHIxlGtjbDe3661rjJGi7Fcxnw/exec";
-
 let rows = { pw: [], dm: [], import: [], links: [] };
+let filteredData = []; // To track filtered results for Card Copy
 let currentUser = null;
 let currentTab = 'pw';
 let editingIdx = -1;
-let pinnedLinks = Array(10).fill({name:'', url:''});
 
 window.onload = () => {
-  const savedUser = localStorage.getItem('tos_user');
-  if (savedUser) document.getElementById('l-user').value = savedUser;
-  
-  const savedPins = localStorage.getItem('tos_pins');
-  if (savedPins) pinnedLinks = JSON.parse(savedPins);
-  renderPinnedLinks();
+  const savedUser = localStorage.getItem('tos_user_login');
+  if(savedUser) document.getElementById('l-user').value = savedUser;
 };
-
-function renderPinnedLinks() {
-  const cont = document.getElementById('pin-container');
-  const activePins = pinnedLinks.filter(p => p.name && p.url);
-  if(activePins.length === 0) {
-    cont.innerHTML = '<span style="color:#444;font-style:italic;">No links added yet.</span>';
-    return;
-  }
-  cont.innerHTML = activePins.map(p => `<a href="${p.url}" target="_blank" class="pin-btn">${p.name}</a>`).join('');
-}
-
-function editPinnedLinks() {
-  const cont = document.getElementById('pin-inputs');
-  cont.innerHTML = pinnedLinks.map((p, i) => `
-    <div style="display:flex;gap:12px;margin-bottom:12px;align-items:center;">
-      <span style="color:var(--neon-blue);font-weight:bold;width:25px;">${i+1}</span>
-      <input type="text" placeholder="Name" value="${p.name || ''}" id="pin-n-${i}" style="flex:1;padding:10px;background:#000;border:1px solid #444;color:#fff;border-radius:8px;">
-      <input type="text" placeholder="URL" value="${p.url || ''}" id="pin-u-${i}" style="flex:2;padding:10px;background:#000;border:1px solid #444;color:#fff;border-radius:8px;">
-    </div>
-  `).join('');
-  openModal('pin-modal');
-}
-
-function savePinnedLinks() {
-  pinnedLinks = Array.from({length:10}).map((_, i) => ({
-    name: document.getElementById(`pin-n-${i}`).value.trim(),
-    url: document.getElementById(`pin-u-${i}`).value.trim()
-  }));
-  localStorage.setItem('tos_pins', JSON.stringify(pinnedLinks));
-  renderPinnedLinks();
-  closeModal('pin-modal');
-  showToast("Pinned Links Updated!");
-}
 
 async function handleLogin() {
   const u = document.getElementById('l-user').value.trim();
   const p = document.getElementById('l-pass').value.trim();
   if(!u || !p) return;
-  
-  const btn = document.getElementById('login-btn');
-  const err = document.getElementById('login-err');
-  
-  btn.disabled = true;
-  btn.innerText = "⏳ LOGGING IN...";
-  err.innerText = "";
-
   try {
-    const res = await fetch(API_URL, {
-      method: 'POST',
-      body: JSON.stringify({ action: 'login', username: u, password: p })
-    });
+    const res = await fetch(API_URL, { method: 'POST', body: JSON.stringify({ action: 'login', username: u, password: p }) });
     const result = await res.json();
     if(result.success) {
       currentUser = result.user;
-      localStorage.setItem('tos_user', u);
+      localStorage.setItem('tos_user_login', u);
+      document.getElementById('display-user').innerText = "👤 " + currentUser.username.toUpperCase();
       document.getElementById('login-screen').style.display = 'none';
       document.getElementById('app').style.display = 'flex';
-      if(currentUser.role === 'admin') document.getElementById('admin-tab').style.display = 'block';
       loadFromSheets();
-    } else {
-      err.innerText = "❌ " + result.error;
-    }
-  } catch(e) {
-    err.innerText = "❌ Connection Error. Please check your URL.";
-  } finally {
-    btn.disabled = false;
-    btn.innerText = "LOGIN NOW";
-  }
+    } else { document.getElementById('login-err').innerText = "❌ " + result.error; }
+  } catch(e) { alert("Error connecting to server."); }
 }
 
 async function loadFromSheets() {
-  setStatus("⏳ ডাটা লোড হচ্ছে...");
+  setStatus("⏳ Loading Data...");
   try {
     const res = await fetch(API_URL);
-    const data = await res.json();
-    if(data.status === 'ok') {
-      rows = data;
-      renderTable();
-      const total = rows[currentTab].length;
-      setStatus(`✅ মোট ${total} টি ডাটা শিট থেকে লোড হয়েছে।`);
-    }
-  } catch(e) {
-    setStatus("❌ লোড করতে সমস্যা হয়েছে।");
-  }
+    rows = await res.json();
+    renderData();
+    setStatus(`✅ Total ${rows[currentTab].length} entries loaded.`);
+  } catch(e) { setStatus("❌ Load Error."); }
 }
 
 async function saveToSheets() {
-  setStatus("⏳ ডাটা সেভ হচ্ছে...");
+  setStatus("⏳ Saving...");
   try {
-    const res = await fetch(API_URL, {
-      method: 'POST',
-      body: JSON.stringify({ action: 'save', rows: rows, username: currentUser.username })
-    });
-    const result = await res.json();
-    if(result.status === 'ok') {
-      setStatus(`✅ ডাটা সফলভাবে শিটে সেভ হয়েছে।`);
-      showToast("System Synced!");
-    }
-  } catch(e) {
-    setStatus("❌ সেভ করতে সমস্যা হয়েছে।");
-  }
+    await fetch(API_URL, { method: 'POST', body: JSON.stringify({ action: 'save', rows: rows, username: currentUser.username }) });
+    setStatus(`✅ Saved to Sheets.`);
+    showToast("Synced!");
+  } catch(e) { setStatus("❌ Save Error."); }
 }
 
-function renderTable() {
+function renderData() {
   const query = document.getElementById('search-input').value.toLowerCase();
-  const body = document.getElementById(`${currentTab}-body`);
-  body.innerHTML = '';
+  filteredData = rows[currentTab].filter(r => Object.values(r).some(v => v.toString().toLowerCase().includes(query)));
   
-  let filtered = rows[currentTab].filter(r => {
-    return Object.values(r).some(v => v.toString().toLowerCase().includes(query));
-  });
-
-  filtered.forEach((r, i) => {
-    let tr = document.createElement('tr');
-    let html = `<td class="col-id">${i+1}</td>`;
-    
-    if(currentTab === 'pw') {
-      html += `
-        <td class="fw-bold" style="color:#fff;">${r.company}</td>
-        <td style="color:var(--neon-blue);">${r.shj} <button class="copy-btn" onclick="copy('${r.shj}')">📋</button></td>
-        <td style="color:var(--neon-green);">${r.user} <button class="copy-btn" onclick="copy('${r.user}')">📋</button></td>
-        <td style="color:#ffcc00;">${r.password} <button class="copy-btn" onclick="copy('${r.password}')">📋</button></td>
-        <td style="color:#aaa;">${r.note} <button class="copy-btn" onclick="copy('${r.note}')">📋</button></td>
-      `;
-    } else if(currentTab === 'dm') {
-      html += `
-        <td class="fw-bold">${r.product}</td>
-        <td class="text-center">${r.size}</td>
-        <td>${r.country}</td>
-        <td>${r.brand}</td>
-        <td style="color:var(--neon-blue);">${r.barcode} <button class="copy-btn" onclick="copy('${r.barcode}')">📋</button></td>
-      `;
-    } else if(currentTab === 'import') {
-      html += `<td class="fw-bold" style="color:var(--neon-green);">${r.name}</td><td>${r.desc}</td>`;
-    } else if(currentTab === 'links') {
-      html += `
-        <td><span class="link-text" onclick="openLink('${r.url}')">${r.title}</span></td>
-        <td style="font-size:0.8rem;color:#777;">${r.url} <button class="copy-btn" onclick="copy('${r.url}')">📋</button></td>
-      `;
-    }
-    
-    html += `<td class="col-action">
-      <button class="edit-btn" onclick="editEntryModal(${i})">✏️</button>
-      <button class="del-btn" onclick="deleteEntry(${i})">🗑️</button>
-    </td>`;
-    tr.innerHTML = html;
-    body.appendChild(tr);
-  });
-}
-
-function openLink(url) {
-  if(!url) return;
-  const target = url.startsWith('http') ? url : 'https://' + url;
-  window.open(target, '_blank');
-}
-
-function openModal(id, isEdit = false) {
-  editingIdx = isEdit ? editingIdx : -1;
-  document.getElementById('modal-title').innerText = isEdit ? "✏️ Edit Entry" : "➕ Add New Entry";
-  const fields = document.getElementById('add-form-fields');
-  fields.innerHTML = '';
-  
+  const head = document.getElementById('table-head');
+  const body = document.getElementById('table-body');
   const config = {
-    pw: { labels: ['Company Name', 'Shj Code', 'Username', 'Password', 'Dubai Code / Note'], keys: ['company', 'shj', 'user', 'password', 'note'] },
-    dm: { labels: ['Product Name', 'Size', 'Country', 'Brand', 'Barcode'], keys: ['product', 'size', 'country', 'brand', 'barcode'] },
-    import: { labels: ['Code', 'Description'], keys: ['name', 'desc'] },
-    links: { labels: ['Title / Site Name', 'URL Address'], keys: ['title', 'url'] }
+    pw: { labels: ['Action', '#', 'Company', 'Shj', 'User', 'Pass', 'Dubai'], keys: ['company', 'shj', 'user', 'password', 'note'] },
+    dm: { labels: ['Action', '#', 'Product', 'Size', 'Country', 'Brand', 'Barcode'], keys: ['product', 'size', 'country', 'brand', 'barcode'] },
+    import: { labels: ['Action', '#', 'Code', 'Description'], keys: ['name', 'desc'] },
+    links: { labels: ['Action', '#', 'Title', 'URL'], keys: ['title', 'url'] }
   };
   
-  const currentRows = rows[currentTab][editingIdx] || {};
-  config[currentTab].labels.forEach((label, i) => {
-    const key = config[currentTab].keys[i];
-    fields.innerHTML += `
-      <div class="form-g">
-        <label>${label}</label>
-        <input type="text" id="f-${key}" value="${currentRows[key] || ''}">
+  head.innerHTML = `<tr>${config[currentTab].labels.map(l => `<th>${l}</th>`).join('')}<th>Copy</th></tr>`;
+  body.innerHTML = filteredData.map((r, i) => `
+    <tr>
+      <td>
+        <button class="btn-del-sm" onclick="deleteEntry(${i})">🗑️</button>
+        <button class="btn-edit-sm" onclick="editEntry(${i})">✏️</button>
+      </td>
+      <td>${i+1}</td>
+      ${config[currentTab].keys.map(k => {
+        const isUser = k === 'user';
+        return `<td class="${isUser ? 'user-highlight' : ''}">${r[k]} <button class="copy-btn-sm" onclick="copy('${r[k]}')">📋</button></td>`;
+      }).join('')}
+      <td><button class="card-copy-btn" onclick="copyCard(${i})">Card Copy</button></td>
+    </tr>
+  `).join('');
+
+  const cardList = document.getElementById('card-list');
+  cardList.innerHTML = filteredData.map((r, i) => `
+    <div class="data-card">
+      <div class="card-header">
+        <div style="display:flex;gap:5px;align-items:center;">
+          <button class="btn-del-sm" onclick="deleteEntry(${i})">🗑️</button>
+          <button class="btn-edit-sm" onclick="editEntry(${i})">✏️</button>
+          <span style="font-size:0.8rem;margin-left:5px;">#${i+1}</span>
+        </div>
+        <button class="card-copy-btn" onclick="copyCard(${i})">Card Copy</button>
       </div>
-    `;
-  });
+      ${config[currentTab].keys.map((k, idx) => {
+        const isUser = k === 'user';
+        return `
+          <div class="card-row">
+            <span class="card-label">${config[currentTab].labels[idx+2]}</span>
+            <div class="card-value ${isUser ? 'user-highlight' : ''}">
+              <span>${r[k]}</span>
+              <button class="copy-btn-sm" onclick="copy('${r[k]}')">📋</button>
+            </div>
+          </div>
+        `;
+      }).join('')}
+    </div>
+  `).join('');
+}
+
+function copy(txt) { if(!txt) return; navigator.clipboard.writeText(txt); showToast("Copied!"); }
+
+function copyCard(idx) {
+  const r = filteredData[idx]; // USE FILTERED DATA
+  if(!r) return;
+  let text = "";
+  if(currentTab === 'pw') text = `Company: ${r.company}\nShj Code: ${r.shj}\nUser: ${r.user}\nPass: ${r.password}\nNote: ${r.note}`;
+  else if(currentTab === 'dm') text = `Product: ${r.product}\nSize: ${r.size}\nCountry: ${r.country}\nBrand: ${r.brand}\nBarcode: ${r.barcode}`;
+  else if(currentTab === 'import') text = `Code: ${r.name}\nDesc: ${r.desc}`;
+  else if(currentTab === 'links') text = `Title: ${r.title}\nURL: ${r.url}`;
   
+  const textArea = document.createElement("textarea");
+  textArea.value = text;
+  document.body.appendChild(textArea);
+  textArea.select();
+  try {
+    document.execCommand('copy');
+    showToast("Full Card Copied!");
+  } catch (err) {
+    alert("Copy failed. Please try manually.");
+  }
+  document.body.removeChild(textArea);
+}
+
+function setStatus(txt) { document.getElementById('status-text').innerText = txt; }
+function showToast(msg) { const t = document.getElementById('toast'); t.innerText = msg; t.style.display = 'block'; setTimeout(() => t.style.display = 'none', 2000); }
+function switchTab(t) { currentTab = t; document.querySelectorAll('.tab-btn-pro').forEach(b => b.classList.remove('active')); event.target.classList.add('active'); renderData(); }
+function openModal(id) {
+  const fields = document.getElementById('add-form-fields'); fields.innerHTML = '';
+  const config = {
+    pw: { labels: ['Company', 'Shj Code', 'User', 'Password', 'Dubai Code'], keys: ['company', 'shj', 'user', 'password', 'note'] },
+    dm: { labels: ['Product', 'Size', 'Country', 'Brand', 'Barcode'], keys: ['product', 'size', 'country', 'brand', 'barcode'] },
+    import: { labels: ['Code', 'Description'], keys: ['name', 'desc'] },
+    links: { labels: ['Title', 'URL'], keys: ['title', 'url'] }
+  };
+  const r = filteredData[editingIdx] || {};
+  config[currentTab].labels.forEach((l, i) => {
+    const k = config[currentTab].keys[i];
+    fields.innerHTML += `<div class="lf"><label>${l}</label><input type="text" id="f-${k}" value="${r[k]||''}"></div>`;
+  });
   document.getElementById(id).style.display = 'flex';
 }
-
+function closeModal(id) { document.getElementById(id).style.display = 'none'; editingIdx = -1; }
 async function addEntry() {
-  const config = {
-    pw: ['company', 'shj', 'user', 'password', 'note'],
-    dm: ['product', 'size', 'country', 'brand', 'barcode'],
-    import: ['name', 'desc'],
-    links: ['title', 'url']
-  };
-  
-  let newRow = {};
-  config[currentTab].forEach(k => {
-    newRow[k] = document.getElementById(`f-${k}`).value.trim();
-  });
-  
+  const config = { pw:['company','shj','user','password','note'], dm:['product','size','country','brand','barcode'], import:['name','desc'], links:['title','url'] };
+  let newRow = {}; config[currentTab].forEach(k => { newRow[k] = document.getElementById(`f-${k}`).value.trim(); });
   if(editingIdx > -1) {
-    rows[currentTab][editingIdx] = newRow;
+    const realIdx = rows[currentTab].indexOf(filteredData[editingIdx]);
+    rows[currentTab][realIdx] = newRow;
   } else {
-    rows[currentTab].push(newRow); // ADD TO BOTTOM
+    rows[currentTab].push(newRow);
   }
-  
-  closeModal('add-modal');
-  renderTable();
-  await saveToSheets();
+  closeModal('add-modal'); renderData(); await saveToSheets();
 }
-
-async function deleteEntry(i) {
-  if(confirm("Are you sure you want to delete this entry?")) {
-    rows[currentTab].splice(i, 1);
-    renderTable();
-    await saveToSheets();
-  }
+function editEntry(i) { editingIdx = i; openModal('add-modal'); }
+async function deleteEntry(i) { 
+  if(confirm("Are you sure you want to delete this?")) { 
+    const realIdx = rows[currentTab].indexOf(filteredData[i]);
+    rows[currentTab].splice(realIdx, 1); 
+    renderData(); await saveToSheets(); 
+  } 
 }
-
-function editEntryModal(i) {
-  editingIdx = i;
-  openModal('add-modal', true);
-}
-
-function switchTab(t) {
-  currentTab = t;
-  document.querySelectorAll('.tab-btn-pro').forEach(b => b.classList.remove('active'));
-  event.target.classList.add('active');
-  
-  document.querySelectorAll('.table-container').forEach(c => c.style.display = 'none');
-  if(t === 'admin') document.getElementById('admin-section').style.display = 'block';
-  else document.getElementById(`${t}-tab`).style.display = 'block';
-  
-  renderTable();
-  const total = rows[currentTab].length;
-  setStatus(`✅ ${currentTab.toUpperCase()} ট্যাবে মোট ${total} টি ডাটা আছে।`);
-}
-
-function exportToExcel() {
-  if (typeof XLSX === 'undefined') {
-    alert("Excel library not loaded. Check internet.");
-    return;
-  }
-  try {
-    const ws = XLSX.utils.json_to_sheet(rows[currentTab]);
-    const wb = XLSX.utils.book_new();
-    XLSX.utils.book_append_sheet(wb, ws, currentTab);
-    XLSX.writeFile(wb, `TOS_EXPORT_${currentTab.toUpperCase()}_${new Date().toLocaleDateString()}.xlsx`);
-  } catch(e) {
-    alert("Export Error: " + e.message);
-  }
-}
-
-function importFromExcel() {
-  document.getElementById('file-input').click();
-}
-
-function handleFileImport(e) {
-  const file = e.target.files[0];
-  const reader = new FileReader();
-  reader.onload = async (evt) => {
-    const data = new Uint8Array(evt.target.result);
-    const wb = XLSX.read(data, {type: 'array'});
-    const ws = wb.Sheets[wb.SheetNames[0]];
-    const json = XLSX.utils.sheet_to_json(ws);
-    rows[currentTab] = json;
-    renderTable();
-    showToast("Import Successful!");
-    await saveToSheets();
-  };
-  reader.readAsArrayBuffer(file);
-}
-
-function copy(txt) {
-  if(!txt) return;
-  navigator.clipboard.writeText(txt);
-  showToast("Copied to Clipboard!");
-}
-
-function setStatus(txt) {
-  document.getElementById('status-text').innerText = txt;
-}
-
-function showToast(msg) {
-  const t = document.getElementById('toast');
-  t.innerText = msg;
-  t.style.display = 'block';
-  setTimeout(() => t.style.display = 'none', 2500);
-}
-
-function closeModal(id) {
-  document.getElementById(id).style.display = 'none';
-}
-
-function togglePass(id) {
-  const x = document.getElementById(id);
-  x.type = x.type === "password" ? "text" : "password";
-}
-
-function clearSearch() {
-  document.getElementById('search-input').value = '';
-  renderTable();
-}
-
-function handleLogout() {
-  currentUser = null;
-  document.getElementById('app').style.display = 'none';
-  document.getElementById('login-screen').style.display = 'flex';
-  document.getElementById('l-pass').value = '';
-}
+function exportToExcel() { const ws = XLSX.utils.json_to_sheet(rows[currentTab]); const wb = XLSX.utils.book_new(); XLSX.utils.book_append_sheet(wb, ws, currentTab); XLSX.writeFile(wb, `TOS_${currentTab.toUpperCase()}.xlsx`); }
+function togglePass(id) { const x = document.getElementById(id); x.type = x.type === "password" ? "text" : "password"; }
+function handleLogout() { currentUser = null; document.getElementById('app').style.display = 'none'; document.getElementById('login-screen').style.display = 'flex'; }
 </script>
 </body>
 </html>
