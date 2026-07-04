@@ -36,17 +36,15 @@ header{background:#111;padding:15px 20px;border-bottom:3px solid #00d4ff;display
 .pin-btn{padding:5px 12px;background:#111;border:1px solid #00ffcc;color:#00ffcc;border-radius:15px;font-size:0.75rem;text-decoration:none;font-weight:bold;transition:0.3s;white-space:nowrap;}
 .pin-btn:hover{background:#00ffcc;color:#000;}
 
-/* ── TABS ── */
-.tab-container{background:#111;display:flex;border-bottom:2px solid #00d4ff;overflow-x:auto;}
-.tab-btn{padding:12px 25px;border:none;background:transparent;color:#7ec8e3;cursor:pointer;font-weight:bold;white-space:nowrap;border-bottom:3px solid transparent;transition:0.3s ease-in-out;position:relative;}
-.tab-btn.active{color:#fff;}
-.tab-btn::after{content:'';position:absolute;bottom:0;left:50%;width:0;height:4px;background:#ff0000;transition:0.3s ease-in-out;transform:translateX(-50%);}
-.tab-btn.active::after{width:100%;box-shadow:0 0 10px #ff0000;}
-
 /* ── TOOLBAR ── */
 .toolbar{background:#000;padding:15px 20px;display:flex;gap:12px;align-items:center;flex-wrap:wrap;border-bottom:1px solid #00d4ff33;}
 .toolbar button{padding:10px 18px;border-radius:8px;border:2px solid #fff;background:#000;color:#fff;font-weight:bold;cursor:pointer;font-size:0.85rem;transition:0.3s;}
 .toolbar button:hover{background:#fff;color:#000;}
+
+/* ── TAB BUTTONS IN TOOLBAR ── */
+.tab-group{display:flex;gap:8px;margin:0 auto;}
+.tab-btn-pro{padding:10px 18px;border-radius:8px;border:2px solid #00d4ff;background:#000;color:#00d4ff;font-weight:bold;cursor:pointer;font-size:0.85rem;transition:0.3s;}
+.tab-btn-pro.active{background:#00d4ff;color:#000;box-shadow:0 0 10px #00d4ff;}
 
 /* ── SEARCH BOX ── */
 .search-container{padding:20px;background:#000;display:flex;justify-content:center;align-items:center;gap:15px;}
@@ -55,7 +53,10 @@ header{background:#111;padding:15px 20px;border-bottom:3px solid #00d4ff;display
 .search-wrapper input:focus{border-color:#00ffcc;box-shadow:0 0 25px rgba(0,255,204,0.3);}
 .search-wrapper::before{content:'🔍';position:absolute;left:20px;top:50%;transform:translateY(-50%);font-size:1.2rem;opacity:0.7;}
 .btn-clear{background:#333;color:#fff;border:1px solid #555;padding:10px 20px;border-radius:20px;cursor:pointer;font-weight:bold;transition:0.3s;}
-.btn-clear:hover{background:#ff0055;border-color:#ff0055;}
+
+/* ── STATUS ── */
+#status-bar{padding:10px 20px;background:#111;display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid #00d4ff22;}
+#status-text{color:#00d4ff;font-weight:bold;}
 
 /* ── TABLE ── */
 .table-container{flex:1;overflow:auto;padding:0 20px 20px;background:#000;}
@@ -131,25 +132,25 @@ td{padding:12px;border-bottom:1px solid #222;font-size:0.95rem;color:#eee;overfl
     <button onclick="editPinnedLinks()" style="background:none;border:none;color:#555;font-size:0.7rem;cursor:pointer;margin-left:auto;white-space:nowrap;">⚙️ Edit Links</button>
   </div>
 
-  <div class="tab-container">
-    <button class="tab-btn active" onclick="switchTab('pw')">📋 Passwords</button>
-    <button class="tab-btn" onclick="switchTab('dm')">📦 DM Barcodes</button>
-    <button class="tab-btn" onclick="switchTab('import')">📥 Import Codes</button>
-    <button class="tab-btn" onclick="switchTab('links')">🔗 Links</button>
-    <button class="tab-btn" id="admin-tab" onclick="switchTab('admin')" style="display:none;margin-left:auto;">⚙️ Admin</button>
-  </div>
-
   <div class="toolbar">
     <button onclick="openModal('add-modal')">➕ Add Entry</button>
     <button onclick="exportToExcel()">📤 Export</button>
     <button onclick="importFromExcel()">📥 Import</button>
     <button onclick="loadFromSheets()">🔄 Reload</button>
     <button onclick="removeDuplicates()" style="border-color:#00ffcc;color:#00ffcc;">🧹 Remove Duplicates</button>
+    
+    <!-- TAB BUTTONS CENTERED -->
+    <div class="tab-group">
+      <button class="tab-btn-pro active" onclick="switchTab('pw')">Passwords</button>
+      <button class="tab-btn-pro" onclick="switchTab('dm')">DM Barcodes</button>
+      <button class="tab-btn-pro" onclick="switchTab('import')">Import Codes</button>
+      <button class="tab-btn-pro" onclick="switchTab('links')">Links</button>
+      <button class="tab-btn-pro" id="admin-tab" onclick="switchTab('admin')" style="display:none;border-color:#ff0055;color:#ff0055;">Admin</button>
+    </div>
   </div>
 
   <div id="status-bar">
-    <div id="status-text" style="color:#00d4ff;font-weight:bold;">⏳ System Ready</div>
-    <div id="total-count" style="background:#00d4ff;color:#000;padding:3px 10px;border-radius:12px;font-size:0.75rem;font-weight:bold;">Total: 0</div>
+    <div id="status-text">⏳ System Ready</div>
   </div>
 
   <div class="search-container">
@@ -329,29 +330,32 @@ async function loadFromSheets() {
   try {
     const res = await fetch(API_URL + "?t=" + Date.now());
     const data = await res.json();
-    if(data.status === "ok") { rows = data; renderTable(); document.getElementById('status-text').textContent = "✅ System Synced"; }
-  } catch(e) { document.getElementById('status-text').textContent = "❌ Load Error"; }
+    if(data.status === "ok") { 
+      rows = data; 
+      renderTable(); 
+      updateStatus(`✅ মোট ${rows[currentTab].length} টি ডাটা, শিটে সেভ হয়েছে।`); 
+    }
+  } catch(e) { updateStatus("❌ Load Error"); }
 }
 
 function switchTab(tab) {
   currentTab = tab;
-  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
-  event.target.classList.add('active');
+  document.querySelectorAll('.tab-btn-pro').forEach(b => b.classList.remove('active'));
+  if(event) event.target.classList.add('active');
   ['pw','dm','import','links'].forEach(t => document.getElementById(t+'-tab').style.display = tab === t ? 'block' : 'none');
   document.getElementById('admin-section').style.display = tab === 'admin' ? 'flex' : 'none';
   if(tab === 'admin') { loadUsers(); }
   renderTable();
+  updateStatus(`✅ মোট ${rows[currentTab].length} টি ডাটা, শিটে সেভ হয়েছে।`);
 }
 
 function renderTable() {
   const q = document.getElementById('search-input').value.toLowerCase();
-  let total = 0;
   ['pw','dm','import','links'].forEach(t => {
     const data = rows[t] || [];
     const body = document.getElementById(t+'-body');
     body.innerHTML = "";
     const filtered = data.filter(r => JSON.stringify(r).toLowerCase().includes(q));
-    if(currentTab === t) total = filtered.length;
     filtered.forEach((r, i) => {
       const actualIdx = data.indexOf(r);
       const tr = document.createElement('tr');
@@ -367,7 +371,6 @@ function renderTable() {
       body.appendChild(tr);
     });
   });
-  document.getElementById('total-count').textContent = `Total: ${total}`;
 }
 
 function clearSearch() { document.getElementById('search-input').value = ""; renderTable(); }
@@ -435,19 +438,27 @@ async function deleteRow(t, idx) {
 }
 
 async function saveToSheets() {
-  document.getElementById('status-text').textContent = "⏳ Syncing...";
+  updateStatus("⏳ ডাটা সেভ হচ্ছে...");
   try {
     const res = await fetch(API_URL, { method: 'POST', body: JSON.stringify({ action: 'save', username: currentUser.username, rows: rows }) });
     const data = await res.json();
-    if(data.status === "ok") { document.getElementById('status-text').textContent = "✅ Synced"; showToast("💾 Saved!"); }
-  } catch(e) { document.getElementById('status-text').textContent = "❌ Sync Error"; }
+    if(data.status === "ok") { 
+      updateStatus(`✅ মোট ${rows[currentTab].length} টি ডাটা, শিটে সেভ হয়েছে।`); 
+      showToast("💾 Saved!"); 
+    }
+  } catch(e) { updateStatus("❌ Sync Error"); }
 }
 
 function exportToExcel() {
-  const ws = XLSX.utils.json_to_sheet(rows[currentTab] || []);
-  const wb = XLSX.utils.book_new(); XLSX.utils.book_append_sheet(wb, ws, currentTab);
-  XLSX.writeFile(wb, `TOS_${currentTab}_${new Date().getTime()}.xlsx`);
-  showToast("📤 Exported!");
+  try {
+    const data = rows[currentTab] || [];
+    if(data.length === 0) return alert("No data to export");
+    const ws = XLSX.utils.json_to_sheet(data);
+    const wb = XLSX.utils.book_new(); 
+    XLSX.utils.book_append_sheet(wb, ws, currentTab);
+    XLSX.writeFile(wb, `TOS_${currentTab}_${new Date().getTime()}.xlsx`);
+    showToast("📤 Exported!");
+  } catch(e) { alert("Export failed: " + e.message); }
 }
 
 function importFromExcel() { document.getElementById('file-input').click(); }
@@ -471,6 +482,8 @@ async function handleFileImport(event) {
   reader.readAsArrayBuffer(file);
   event.target.value = '';
 }
+
+function updateStatus(msg) { document.getElementById('status-text').textContent = msg; }
 
 async function loadUsers() {
   try {
