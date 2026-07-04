@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
-<title>USER- PW LIST - PREMIUM</title>
+<title>USER PW LIST V.19 - PREMIUM</title>
 <script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
 <style>
 :root {
@@ -28,19 +28,20 @@ body{font-family:'Segoe UI', Roboto, Helvetica, Arial, sans-serif;background:var
 .lf input:focus{box-shadow:0 0 15px rgba(0,212,255,0.3);}
 .btn-login{width:100%;padding:14px;background:linear-gradient(90deg, var(--neon-blue), var(--neon-green));color:#000;border:none;border-radius:30px;font-size:1.1rem;font-weight:bold;cursor:pointer;margin-top:15px;transition:0.3s;}
 .btn-login:hover{transform:scale(1.02);box-shadow:0 0 20px var(--neon-blue);}
-.footer-neon{margin-top:30px;padding:15px;border:2px solid var(--neon-red);border-radius:15px;background:rgba(255,0,85,0.05);box-shadow:0 0 15px rgba(255,0,85,0.1);}
-.footer-neon .line1{color:#fff;font-weight:bold;font-size:0.9rem;text-shadow:0 0 8px var(--neon-red);}
-.footer-neon .line2{color:var(--neon-red);font-weight:bold;font-size:0.85rem;text-shadow:0 0 8px var(--neon-red);margin-top:5px;}
+.footer-neon{margin-top:30px;padding:15px;border:2px solid var(--neon-green);border-radius:15px;background:rgba(0,255,204,0.06);box-shadow:0 0 15px rgba(0,255,204,0.15);}
+.footer-neon .line2{color:#00FFC2;font-weight:bold;font-size:0.9rem;text-shadow:0 0 4px #00FFC2;letter-spacing:0.5px;}
 
 /* ── APP ── */
 #app{display:none;flex-direction:column;height:100%;}
-header{background:var(--panel-bg);padding:15px 25px;border-bottom:3px solid var(--neon-blue);display:flex;justify-content:space-between;align-items:center;box-shadow:0 4px 15px rgba(0,0,0,0.5);}
-.header-title{color:var(--neon-blue);font-weight:bold;font-size:1.3rem;display:flex;align-items:center;gap:12px;text-shadow:0 0 10px rgba(0,212,255,0.3);}
-.header-title .by{color:var(--neon-green);font-size:0.85rem;font-weight:bold;background:rgba(0,255,204,0.1);padding:4px 15px;border-radius:20px;border:2px solid var(--neon-green);text-shadow:0 0 8px var(--neon-green);}
-.header-right{display:flex;align-items:center;gap:15px;}
-.company-badge{background:rgba(0,255,0,0.05);color:#00ff00;padding:8px 20px;border-radius:25px;font-weight:bold;border:2px solid #00ff00;font-size:0.9rem;text-shadow:0 0 5px #00ff00;}
-.btn-logout-pro{background:linear-gradient(90deg, var(--neon-red), #900);color:#fff;border:none;padding:10px 20px;border-radius:25px;font-weight:bold;cursor:pointer;transition:0.3s;}
+header{background:var(--panel-bg);padding:15px 25px;border-bottom:3px solid var(--neon-blue);display:flex;justify-content:space-between;align-items:center;box-shadow:0 4px 15px rgba(0,0,0,0.5);flex-wrap:wrap;gap:12px;}
+.header-left{display:flex;flex-wrap:wrap;min-width:0;}
+.header-title{color:var(--neon-blue);font-weight:bold;font-size:1.3rem;display:flex;align-items:center;gap:12px;text-shadow:0 0 10px rgba(0,212,255,0.3);flex-wrap:wrap;}
+.header-title .by{color:#00FFC2;font-size:0.85rem;font-weight:bold;background:rgba(0,255,194,0.1);padding:4px 15px;border-radius:20px;border:2px solid #00FFC2;text-shadow:0 0 8px #00FFC2;}
+.header-right{display:flex;align-items:center;gap:15px;flex-wrap:wrap;}
+.company-badge{background:rgba(0,255,194,0.05);color:#00FFC2;padding:8px 20px;border-radius:25px;font-weight:bold;border:2px solid #00FFC2;font-size:0.9rem;text-shadow:0 0 5px #00FFC2;}
+.btn-logout-pro{background:linear-gradient(90deg, var(--neon-red), #900);color:#fff;border:none;padding:10px 20px;border-radius:25px;font-weight:bold;cursor:pointer;transition:0.3s;flex-shrink:0;}
 .btn-logout-pro:hover{box-shadow:0 0 15px var(--neon-red);}
+
 
 /* ── PINNED LINKS ── */
 .pinned-links{background:#000;padding:10px 25px;display:flex;gap:12px;align-items:center;border-bottom:1px solid rgba(0,212,255,0.2);overflow-x:auto;}
@@ -49,14 +50,17 @@ header{background:var(--panel-bg);padding:15px 25px;border-bottom:3px solid var(
 .pin-btn:hover{background:var(--neon-green);color:#000;box-shadow:0 0 10px var(--neon-green);}
 
 /* ── TOOLBAR ── */
-.toolbar{background:#000;padding:15px 25px;display:flex;gap:15px;align-items:center;flex-wrap:wrap;border-bottom:1px solid rgba(0,212,255,0.1);}
-.toolbar button{padding:10px 20px;border-radius:10px;border:2px solid #fff;background:#000;color:#fff;font-weight:bold;cursor:pointer;font-size:0.85rem;transition:0.3s;}
-.toolbar button:hover{background:#fff;color:#000;}
+.toolbar-actions{background:#000;padding:15px 25px 10px;display:flex;gap:15px;align-items:center;border-bottom:none;overflow-x:auto;white-space:nowrap;scrollbar-width:thin;}
+.toolbar-actions::-webkit-scrollbar{height:4px;}
+.toolbar-actions button{padding:10px 20px;border-radius:10px;border:2px solid #fff;background:#000;color:#fff;font-weight:bold;cursor:pointer;font-size:0.85rem;transition:0.3s;flex-shrink:0;}
+.toolbar-actions button:hover{background:#fff;color:#000;}
 
 /* ── TAB BUTTONS ── */
-.tab-group{display:flex;gap:10px;margin:0 auto;}
-.tab-btn-pro{padding:12px 22px;border-radius:10px;border:2px solid var(--neon-blue);background:#000;color:var(--neon-blue);font-weight:bold;cursor:pointer;font-size:0.9rem;transition:0.3s;position:relative;}
-.tab-btn-pro.active{color:#fff;background:rgba(0,212,255,0.1);border-color:#fff;}
+.tab-group{display:flex;gap:10px;padding:10px 25px 15px;overflow-x:auto;white-space:nowrap;border-bottom:1px solid rgba(0,212,255,0.1);scrollbar-width:thin;}
+.tab-group::-webkit-scrollbar{height:4px;}
+.tab-btn-pro{padding:12px 22px;border-radius:10px;border:2px solid var(--neon-green);background:#000;color:var(--neon-green);font-weight:bold;cursor:pointer;font-size:0.9rem;transition:0.3s;position:relative;flex-shrink:0;}
+.tab-btn-pro:hover{background:var(--neon-green);color:#000;}
+.tab-btn-pro.active{color:#fff;background:rgba(0,255,204,0.1);border-color:#fff;}
 .tab-btn-pro.active::after{content:'';position:absolute;bottom:-18px;left:0;width:100%;height:4px;background:var(--neon-red);box-shadow:0 0 15px var(--neon-red);border-radius:2px;}
 
 /* ── SEARCH ── */
@@ -67,8 +71,8 @@ header{background:var(--panel-bg);padding:15px 25px;border-bottom:3px solid var(
 .search-wrapper input{width:100%;padding:16px 25px 16px 60px;border-radius:35px;border:2px solid var(--neon-blue);background:var(--panel-bg);color:#fff;font-size:1.1rem;outline:none;transition:0.3s;box-shadow:0 0 15px rgba(0,212,255,0.1);}
 .search-wrapper input:focus{border-color:var(--neon-green);box-shadow:0 0 25px rgba(0,255,204,0.2);}
 .search-wrapper::before{content:'🔍';position:absolute;left:25px;top:50%;transform:translateY(-50%);font-size:1.3rem;opacity:0.8;}
-.btn-clear{background:#333;color:#fff;border:1px solid #555;padding:12px 25px;border-radius:25px;cursor:pointer;font-weight:bold;transition:0.3s;}
-.btn-clear:hover{background:#444;}
+.btn-clear{background:#000;color:var(--neon-green);border:2px solid var(--neon-green);padding:14px 25px;border-radius:35px;cursor:pointer;font-weight:bold;transition:0.3s;text-transform:uppercase;letter-spacing:1px;}
+.btn-clear:hover{background:var(--neon-green);color:#000;box-shadow:0 0 20px var(--neon-green);}
 
 /* ── TABLE ── */
 .table-container{flex:1;overflow:auto;padding:0 25px 25px;background:#000;}
@@ -77,7 +81,7 @@ th{background:#1a1a1a;color:var(--neon-blue);padding:16px;text-align:left;font-s
 td{padding:14px 16px;border-bottom:1px solid #222;font-size:0.95rem;color:#eee;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;vertical-align:middle;}
 tr:hover{background:rgba(255,255,255,0.03);}
 
-.col-id{width:60px;text-align:center;color:var(--neon-green);font-weight:bold;}
+.col-id{width:60px;text-align:center;color:#fff;font-weight:bold;}
 .col-action{width:130px;text-align:center;}
 
 .copy-btn{background:transparent;border:1px solid var(--neon-blue);color:var(--neon-blue);padding:5px 10px;border-radius:6px;cursor:pointer;font-size:0.75rem;margin-left:8px;transition:0.2s;}
@@ -115,6 +119,39 @@ tr:hover{background:rgba(255,255,255,0.03);}
 .text-left{text-align:left;}
 .fw-bold{font-weight:bold;}
 .text-neon{color:var(--neon-blue);}
+
+/* ── MOBILE CARD VIEW ── */
+@media (max-width:768px){
+  .table-container{padding:0 10px 20px;width:100%;box-sizing:border-box;}
+  colgroup, col{display:none !important;}
+  table, colgroup, col{table-layout:auto;}
+  thead{display:none;}
+  table{display:block;width:100%;background:transparent;border:none;border-spacing:0 14px;border-collapse:separate;}
+  tbody{display:block;width:100%;}
+  tr{display:block;width:100%;background:var(--panel-bg);border:1px solid #333;border-radius:14px;margin-bottom:14px;padding:36px 16px 14px;box-shadow:0 4px 12px rgba(0,0,0,0.4);position:relative;box-sizing:border-box;}
+  td{display:flex;justify-content:space-between;align-items:center;gap:10px;padding:9px 0;border-bottom:1px solid rgba(255,255,255,0.06);text-align:right;white-space:normal;overflow:visible;text-overflow:unset;width:auto !important;}
+  td:last-child{border-bottom:none;}
+  td::before{content:attr(data-label);color:#888;font-weight:bold;font-size:0.78rem;text-transform:uppercase;letter-spacing:0.5px;text-align:left;flex-shrink:0;}
+  .cell-value{display:flex;align-items:center;justify-content:flex-end;gap:8px;flex-wrap:wrap;text-align:right;}
+  td.col-id{display:block;position:absolute;top:12px;right:16px;width:auto;padding:2px 10px;background:rgba(255,255,255,0.08);border-radius:20px;font-size:0.75rem;}
+  td.col-id::before{content:none;}
+  td.col-action{justify-content:flex-end;padding-top:12px;border-top:1px solid rgba(255,255,255,0.1);margin-top:6px;}
+  td.col-action::before{content:none;}
+  .edit-btn,.del-btn{padding:9px 16px;}
+
+  header{padding:14px 16px;justify-content:center;text-align:center;}
+  .header-left,.header-right{width:100%;justify-content:center;}
+  .header-title{font-size:1rem;justify-content:center;}
+  .company-badge{font-size:0.72rem;padding:6px 12px;text-align:center;}
+  .btn-logout-pro{padding:8px 16px;font-size:0.85rem;}
+  .toolbar-wrap{border-bottom:1px solid rgba(0,212,255,0.1);}
+  .app-header-scroll{max-height:40vh;overflow-y:auto;-webkit-overflow-scrolling:touch;flex-shrink:1;border-bottom:2px solid rgba(0,212,255,0.15);}
+  .search-container{flex-shrink:0;}
+  .toolbar-actions{display:grid !important;grid-template-columns:repeat(3,1fr);overflow-x:visible !important;white-space:normal !important;padding:14px 14px 8px;gap:8px;border-bottom:none;}
+  .toolbar-actions button{white-space:normal !important;text-align:center;padding:10px 6px;font-size:0.72rem;flex-shrink:initial;}
+  .tab-group{display:grid !important;grid-template-columns:repeat(3,1fr);overflow-x:visible !important;white-space:normal !important;padding:8px 14px 14px;gap:8px;border-bottom:none;}
+  .tab-btn-pro{white-space:normal !important;text-align:center;padding:10px 6px;font-size:0.78rem;flex-shrink:initial;}
+}
 </style>
 </head>
 <body>
@@ -122,7 +159,7 @@ tr:hover{background:rgba(255,255,255,0.03);}
 <!-- ══ LOGIN ══ -->
 <div id="login-screen">
   <div class="login-box">
-    <h1>🔐 SEA SHIPPING USER PW </h1>
+    <h1>🔐 USER PW LIST V.1</h1>
     <div id="login-err" style="color:var(--neon-red);margin-bottom:15px;font-size:0.95rem;font-weight:bold;"></div>
     <div class="lf">
       <label>USERNAME</label>
@@ -137,7 +174,6 @@ tr:hover{background:rgba(255,255,255,0.03);}
     </div>
     <button class="btn-login" id="login-btn" onclick="handleLogin()">LOGIN NOW</button>
     <div class="footer-neon">
-      <div class="line1">By-Idris Mansoor</div>
       <div class="line2">রিলিজ-জুলাই-২০২৬</div>
     </div>
   </div>
@@ -145,42 +181,45 @@ tr:hover{background:rgba(255,255,255,0.03);}
 
 <!-- ══ APP ══ -->
 <div id="app">
-  <header>
-    <div class="header-left">
-      <div class="header-title">
-        🔐 USER PW  V.1
-        <span class="by">By-Idris Mansoor</span>
+  <div class="app-header-scroll">
+    <header>
+      <div class="header-left">
+        <div class="header-title">
+          🔐 USER PW LIST V.1
+          <span class="by">By-Idris Mansoor</span>
+        </div>
+      </div>
+      <div class="header-right">
+        <div class="company-badge">© SEA SHIPPING LLC - Release-July 2026</div>
+        <button class="btn-logout-pro" onclick="handleLogout()">🚪 Logout</button>
+      </div>
+    </header>
+
+    <div class="pinned-links">
+      <span>📌 QUICK LINKS:</span>
+      <div id="pin-container" style="display:flex;gap:12px;"></div>
+      <button onclick="editPinnedLinks()" style="background:none;border:none;color:#555;font-size:0.75rem;cursor:pointer;margin-left:auto;font-weight:bold;">⚙️ EDIT LINKS</button>
+    </div>
+
+    <div class="toolbar-wrap">
+      <div class="toolbar-actions">
+        <button onclick="exportToExcel()">📤 Export Excel</button>
+        <button onclick="importFromExcel()">📥 Import Excel</button>
+        <button onclick="loadFromSheets()">🔄 Reload From Sheets</button>
+        <button onclick="removeDuplicates()" style="border-color:var(--neon-green);color:var(--neon-green);">🧹 রিমুভ ডুপ্লিকেট্স</button>
+      </div>
+      <div class="tab-group">
+        <button class="tab-btn-pro active" onclick="switchTab('pw')">Passwords</button>
+        <button class="tab-btn-pro" onclick="switchTab('dm')">DM Barcodes</button>
+        <button class="tab-btn-pro" onclick="switchTab('import')">Import Codes</button>
+        <button class="tab-btn-pro" onclick="switchTab('links')">Links</button>
+        <button class="tab-btn-pro" id="admin-tab" onclick="switchTab('admin')" style="display:none;border-color:var(--neon-red);color:var(--neon-red);">Admin</button>
       </div>
     </div>
-    <div class="header-right">
-      <div class="company-badge">© SEA SHIPPING LLC - Release-July 2026</div>
-      <button class="btn-logout-pro" onclick="handleLogout()">🚪 Logout</button>
+
+    <div id="status-bar">
+      <div id="status-text">⏳ System Ready</div>
     </div>
-  </header>
-
-  <div class="pinned-links">
-    <span>📌 QUICK LINKS:</span>
-    <div id="pin-container" style="display:flex;gap:12px;"></div>
-    <button onclick="editPinnedLinks()" style="background:none;border:none;color:#555;font-size:0.75rem;cursor:pointer;margin-left:auto;font-weight:bold;">⚙️ EDIT LINKS</button>
-  </div>
-
-  <div class="toolbar">
-    <button onclick="exportToExcel()">📤 Export Excel</button>
-    <button onclick="importFromExcel()">📥 Import Excel</button>
-    <button onclick="loadFromSheets()">🔄 Sync Sheets</button>
-    <button onclick="removeDuplicates()" style="border-color:var(--neon-green);color:var(--neon-green);">🧹 Clean Duplicates</button>
-    
-    <div class="tab-group">
-      <button class="tab-btn-pro active" onclick="switchTab('pw')">Passwords</button>
-      <button class="tab-btn-pro" onclick="switchTab('dm')">DM Barcodes</button>
-      <button class="tab-btn-pro" onclick="switchTab('import')">Import Codes</button>
-      <button class="tab-btn-pro" onclick="switchTab('links')">Links</button>
-      <button class="tab-btn-pro" id="admin-tab" onclick="switchTab('admin')" style="display:none;border-color:var(--neon-red);color:var(--neon-red);">Admin</button>
-    </div>
-  </div>
-
-  <div id="status-bar">
-    <div id="status-text">⏳ System Ready</div>
   </div>
 
   <div class="search-container">
@@ -234,7 +273,7 @@ tr:hover{background:rgba(255,255,255,0.03);}
         <tr>
           <th class="text-center">#</th>
           <th>Product Name</th>
-          <th>Size</th>
+          <th class="text-center">Size</th>
           <th>Country</th>
           <th>Brand</th>
           <th>Barcode</th>
@@ -340,6 +379,18 @@ window.onload = () => {
   const savedPins = localStorage.getItem('tos_pins');
   if (savedPins) pinnedLinks = JSON.parse(savedPins);
   renderPinnedLinks();
+
+  // Prevent hardware/gesture "back" from closing the whole app.
+  // Without this, pressing back while a history stack of 1 exists
+  // (common when opened as a local/downloaded file) exits the page
+  // entirely instead of just dismissing the keyboard.
+  history.pushState({ guard: true }, '');
+  window.addEventListener('popstate', () => {
+    if (document.activeElement && typeof document.activeElement.blur === 'function') {
+      document.activeElement.blur();
+    }
+    history.pushState({ guard: true }, '');
+  });
 };
 
 function renderPinnedLinks() {
@@ -420,10 +471,41 @@ async function loadFromSheets() {
       rows = data;
       renderTable();
       const total = rows[currentTab].length;
-      setStatus(`✅ মোট ${total} টি ডাটা শিট থেকে লোড হয়েছে।`);
+      setStatus(`✅ মোট ${total} টি ডাটা শিট থেকে লোড হয়েছে।`);
+      showToast("Reloaded From Sheets!");
     }
   } catch(e) {
-    setStatus("❌ লোড করতে সমস্যা হয়েছে।");
+    setStatus("❌ লোড করতে সমস্যা হয়েছে।");
+  }
+}
+
+function removeDuplicates() {
+  const list = rows[currentTab] || [];
+  const seen = new Set();
+  const unique = [];
+  let duplicateCount = 0;
+
+  list.forEach(r => {
+    const key = Object.values(r).map(v => (v || '').toString().trim().toLowerCase()).join('|');
+    if (seen.has(key)) {
+      duplicateCount++;
+    } else {
+      seen.add(key);
+      unique.push(r);
+    }
+  });
+
+  if (duplicateCount === 0) {
+    showToast("কোনো ডুপ্লিকেট পাওয়া যায়নি!");
+    return;
+  }
+
+  const confirmed = confirm(`${duplicateCount} টি ডুপ্লিকেট পাওয়া গেছে। এগুলো রিমুভ করতে চান?`);
+  if (confirmed) {
+    rows[currentTab] = unique;
+    renderTable();
+    saveToSheets();
+    showToast(`${duplicateCount} টি ডুপ্লিকেট রিমুভ হয়েছে!`);
   }
 }
 
@@ -455,34 +537,34 @@ function renderTable() {
 
   filtered.forEach((r, i) => {
     let tr = document.createElement('tr');
-    let html = `<td class="col-id">${i+1}</td>`;
+    let html = `<td class="col-id" data-label="#">${i+1}</td>`;
     
     if(currentTab === 'pw') {
       html += `
-        <td class="fw-bold" style="color:#fff;">${r.company}</td>
-        <td style="color:var(--neon-blue);">${r.shj} <button class="copy-btn" onclick="copy('${r.shj}')">📋</button></td>
-        <td style="color:var(--neon-green);">${r.user} <button class="copy-btn" onclick="copy('${r.user}')">📋</button></td>
-        <td style="color:#ffcc00;">${r.password} <button class="copy-btn" onclick="copy('${r.password}')">📋</button></td>
-        <td style="color:#aaa;">${r.note} <button class="copy-btn" onclick="copy('${r.note}')">📋</button></td>
+        <td class="fw-bold" data-label="Company Name" style="color:var(--neon-green);"><span class="cell-value">${r.company}</span></td>
+        <td data-label="Shj Code" style="color:var(--neon-green);"><span class="cell-value">${r.shj} <button class="copy-btn" onclick="copy('${r.shj}')">📋</button></span></td>
+        <td data-label="Username" style="color:var(--neon-green);"><span class="cell-value">${r.user} <button class="copy-btn" onclick="copy('${r.user}')">📋</button></span></td>
+        <td data-label="Password" style="color:var(--neon-green);"><span class="cell-value">${r.password} <button class="copy-btn" onclick="copy('${r.password}')">📋</button></span></td>
+        <td data-label="Dubai Code / Note" style="color:var(--neon-green);"><span class="cell-value">${r.note} <button class="copy-btn" onclick="copy('${r.note}')">📋</button></span></td>
       `;
     } else if(currentTab === 'dm') {
       html += `
-        <td class="fw-bold">${r.product}</td>
-        <td class="text-center">${r.size}</td>
-        <td>${r.country}</td>
-        <td>${r.brand}</td>
-        <td style="color:var(--neon-blue);">${r.barcode} <button class="copy-btn" onclick="copy('${r.barcode}')">📋</button></td>
+        <td class="fw-bold" data-label="Product Name"><span class="cell-value">${r.product}</span></td>
+        <td class="text-center" data-label="Size"><span class="cell-value">${r.size}</span></td>
+        <td data-label="Country"><span class="cell-value">${r.country}</span></td>
+        <td data-label="Brand"><span class="cell-value">${r.brand}</span></td>
+        <td data-label="Barcode" style="color:var(--neon-blue);"><span class="cell-value">${r.barcode} <button class="copy-btn" onclick="copy('${r.barcode}')">📋</button></span></td>
       `;
     } else if(currentTab === 'import') {
-      html += `<td class="fw-bold" style="color:var(--neon-green);">${r.name}</td><td>${r.desc}</td>`;
+      html += `<td class="fw-bold" data-label="Code" style="color:var(--neon-green);"><span class="cell-value">${r.name}</span></td><td data-label="Description"><span class="cell-value">${r.desc}</span></td>`;
     } else if(currentTab === 'links') {
       html += `
-        <td><span class="link-text" onclick="openLink('${r.url}')">${r.title}</span></td>
-        <td style="font-size:0.8rem;color:#777;">${r.url} <button class="copy-btn" onclick="copy('${r.url}')">📋</button></td>
+        <td data-label="Title / Site Name"><span class="cell-value"><span class="link-text" onclick="openLink('${r.url}')">${r.title}</span></span></td>
+        <td data-label="URL Address" style="font-size:0.8rem;color:var(--neon-blue);"><span class="cell-value">${r.url} <button class="copy-btn" onclick="copy('${r.url}')">📋</button></span></td>
       `;
     }
     
-    html += `<td class="col-action">
+    html += `<td class="col-action" data-label="Action">
       <button class="edit-btn" onclick="editEntryModal(${i})">✏️</button>
       <button class="del-btn" onclick="deleteEntry(${i})">🗑️</button>
     </td>`;
