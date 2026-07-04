@@ -43,8 +43,10 @@ header{background:#111;padding:15px 20px;border-bottom:3px solid #00d4ff;display
 
 /* ── TAB BUTTONS CENTERED ── */
 .tab-group{display:flex;gap:8px;margin:0 auto;}
-.tab-btn-pro{padding:10px 18px;border-radius:8px;border:2px solid #00d4ff;background:#000;color:#00d4ff;font-weight:bold;cursor:pointer;font-size:0.85rem;transition:0.3s;}
-.tab-btn-pro.active{background:#00d4ff;color:#000;box-shadow:0 0 10px #00d4ff;}
+.tab-btn-pro{padding:10px 18px;border-radius:8px;border:2px solid #00d4ff;background:#000;color:#00d4ff;font-weight:bold;cursor:pointer;font-size:0.85rem;transition:0.3s;position:relative;}
+.tab-btn-pro.active{color:#fff;}
+.tab-btn-pro.active::after{content:'';position:absolute;bottom:-17px;left:0;width:100%;height:3px;background:#ff0000;box-shadow:0 0 10px #ff0000;animation:tabAnim 0.3s ease-out;}
+@keyframes tabAnim { from{width:0;left:50%;} to{width:100%;left:0;} }
 
 /* ── SEARCH CONTAINER ── */
 .search-container{padding:20px;background:#000;display:flex;justify-content:center;align-items:center;gap:15px;}
@@ -233,7 +235,7 @@ td{padding:12px;border-bottom:1px solid #222;font-size:0.95rem;color:#eee;overfl
 <div id="toast"></div>
 
 <script>
-const API_URL = "https://script.google.com/macros/s/AKfycbzP0NQm1C8-kltfq5BEzkGtP5Htv54sGx4XqDNGOxJFGxZqJUBqYvQOeYZTpVW9BMaY0A/exec";
+const API_URL = "https://script.google.com/macros/s/AKfycbzPPK40EUUUVrR9Ucm-TKnlaDYU47ipW3cYjeHT2PgJhHIxlGtjbDe3661rjJGi7Fcxnw/exec";
 let rows = { pw: [], dm: [], import: [], links: [] };
 let currentUser = null;
 let currentTab = 'pw';
@@ -252,276 +254,316 @@ let pinnedLinks = [
 ];
 
 window.onload = () => {
-  const savedUser = localStorage.getItem('tos_username');
-  if(savedUser) document.getElementById('l-user').value = savedUser;
-  const savedLinks = localStorage.getItem('tos_pinned_links');
-  if(savedLinks) { pinnedLinks = JSON.parse(savedLinks); }
+  const savedUser = localStorage.getItem('tos_user');
+  if (savedUser) document.getElementById('l-user').value = savedUser;
+  
+  const savedPins = localStorage.getItem('tos_pins');
+  if (savedPins) pinnedLinks = JSON.parse(savedPins);
   renderPinnedLinks();
 };
 
 function renderPinnedLinks() {
-  const container = document.getElementById('pin-container');
-  container.innerHTML = '';
-  pinnedLinks.forEach(link => {
-    if(link.name && link.url) {
-      const a = document.createElement('a');
-      a.href = link.url; a.target = '_blank'; a.className = 'pin-btn'; a.textContent = link.name;
-      container.appendChild(a);
-    }
-  });
+  const cont = document.getElementById('pin-container');
+  cont.innerHTML = pinnedLinks.map(p => `<a href="${p.url}" target="_blank" class="pin-btn">${p.name}</a>`).join('');
 }
 
 function editPinnedLinks() {
-  const container = document.getElementById('pin-inputs');
-  container.innerHTML = "";
-  for(let i=0; i<10; i++) {
-    const link = pinnedLinks[i] || { name: '', url: '' };
-    container.innerHTML += `<div style="display:flex;gap:10px;margin-bottom:10px;">
-      <span style="color:#555;width:20px;">${i+1}</span>
-      <input id="pin-name-${i}" value="${esc(link.name)}" placeholder="Name" style="flex:1;padding:8px;background:#000;border:1px solid #444;color:#fff;">
-      <input id="pin-url-${i}" value="${esc(link.url)}" placeholder="URL" style="flex:2;padding:8px;background:#000;border:1px solid #444;color:#fff;">
-    </div>`;
-  }
-  document.getElementById('pin-modal').style.display = 'flex';
+  const cont = document.getElementById('pin-inputs');
+  cont.innerHTML = Array.from({length:10}).map((_, i) => {
+    const p = pinnedLinks[i] || {name:'', url:''};
+    return `
+      <div style="display:flex;gap:10px;margin-bottom:10px;">
+        <span style="color:#00d4ff;width:20px;">${i+1}</span>
+        <input type="text" placeholder="Name" value="${p.name}" id="pin-n-${i}" style="flex:1;padding:8px;background:#000;border:1px solid #444;color:#fff;border-radius:5px;">
+        <input type="text" placeholder="URL" value="${p.url}" id="pin-u-${i}" style="flex:2;padding:8px;background:#000;border:1px solid #444;color:#fff;border-radius:5px;">
+      </div>
+    `;
+  }).join('');
+  openModal('pin-modal');
 }
 
 function savePinnedLinks() {
-  pinnedLinks = [];
+  let newPins = [];
   for(let i=0; i<10; i++) {
-    const name = document.getElementById(`pin-name-${i}`).value.trim();
-    const url = document.getElementById(`pin-url-${i}`).value.trim();
-    if(name && url) pinnedLinks.push({ name, url });
+    const n = document.getElementById(`pin-n-${i}`).value.trim();
+    const u = document.getElementById(`pin-u-${i}`).value.trim();
+    if(n && u) newPins.push({name: n, url: u.startsWith('http') ? u : 'https://'+u});
   }
-  localStorage.setItem('tos_pinned_links', JSON.stringify(pinnedLinks));
-  renderPinnedLinks(); closeModal('pin-modal'); showToast("✅ Links Updated!");
-}
-
-function togglePass(id) {
-  const inp = document.getElementById(id);
-  inp.type = inp.type === 'password' ? 'text' : 'password';
+  pinnedLinks = newPins;
+  localStorage.setItem('tos_pins', JSON.stringify(pinnedLinks));
+  renderPinnedLinks();
+  closeModal('pin-modal');
+  showToast("Pinned Links Updated!");
 }
 
 async function handleLogin() {
   const u = document.getElementById('l-user').value.trim();
-  const p = document.getElementById('l-pass').value;
-  const err = document.getElementById('login-err');
-  if(!u || !p) { err.textContent = "Enter credentials"; return; }
-  err.textContent = "⏳ Authenticating...";
+  const p = document.getElementById('l-pass').value.trim();
+  if(!u || !p) return alert("Enter credentials");
+  
+  document.getElementById('login-err').innerText = "⏳ Logging in...";
   try {
-    const res = await fetch(API_URL, { method: 'POST', body: JSON.stringify({ action: 'login', username: u, password: p }) });
-    const data = await res.json();
-    if(data.success) {
-      currentUser = data.user;
-      localStorage.setItem('tos_username', u);
+    const res = await fetch(API_URL, {
+      method: 'POST',
+      body: JSON.stringify({ action: 'login', username: u, password: p })
+    });
+    const result = await res.json();
+    if(result.success) {
+      currentUser = result.user;
+      localStorage.setItem('tos_user', u);
       document.getElementById('login-screen').style.display = 'none';
       document.getElementById('app').style.display = 'flex';
       if(currentUser.role === 'admin') document.getElementById('admin-tab').style.display = 'block';
       loadFromSheets();
-    } else err.textContent = "❌ " + (data.error || "Login Failed");
-  } catch(e) { err.textContent = "❌ Connection Error"; }
+    } else {
+      document.getElementById('login-err').innerText = "❌ " + result.error;
+    }
+  } catch(e) {
+    document.getElementById('login-err').innerText = "❌ Connection Error";
+  }
 }
-
-function handleLogout() { if(confirm("Logout?")) location.reload(); }
 
 async function loadFromSheets() {
-  document.getElementById('status-text').textContent = "⏳ Loading Data...";
+  setStatus("⏳ ডাটা লোড হচ্ছে...");
   try {
-    const res = await fetch(API_URL + "?t=" + Date.now());
+    const res = await fetch(API_URL);
     const data = await res.json();
-    if(data.status === "ok") { 
-      rows = data; 
-      renderTable(); 
-      updateStatus(`✅ মোট ${rows[currentTab].length} টি ডাটা, শিটে সেভ হয়েছে।`); 
+    if(data.status === 'ok') {
+      rows = data;
+      renderTable();
+      const total = rows.pw.length + rows.dm.length + rows.import.length + rows.links.length;
+      setStatus(`✅ মোট ${total} টি ডাটা, শিট থেকে লোড হয়েছে।`);
     }
-  } catch(e) { updateStatus("❌ Load Error"); }
-}
-
-function switchTab(tab) {
-  currentTab = tab;
-  document.querySelectorAll('.tab-btn-pro').forEach(b => b.classList.remove('active'));
-  if(event) event.target.classList.add('active');
-  ['pw','dm','import','links'].forEach(t => document.getElementById(t+'-tab').style.display = tab === t ? 'block' : 'none');
-  document.getElementById('admin-section').style.display = tab === 'admin' ? 'flex' : 'none';
-  if(tab === 'admin') { loadUsers(); }
-  renderTable();
-  updateStatus(`✅ মোট ${rows[currentTab].length} টি ডাটা, শিটে সেভ হয়েছে।`);
-}
-
-function renderTable() {
-  const q = document.getElementById('search-input').value.toLowerCase();
-  ['pw','dm','import','links'].forEach(t => {
-    const data = rows[t] || [];
-    const body = document.getElementById(t+'-body');
-    body.innerHTML = "";
-    const filtered = data.filter(r => JSON.stringify(r).toLowerCase().includes(q));
-    filtered.forEach((r, i) => {
-      const actualIdx = data.indexOf(r);
-      const tr = document.createElement('tr');
-      if(t === 'pw') {
-        tr.innerHTML = `<td>${i+1}</td><td title="${esc(r.company)}"><span class="cell-30">${esc(r.company)}</span></td><td><span class="cell-10">${esc(r.shj)}</span><button class="copy-btn" onclick="copy('${esc(r.shj)}')">📋</button></td><td><span class="cell-10">${esc(r.user)}</span><button class="copy-btn" onclick="copy('${esc(r.user)}')">📋</button></td><td><span class="cell-10">${esc(r.password)}</span><button class="copy-btn" onclick="copy('${esc(r.password)}')">📋</button></td><td><span class="cell-10">${esc(r.note)}</span><button class="copy-btn" onclick="copy('${esc(r.note)}')">📋</button></td><td><button class="edit-btn" onclick="openEdit('${t}',${actualIdx})">✏️</button><button class="del-btn" onclick="deleteRow('${t}',${actualIdx})">🗑️</button></td>`;
-      } else if(t === 'dm') {
-        tr.innerHTML = `<td>${i+1}</td><td title="${esc(r.product)}"><span class="cell-30">${esc(r.product)}</span></td><td><span class="cell-10">${esc(r.size)}</span><button class="copy-btn" onclick="copy('${esc(r.size)}')">📋</button></td><td><span class="cell-10">${esc(r.country)}</span><button class="copy-btn" onclick="copy('${esc(r.country)}')">📋</button></td><td><span class="cell-10">${esc(r.brand)}</span><button class="copy-btn" onclick="copy('${esc(r.brand)}')">📋</button></td><td><span class="cell-10">${esc(r.barcode)}</span><button class="copy-btn" onclick="copy('${esc(r.barcode)}')">📋</button></td><td><button class="edit-btn" onclick="openEdit('${t}',${actualIdx})">✏️</button><button class="del-btn" onclick="deleteRow('${t}',${actualIdx})">🗑️</button></td>`;
-      } else if(t === 'import') {
-        tr.innerHTML = `<td>${i+1}</td><td>${esc(r.name)}<button class="copy-btn" onclick="copy('${esc(r.name)}')">📋</button></td><td>${esc(r.desc)}</td><td><button class="edit-btn" onclick="openEdit('${t}',${actualIdx})">✏️</button><button class="del-btn" onclick="deleteRow('${t}',${actualIdx})">🗑️</button></td>`;
-      } else if(t === 'links') {
-        tr.innerHTML = `<td>${i+1}</td><td title="${esc(r.title)}"><span class="cell-30">${esc(r.title)}</span></td><td><a href="${esc(r.url)}" target="_blank" style="color:#00d4ff;">${esc(r.url)}</a><button class="copy-btn" onclick="copy('${esc(r.url)}')">📋</button></td><td><button class="edit-btn" onclick="openEdit('${t}',${actualIdx})">✏️</button><button class="del-btn" onclick="deleteRow('${t}',${actualIdx})">🗑️</button></td>`;
-      }
-      body.appendChild(tr);
-    });
-  });
-}
-
-function clearSearch() { document.getElementById('search-input').value = ""; renderTable(); }
-
-function removeDuplicates() {
-  const initialCount = rows.pw.length;
-  const unique = [];
-  const seen = new Set();
-  rows.pw.forEach(r => {
-    const key = `${r.company}|${r.shj}|${r.user}|${r.password}|${r.note}`.toLowerCase();
-    if(!seen.has(key)) { seen.add(key); unique.push(r); }
-  });
-  rows.pw = unique;
-  renderTable();
-  saveToSheets();
-  showToast(`🧹 Removed ${initialCount - unique.length} duplicates!`);
-}
-
-function openModal(id) {
-  editingIdx = -1;
-  document.getElementById('modal-title').textContent = "➕ Add New Entry";
-  const fields = document.getElementById('add-form-fields');
-  if(currentTab === 'pw') fields.innerHTML = `<div class="form-g"><label>Company</label><input id="in-1"></div><div class="form-g"><label>Shj Code</label><input id="in-2"></div><div class="form-g"><label>User</label><input id="in-3"></div><div class="form-g"><label>Password</label><input id="in-4"></div><div class="form-g"><label>Dubai Code</label><input id="in-5"></div>`;
-  else if(currentTab === 'dm') fields.innerHTML = `<div class="form-g"><label>Product Name</label><input id="in-1"></div><div class="form-g"><label>Size/Weight</label><input id="in-2"></div><div class="form-g"><label>Country</label><input id="in-3"></div><div class="form-g"><label>Brand Name</label><input id="in-4"></div><div class="form-g"><label>Barcode</label><input id="in-5"></div>`;
-  else if(currentTab === 'import') fields.innerHTML = `<div class="form-g"><label>Code</label><input id="in-1"></div><div class="form-g"><label>Description</label><input id="in-2"></div>`;
-  else if(currentTab === 'links') fields.innerHTML = `<div class="form-g"><label>Title</label><input id="in-1"></div><div class="form-g"><label>URL</label><input id="in-2"></div>`;
-  document.getElementById(id).style.display = 'flex';
-}
-
-function openEdit(tab, idx) {
-  editingIdx = idx;
-  document.getElementById('modal-title').textContent = "✏️ Edit Entry";
-  const fields = document.getElementById('add-form-fields');
-  const r = rows[tab][idx];
-  if(tab === 'pw') fields.innerHTML = `<div class="form-g"><label>Company</label><input id="in-1" value="${esc(r.company)}"></div><div class="form-g"><label>Shj Code</label><input id="in-2" value="${esc(r.shj)}"></div><div class="form-g"><label>User</label><input id="in-3" value="${esc(r.user)}"></div><div class="form-g"><label>Password</label><input id="in-4" value="${esc(r.password)}"></div><div class="form-g"><label>Dubai Code</label><input id="in-5" value="${esc(r.note)}"></div>`;
-  else if(tab === 'dm') fields.innerHTML = `<div class="form-g"><label>Product Name</label><input id="in-1" value="${esc(r.product)}"></div><div class="form-g"><label>Size/Weight</label><input id="in-2" value="${esc(r.size)}"></div><div class="form-g"><label>Country</label><input id="in-3" value="${esc(r.country)}"></div><div class="form-g"><label>Brand Name</label><input id="in-4" value="${esc(r.brand)}"></div><div class="form-g"><label>Barcode</label><input id="in-5" value="${esc(r.barcode)}"></div>`;
-  else if(tab === 'import') fields.innerHTML = `<div class="form-g"><label>Code</label><input id="in-1" value="${esc(r.name)}"></div><div class="form-g"><label>Description</label><input id="in-2" value="${esc(r.desc)}"></div>`;
-  else if(tab === 'links') fields.innerHTML = `<div class="form-g"><label>Title</label><input id="in-1" value="${esc(r.title)}"></div><div class="form-g"><label>URL</label><input id="in-2" value="${esc(r.url)}"></div>`;
-  document.getElementById('add-modal').style.display = 'flex';
-}
-
-async function addEntry() {
-  const v1 = document.getElementById('in-1').value.trim();
-  if(!v1) return alert("Required field empty");
-  const newRow = {};
-  if(currentTab === 'pw') { newRow.company = v1; newRow.shj = document.getElementById('in-2').value; newRow.user = document.getElementById('in-3').value; newRow.password = document.getElementById('in-4').value; newRow.note = document.getElementById('in-5').value; }
-  else if(currentTab === 'dm') { newRow.product = v1; newRow.size = document.getElementById('in-2').value; newRow.country = document.getElementById('in-3').value; newRow.brand = document.getElementById('in-4').value; newRow.barcode = document.getElementById('in-5').value; }
-  else if(currentTab === 'import') { newRow.name = v1; newRow.desc = document.getElementById('in-2').value; }
-  else if(currentTab === 'links') { newRow.title = v1; newRow.url = document.getElementById('in-2').value; }
-  
-  if(editingIdx > -1) rows[currentTab][editingIdx] = newRow;
-  else rows[currentTab].push(newRow);
-  
-  renderTable(); 
-  closeModal('add-modal');
-  await saveToSheets();
-}
-
-async function deleteRow(t, idx) { 
-  if(confirm("Delete?")) { 
-    rows[t].splice(idx, 1); 
-    renderTable(); 
-    await saveToSheets();
-  } 
+  } catch(e) {
+    setStatus("❌ লোড করতে সমস্যা হয়েছে।");
+  }
 }
 
 async function saveToSheets() {
-  updateStatus("⏳ ডাটা সেভ হচ্ছে...");
+  setStatus("⏳ ডাটা সেভ হচ্ছে...");
   try {
-    const res = await fetch(API_URL, { method: 'POST', body: JSON.stringify({ action: 'save', username: currentUser.username, rows: rows }) });
-    const data = await res.json();
-    if(data.status === "ok") { 
-      updateStatus(`✅ মোট ${rows[currentTab].length} টি ডাটা, শিটে সেভ হয়েছে।`); 
-      showToast("💾 Saved!"); 
+    const res = await fetch(API_URL, {
+      method: 'POST',
+      body: JSON.stringify({ action: 'save', rows: rows, username: currentUser.username })
+    });
+    const result = await res.json();
+    if(result.status === 'ok') {
+      const total = rows[currentTab].length;
+      setStatus(`✅ মোট ${total} টি ডাটা, শিটে সেভ হয়েছে।`);
+      showToast("System Synced!");
     }
-  } catch(e) { updateStatus("❌ Sync Error"); }
+  } catch(e) {
+    setStatus("❌ সেভ করতে সমস্যা হয়েছে।");
+  }
+}
+
+function renderTable() {
+  const query = document.getElementById('search-input').value.toLowerCase();
+  const body = document.getElementById(`${currentTab}-body`);
+  body.innerHTML = '';
+  
+  let filtered = rows[currentTab].filter(r => {
+    return Object.values(r).some(v => v.toString().toLowerCase().includes(query));
+  });
+
+  filtered.forEach((r, i) => {
+    let tr = document.createElement('tr');
+    let html = `<td>${i+1}</td>`;
+    
+    if(currentTab === 'pw') {
+      html += `
+        <td><span class="cell-30">${r.company}</span></td>
+        <td><span class="cell-10">${r.shj}</span> <button class="copy-btn" onclick="copy('${r.shj}')">📋</button></td>
+        <td><span class="cell-10">${r.user}</span> <button class="copy-btn" onclick="copy('${r.user}')">📋</button></td>
+        <td><span class="cell-10">${r.password}</span> <button class="copy-btn" onclick="copy('${r.password}')">📋</button></td>
+        <td><span class="cell-10">${r.note}</span> <button class="copy-btn" onclick="copy('${r.note}')">📋</button></td>
+      `;
+    } else if(currentTab === 'dm') {
+      html += `
+        <td>${r.product}</td>
+        <td>${r.size}</td>
+        <td>${r.country}</td>
+        <td>${r.brand}</td>
+        <td>${r.barcode} <button class="copy-btn" onclick="copy('${r.barcode}')">📋</button></td>
+      `;
+    } else if(currentTab === 'import') {
+      html += `<td>${r.name}</td><td>${r.desc}</td>`;
+    } else if(currentTab === 'links') {
+      html += `<td><span class="cell-30">${r.title}</span></td><td>${r.url} <button class="copy-btn" onclick="copy('${r.url}')">📋</button></td>`;
+    }
+    
+    html += `<td>
+      <button class="edit-btn" onclick="editEntryModal(${i})">✏️</button>
+      <button class="del-btn" onclick="deleteEntry(${i})">🗑️</button>
+    </td>`;
+    tr.innerHTML = html;
+    body.appendChild(tr);
+  });
+}
+
+function openModal(id, isEdit = false) {
+  editingIdx = isEdit ? editingIdx : -1;
+  document.getElementById('modal-title').innerText = isEdit ? "✏️ Edit Entry" : "➕ Add New Entry";
+  const fields = document.getElementById('add-form-fields');
+  fields.innerHTML = '';
+  
+  const config = {
+    pw: ['Company', 'Shj Code', 'User', 'Password', 'Dubai Code'],
+    dm: ['Product Name', 'Size', 'Country', 'Brand', 'Barcode'],
+    import: ['Code', 'Description'],
+    links: ['Title', 'URL']
+  };
+  
+  const currentRows = rows[currentTab][editingIdx] || {};
+  const keys = {
+    pw: ['company', 'shj', 'user', 'password', 'note'],
+    dm: ['product', 'size', 'country', 'brand', 'barcode'],
+    import: ['name', 'desc'],
+    links: ['title', 'url']
+  };
+
+  config[currentTab].forEach((label, i) => {
+    const key = keys[currentTab][i];
+    fields.innerHTML += `
+      <div class="form-g">
+        <label>${label}</label>
+        <input type="text" id="f-${key}" value="${currentRows[key] || ''}">
+      </div>
+    `;
+  });
+  
+  document.getElementById(id).style.display = 'flex';
+}
+
+async function addEntry() {
+  const keys = {
+    pw: ['company', 'shj', 'user', 'password', 'note'],
+    dm: ['product', 'size', 'country', 'brand', 'barcode'],
+    import: ['name', 'desc'],
+    links: ['title', 'url']
+  };
+  
+  let newRow = {};
+  keys[currentTab].forEach(k => {
+    newRow[k] = document.getElementById(`f-${k}`).value.trim();
+  });
+  
+  if(editingIdx > -1) rows[currentTab][editingIdx] = newRow;
+  else rows[currentTab].unshift(newRow);
+  
+  closeModal('add-modal');
+  renderTable();
+  await saveToSheets();
+}
+
+async function deleteEntry(i) {
+  if(confirm("Are you sure?")) {
+    rows[currentTab].splice(i, 1);
+    renderTable();
+    await saveToSheets();
+  }
+}
+
+function editEntryModal(i) {
+  editingIdx = i;
+  openModal('add-modal', true);
+}
+
+function switchTab(t) {
+  currentTab = t;
+  document.querySelectorAll('.tab-btn-pro').forEach(b => b.classList.remove('active'));
+  event.target.classList.add('active');
+  
+  document.querySelectorAll('.table-container').forEach(c => c.style.display = 'none');
+  if(t === 'admin') document.getElementById('admin-section').style.display = 'flex';
+  else document.getElementById(`${t}-tab`).style.display = 'block';
+  
+  renderTable();
+}
+
+function removeDuplicates() {
+  const before = rows[currentTab].length;
+  const unique = [];
+  const seen = new Set();
+  
+  rows[currentTab].forEach(r => {
+    const str = JSON.stringify(r);
+    if(!seen.has(str)) {
+      seen.add(str);
+      unique.push(r);
+    }
+  });
+  
+  rows[currentTab] = unique;
+  renderTable();
+  const removed = before - unique.length;
+  showToast(`Removed ${removed} duplicates!`);
+  saveToSheets();
 }
 
 function exportToExcel() {
-  try {
-    const data = rows[currentTab] || [];
-    if(data.length === 0) return alert("No data to export");
-    const ws = XLSX.utils.json_to_sheet(data);
-    const wb = XLSX.utils.book_new(); 
-    XLSX.utils.book_append_sheet(wb, ws, currentTab);
-    XLSX.writeFile(wb, `TOS_${currentTab}_${new Date().getTime()}.xlsx`);
-    showToast("📤 Exported!");
-  } catch(e) { alert("Export failed: " + e.message); }
+  const ws = XLSX.utils.json_to_sheet(rows[currentTab]);
+  const wb = XLSX.utils.book_new();
+  XLSX.utils.book_append_sheet(wb, ws, currentTab);
+  XLSX.writeFile(wb, `TOS_${currentTab}_${new Date().toLocaleDateString()}.xlsx`);
 }
 
-function importFromExcel() { document.getElementById('file-input').click(); }
+function importFromExcel() {
+  document.getElementById('file-input').click();
+}
 
-async function handleFileImport(event) {
-  const file = event.target.files[0];
-  if(!file) return;
+function handleFileImport(e) {
+  const file = e.target.files[0];
   const reader = new FileReader();
-  reader.onload = async (e) => {
-    try {
-      const data = new Uint8Array(e.target.result);
-      const workbook = XLSX.read(data, { type: 'array' });
-      const sheet = workbook.Sheets[workbook.SheetNames[0]];
-      const json = XLSX.utils.sheet_to_json(sheet);
-      rows[currentTab] = json;
-      renderTable(); 
-      showToast("📥 Imported!");
-      await saveToSheets();
-    } catch(err) { alert("Import failed: " + err.message); }
+  reader.onload = async (evt) => {
+    const data = new Uint8Array(evt.target.result);
+    const wb = XLSX.read(data, {type: 'array'});
+    const ws = wb.Sheets[wb.SheetNames[0]];
+    const json = XLSX.utils.sheet_to_json(ws);
+    rows[currentTab] = json;
+    renderTable();
+    showToast("Import Successful!");
+    await saveToSheets();
   };
   reader.readAsArrayBuffer(file);
-  event.target.value = '';
 }
 
-function updateStatus(msg) { document.getElementById('status-text').textContent = msg; }
-
-async function loadUsers() {
-  try {
-    const res = await fetch(API_URL, { method: 'POST', body: JSON.stringify({ action: 'getUsers', username: currentUser.username }) });
-    const data = await res.json();
-    if(data.status === "ok") {
-      const list = document.getElementById('users-list'); list.innerHTML = "";
-      data.users.forEach(u => {
-        const item = document.createElement('div');
-        item.style.display = 'flex'; item.style.justifyContent = 'space-between'; item.style.padding = '10px'; item.style.borderBottom = '1px solid #222';
-        item.innerHTML = `<div><span style="color:#00d4ff;font-weight:bold;">${esc(u.username)}</span> <span style="color:#555;font-size:0.8rem;">(${u.role})</span></div><button onclick="deleteUser('${esc(u.username)}')" style="background:#ff0055;color:#fff;border:none;padding:4px 8px;border-radius:5px;cursor:pointer;">🗑️</button>`;
-        list.appendChild(item);
-      });
-    }
-  } catch(e) {}
+function copy(txt) {
+  navigator.clipboard.writeText(txt);
+  showToast("Copied!");
 }
 
-async function addNewUser() {
-  const u = document.getElementById('new-username').value.trim(), p = document.getElementById('new-password').value, r = document.getElementById('new-role').value;
-  if(!u || !p) return alert("Enter credentials");
-  try {
-    const res = await fetch(API_URL, { method: 'POST', body: JSON.stringify({ action: 'addUser', username: currentUser.username, newUsername: u, newPassword: p, role: r }) });
-    const data = await res.json();
-    if(data.status === "ok") { document.getElementById('new-username').value = ""; document.getElementById('new-password').value = ""; showToast("✅ Added!"); loadUsers(); }
-  } catch(e) {}
+function setStatus(txt) {
+  document.getElementById('status-text').innerText = txt;
 }
 
-async function deleteUser(u) {
-  if(!confirm("Delete user?")) return;
-  try {
-    const res = await fetch(API_URL, { method: 'POST', body: JSON.stringify({ action: 'deleteUser', username: currentUser.username, targetUsername: u }) });
-    const data = await res.json();
-    if(data.status === "ok") { showToast("✅ Deleted!"); loadUsers(); }
-  } catch(e) {}
+function showToast(msg) {
+  const t = document.getElementById('toast');
+  t.innerText = msg;
+  t.style.display = 'block';
+  setTimeout(() => t.style.display = 'none', 2000);
 }
 
-function copy(t) { navigator.clipboard.writeText(t).then(() => showToast("📋 Copied!")); }
-function showToast(msg) { const t = document.getElementById('toast'); t.textContent = msg; t.style.display = 'block'; setTimeout(() => { t.style.display = 'none'; }, 3000); }
-function closeModal(id) { document.getElementById(id).style.display = 'none'; }
-function esc(s) { const d = document.createElement('div'); d.textContent = s; return d.innerHTML; }
+function closeModal(id) {
+  document.getElementById(id).style.display = 'none';
+}
+
+function togglePass(id) {
+  const x = document.getElementById(id);
+  x.type = x.type === "password" ? "text" : "password";
+}
+
+function clearSearch() {
+  document.getElementById('search-input').value = '';
+  renderTable();
+}
+
+function handleLogout() {
+  currentUser = null;
+  document.getElementById('app').style.display = 'none';
+  document.getElementById('login-screen').style.display = 'flex';
+  document.getElementById('l-pass').value = '';
+}
 </script>
 </body>
 </html>
