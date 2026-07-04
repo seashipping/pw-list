@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
-<title>USER PW LIST V.17</title>
+<title>USER PW LIST V.18</title>
 <script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
 <style>
 *{box-sizing:border-box;margin:0;padding:0;}
@@ -90,7 +90,7 @@ td{padding:12px;border-bottom:1px solid #222;font-size:0.95rem;color:#eee;overfl
     <div id="login-err" style="color:#ff0055;margin-bottom:10px;font-size:0.9rem;"></div>
     <div class="lf">
       <label>USERNAME</label>
-      <input type="text" id="l-user" placeholder="seashipping" autocomplete="off" onkeydown="if(event.key==='Enter') handleLogin()">
+      <input type="text" id="l-user" placeholder="Username" autocomplete="off" onkeydown="if(event.key==='Enter') handleLogin()">
     </div>
     <div class="lf">
       <label>PASSWORD</label>
@@ -99,7 +99,7 @@ td{padding:12px;border-bottom:1px solid #222;font-size:0.95rem;color:#eee;overfl
         <button onclick="togglePass('l-pass')" style="position:absolute;right:10px;top:50%;transform:translateY(-50%);background:none;border:none;color:#00d4ff;cursor:pointer;">👁️</button>
       </div>
     </div>
-    <button class="btn-login" onclick="handleLogin()">LOGIN NOW</button>
+    <button class="btn-login" id="login-btn" onclick="handleLogin()">LOGIN NOW</button>
     <div class="footer-neon">
       <div class="line1">শুধুমাত্র SEA SHIPPING LLC ব্যবহার যোগ্য</div>
       <div class="line2">রিলিজ-জুলাই-২০২৬</div>
@@ -154,7 +154,6 @@ td{padding:12px;border-bottom:1px solid #222;font-size:0.95rem;color:#eee;overfl
     <button class="btn-clear" onclick="clearSearch()">Clear</button>
   </div>
 
-  <!-- PASSWORD TABLE -->
   <div id="pw-tab" class="table-container">
     <table>
       <colgroup><col style="width:50px"><col style="width:280px"><col style="width:150px"><col style="width:150px"><col style="width:150px"><col style="width:150px"><col style="width:120px"></colgroup>
@@ -163,7 +162,6 @@ td{padding:12px;border-bottom:1px solid #222;font-size:0.95rem;color:#eee;overfl
     </table>
   </div>
 
-  <!-- DM BARCODE TABLE -->
   <div id="dm-tab" class="table-container" style="display:none;">
     <table>
       <colgroup><col style="width:50px"><col style="width:200px"><col style="width:100px"><col style="width:120px"><col style="width:120px"><col style="width:180px"><col style="width:120px"></colgroup>
@@ -222,6 +220,7 @@ td{padding:12px;border-bottom:1px solid #222;font-size:0.95rem;color:#eee;overfl
 <div id="toast"></div>
 
 <script>
+// IMPORTANT: REPLACE WITH YOUR DEPLOYED URL
 const API_URL = "https://script.google.com/macros/s/AKfycbzPPK40EUUUVrR9Ucm-TKnlaDYU47ipW3cYjeHT2PgJhHIxlGtjbDe3661rjJGi7Fcxnw/exec";
 let rows = { pw: [], dm: [], import: [], links: [] };
 let currentUser = null;
@@ -269,7 +268,13 @@ async function handleLogin() {
   const p = document.getElementById('l-pass').value.trim();
   if(!u || !p) return;
   
-  document.getElementById('login-err').innerText = "⏳ Logging in...";
+  const btn = document.getElementById('login-btn');
+  const err = document.getElementById('login-err');
+  
+  btn.disabled = true;
+  btn.innerText = "⏳ LOGGING IN...";
+  err.innerText = "";
+
   try {
     const res = await fetch(API_URL, {
       method: 'POST',
@@ -284,10 +289,13 @@ async function handleLogin() {
       if(currentUser.role === 'admin') document.getElementById('admin-tab').style.display = 'block';
       loadFromSheets();
     } else {
-      document.getElementById('login-err').innerText = "❌ " + result.error;
+      err.innerText = "❌ " + result.error;
     }
   } catch(e) {
-    document.getElementById('login-err').innerText = "❌ Connection Error";
+    err.innerText = "❌ Connection Error. Check URL or Internet.";
+  } finally {
+    btn.disabled = false;
+    btn.innerText = "LOGIN NOW";
   }
 }
 
@@ -302,9 +310,7 @@ async function loadFromSheets() {
       const total = rows[currentTab].length;
       setStatus(`✅ মোট ${total} টি ডাটা লোড হয়েছে।`);
     }
-  } catch(e) {
-    setStatus("❌ লোড করতে সমস্যা হয়েছে।");
-  }
+  } catch(e) { setStatus("❌ লোড করতে সমস্যা হয়েছে।"); }
 }
 
 async function saveToSheets() {
@@ -319,9 +325,7 @@ async function saveToSheets() {
       setStatus(`✅ ডাটা শিটে সেভ হয়েছে।`);
       showToast("System Synced!");
     }
-  } catch(e) {
-    setStatus("❌ সেভ করতে সমস্যা হয়েছে।");
-  }
+  } catch(e) { setStatus("❌ সেভ করতে সমস্যা হয়েছে।"); }
 }
 
 function renderTable() {
