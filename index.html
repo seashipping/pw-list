@@ -36,11 +36,15 @@ body{font-family:'Segoe UI', Roboto, Helvetica, Arial, sans-serif;background:var
 header{background:var(--panel-bg);padding:15px 25px;border-bottom:3px solid var(--neon-blue);display:flex;justify-content:space-between;align-items:center;box-shadow:0 4px 15px rgba(0,0,0,0.5);flex-wrap:wrap;gap:12px;}
 .header-left{display:flex;flex-wrap:wrap;min-width:0;}
 .header-title{color:var(--neon-blue);font-weight:bold;font-size:1.3rem;display:flex;align-items:center;gap:12px;text-shadow:0 0 10px rgba(0,212,255,0.3);flex-wrap:wrap;}
-.header-title .by{color:#00FFC2;font-size:0.85rem;font-weight:bold;background:rgba(0,255,194,0.1);padding:4px 15px;border-radius:20px;border:2px solid #00FFC2;text-shadow:0 0 8px #00FFC2;}
+.header-title .by{color:#fff;font-size:0.85rem;font-weight:bold;background:rgba(0,255,194,0.05);padding:4px 15px;border-radius:20px;border:2px solid var(--neon-green);}
 .header-right{display:flex;align-items:center;gap:15px;flex-wrap:wrap;}
-.company-badge{background:rgba(0,255,194,0.05);color:#00FFC2;padding:8px 20px;border-radius:25px;font-weight:bold;border:2px solid #00FFC2;font-size:0.9rem;text-shadow:0 0 5px #00FFC2;}
-.btn-logout-pro{background:linear-gradient(90deg, var(--neon-red), #900);color:#fff;border:none;padding:10px 20px;border-radius:25px;font-weight:bold;cursor:pointer;transition:0.3s;flex-shrink:0;}
-.btn-logout-pro:hover{box-shadow:0 0 15px var(--neon-red);}
+.company-badge{background:rgba(0,255,194,0.05);color:#fff;padding:8px 20px;border-radius:25px;font-weight:bold;border:2px solid var(--neon-green);font-size:0.9rem;}
+.btn-logout-pro{background:rgba(0,255,204,0.05);color:#fff;border:2px solid var(--neon-green);padding:8px 20px;border-radius:25px;font-weight:bold;cursor:pointer;transition:0.3s;flex-shrink:0;}
+.btn-logout-pro:hover{background:var(--neon-green);color:#000;box-shadow:0 0 15px var(--neon-green);}
+.btn-admin-header{background:rgba(255,0,85,0.05);color:var(--neon-red);padding:8px 20px;border-radius:25px;font-weight:bold;border:2px solid var(--neon-red);font-size:0.9rem;text-shadow:0 0 5px var(--neon-red);cursor:pointer;transition:0.3s;flex-shrink:0;}
+.btn-admin-header:hover{background:var(--neon-red);color:#000;box-shadow:0 0 15px var(--neon-red);}
+.btn-dedupe-header{background:rgba(0,255,204,0.05);color:#fff;padding:8px 20px;border-radius:25px;font-weight:bold;border:2px solid var(--neon-green);font-size:0.9rem;cursor:pointer;transition:0.3s;flex-shrink:0;white-space:nowrap;}
+.btn-dedupe-header:hover{background:var(--neon-green);color:#000;box-shadow:0 0 15px var(--neon-green);}
 
 
 /* ── PINNED LINKS ── */
@@ -50,28 +54,28 @@ header{background:var(--panel-bg);padding:15px 25px;border-bottom:3px solid var(
 .pin-btn:hover{background:var(--neon-green);color:#000;box-shadow:0 0 10px var(--neon-green);}
 
 /* ── TOOLBAR ── */
-.toolbar-actions{background:#000;padding:15px 25px 10px;display:flex;gap:15px;align-items:center;border-bottom:none;overflow-x:auto;white-space:nowrap;scrollbar-width:thin;}
-.toolbar-actions::-webkit-scrollbar{height:4px;}
-.toolbar-actions button{padding:10px 20px;border-radius:10px;border:2px solid #fff;background:#000;color:#fff;font-weight:bold;cursor:pointer;font-size:0.85rem;transition:0.3s;flex-shrink:0;}
-.toolbar-actions button:hover{background:#fff;color:#000;}
+.toolbar-actions-row{display:flex;align-items:center;justify-content:flex-start;padding:15px 25px;background:#000;}
+
+.toolbar-actions{display:flex;gap:10px;align-items:center;flex-wrap:wrap;justify-content:flex-start;}
+.toolbar-actions button{padding:10px 20px;border-radius:10px;border:2px solid var(--neon-green);background:#000;color:#fff;font-weight:bold;cursor:pointer;font-size:0.85rem;transition:0.3s;flex-shrink:0;white-space:nowrap;}
+.toolbar-actions button:hover{background:var(--neon-green);color:#000;}
 
 /* ── TAB BUTTONS ── */
-.tab-group{display:flex;gap:10px;padding:10px 25px 15px;overflow-x:auto;white-space:nowrap;border-bottom:1px solid rgba(0,212,255,0.1);scrollbar-width:thin;}
-.tab-group::-webkit-scrollbar{height:4px;}
-.tab-btn-pro{padding:12px 22px;border-radius:10px;border:2px solid var(--neon-green);background:#000;color:var(--neon-green);font-weight:bold;cursor:pointer;font-size:0.9rem;transition:0.3s;position:relative;flex-shrink:0;}
+.tab-group{display:flex;gap:10px;align-items:center;}
+.tab-btn-pro{padding:12px 22px;border-radius:10px;border:2px solid var(--neon-green);background:#000;color:var(--neon-green);font-weight:bold;cursor:pointer;font-size:0.9rem;transition:0.3s;position:relative;flex-shrink:0;white-space:nowrap;}
 .tab-btn-pro:hover{background:var(--neon-green);color:#000;}
 .tab-btn-pro.active{color:#fff;background:rgba(0,255,204,0.1);border-color:#fff;}
 .tab-btn-pro.active::after{content:'';position:absolute;bottom:-18px;left:0;width:100%;height:4px;background:var(--neon-red);box-shadow:0 0 15px var(--neon-red);border-radius:2px;}
 
 /* ── SEARCH ── */
-.search-container{padding:20px 25px;background:#000;display:flex;justify-content:center;align-items:center;gap:20px;}
-.btn-add-main{padding:14px 30px;background:#000;color:var(--neon-green);border:2px solid var(--neon-green);border-radius:35px;font-weight:bold;cursor:pointer;transition:0.3s;text-transform:uppercase;letter-spacing:1px;}
+.search-container{padding:14px 25px;background:#000;display:flex;justify-content:center;align-items:center;gap:16px;}
+.btn-add-main{padding:8px 20px;font-size:0.9rem;background:#000;color:var(--neon-green);border:2px solid var(--neon-green);border-radius:30px;font-weight:bold;cursor:pointer;transition:0.3s;text-transform:uppercase;letter-spacing:1px;white-space:nowrap;}
 .btn-add-main:hover{background:var(--neon-green);color:#000;box-shadow:0 0 20px var(--neon-green);}
-.search-wrapper{position:relative;width:100%;max-width:850px;}
-.search-wrapper input{width:100%;padding:16px 25px 16px 60px;border-radius:35px;border:2px solid var(--neon-blue);background:var(--panel-bg);color:#fff;font-size:1.1rem;outline:none;transition:0.3s;box-shadow:0 0 15px rgba(0,212,255,0.1);}
+.search-wrapper{position:relative;width:100%;max-width:480px;}
+.search-wrapper input{width:100%;padding:8px 20px 8px 52px;border-radius:30px;border:2px solid var(--neon-blue);background:var(--panel-bg);color:#fff;font-size:1rem;outline:none;transition:0.3s;box-shadow:0 0 15px rgba(0,212,255,0.1);}
 .search-wrapper input:focus{border-color:var(--neon-green);box-shadow:0 0 25px rgba(0,255,204,0.2);}
-.search-wrapper::before{content:'🔍';position:absolute;left:25px;top:50%;transform:translateY(-50%);font-size:1.3rem;opacity:0.8;}
-.btn-clear{background:#000;color:var(--neon-green);border:2px solid var(--neon-green);padding:14px 25px;border-radius:35px;cursor:pointer;font-weight:bold;transition:0.3s;text-transform:uppercase;letter-spacing:1px;}
+.search-wrapper::before{content:'🔍';position:absolute;left:20px;top:50%;transform:translateY(-50%);font-size:1.1rem;opacity:0.8;}
+.btn-clear{background:#000;color:var(--neon-green);border:2px solid var(--neon-green);padding:8px 18px;font-size:0.9rem;border-radius:30px;cursor:pointer;font-weight:bold;transition:0.3s;text-transform:uppercase;letter-spacing:1px;white-space:nowrap;}
 .btn-clear:hover{background:var(--neon-green);color:#000;box-shadow:0 0 20px var(--neon-green);}
 
 /* ── TABLE ── */
@@ -84,7 +88,7 @@ tr:hover{background:rgba(255,255,255,0.03);}
 .col-id{width:60px;text-align:center;color:#fff;font-weight:bold;}
 .col-action{width:130px;text-align:center;}
 
-.copy-btn{background:transparent;border:1px solid var(--neon-blue);color:var(--neon-blue);padding:5px 10px;border-radius:6px;cursor:pointer;font-size:0.75rem;margin-left:8px;transition:0.2s;}
+.copy-btn{background:transparent;border:1px solid var(--neon-blue);color:var(--neon-blue);padding:5px 10px;border-radius:6px;cursor:pointer;font-size:0.75rem;margin-left:8px;transition:0.2s;flex-shrink:0;}
 .copy-btn:hover{background:var(--neon-blue);color:#000;}
 .edit-btn{background:var(--neon-blue);color:#000;border:none;padding:8px 14px;border-radius:6px;cursor:pointer;font-weight:bold;margin-right:8px;transition:0.2s;}
 .del-btn{background:var(--neon-red);color:#fff;border:none;padding:8px 14px;border-radius:6px;cursor:pointer;transition:0.2s;}
@@ -93,6 +97,11 @@ tr:hover{background:rgba(255,255,255,0.03);}
 
 .link-text{color:var(--neon-blue);text-decoration:none;font-weight:bold;cursor:pointer;border-bottom:1px dashed var(--neon-blue);}
 .link-text:hover{color:var(--neon-green);border-color:var(--neon-green);}
+
+/* Fixed-width truncated text + aligned copy button (desktop) */
+.cell-fixed{display:inline-flex;align-items:center;width:100%;}
+.cell-fixed .cell-text{display:inline-block;max-width:20ch;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
+.cell-fixed .copy-btn{margin-left:auto;}
 
 /* ── STATUS ── */
 #status-bar{padding:12px 25px;background:var(--panel-bg);display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid rgba(0,212,255,0.1);}
@@ -133,6 +142,8 @@ tr:hover{background:rgba(255,255,255,0.03);}
   td:last-child{border-bottom:none;}
   td::before{content:attr(data-label);color:#888;font-weight:bold;font-size:0.78rem;text-transform:uppercase;letter-spacing:0.5px;text-align:left;flex-shrink:0;}
   .cell-value{display:flex;align-items:center;justify-content:flex-end;gap:8px;flex-wrap:wrap;text-align:right;}
+  .cell-fixed{display:flex;justify-content:flex-end;}
+  .cell-fixed .cell-text{max-width:160px;}
   td.col-id{display:block;position:absolute;top:12px;right:16px;width:auto;padding:2px 10px;background:rgba(255,255,255,0.08);border-radius:20px;font-size:0.75rem;}
   td.col-id::before{content:none;}
   td.col-action{justify-content:flex-end;padding-top:12px;border-top:1px solid rgba(255,255,255,0.1);margin-top:6px;}
@@ -144,12 +155,16 @@ tr:hover{background:rgba(255,255,255,0.03);}
   .header-title{font-size:1rem;justify-content:center;}
   .company-badge{font-size:0.72rem;padding:6px 12px;text-align:center;}
   .btn-logout-pro{padding:8px 16px;font-size:0.85rem;}
+  .btn-admin-header{padding:8px 16px;font-size:0.85rem;}
+  .btn-dedupe-header{padding:8px 16px;font-size:0.8rem;}
   .toolbar-wrap{border-bottom:1px solid rgba(0,212,255,0.1);}
   .app-header-scroll{max-height:40vh;overflow-y:auto;-webkit-overflow-scrolling:touch;flex-shrink:1;border-bottom:2px solid rgba(0,212,255,0.15);}
   .search-container{flex-shrink:0;}
-  .toolbar-actions{display:grid !important;grid-template-columns:repeat(3,1fr);overflow-x:visible !important;white-space:normal !important;padding:14px 14px 8px;gap:8px;border-bottom:none;}
+  .toolbar-actions-row{padding:14px 14px 8px;}
+  .toolbar-actions{display:grid !important;grid-template-columns:repeat(3,1fr);width:100%;overflow-x:visible !important;white-space:normal !important;gap:8px;}
   .toolbar-actions button{white-space:normal !important;text-align:center;padding:10px 6px;font-size:0.72rem;flex-shrink:initial;}
-  .tab-group{display:grid !important;grid-template-columns:repeat(3,1fr);overflow-x:visible !important;white-space:normal !important;padding:8px 14px 14px;gap:8px;border-bottom:none;}
+  #status-bar{flex-direction:column;align-items:stretch;gap:10px;}
+  .tab-group{display:grid !important;grid-template-columns:repeat(2,1fr);width:100%;overflow-x:visible !important;white-space:normal !important;gap:8px;}
   .tab-btn-pro{white-space:normal !important;text-align:center;padding:10px 6px;font-size:0.78rem;flex-shrink:initial;}
 }
 </style>
@@ -190,35 +205,37 @@ tr:hover{background:rgba(255,255,255,0.03);}
         </div>
       </div>
       <div class="header-right">
-        <div class="company-badge">© SEA SHIPPING LLC - Release-July 2026</div>
+        <button class="btn-dedupe-header" onclick="removeDuplicates()">🧹 রিমুভ ডুপ্লিকেট্স</button>
+        <button class="btn-admin-header" id="admin-tab" onclick="switchTab('admin')" style="display:none;">Admin</button>
         <button class="btn-logout-pro" onclick="handleLogout()">🚪 Logout</button>
+        <div class="company-badge">© SEA SHIPPING LLC - Release-July 2026</div>
       </div>
     </header>
 
     <div class="pinned-links">
       <span>📌 QUICK LINKS:</span>
       <div id="pin-container" style="display:flex;gap:12px;"></div>
-      <button onclick="editPinnedLinks()" style="background:none;border:none;color:#555;font-size:0.75rem;cursor:pointer;margin-left:auto;font-weight:bold;">⚙️ EDIT LINKS</button>
+      <button onclick="editPinnedLinks()" style="background:rgba(0,212,255,0.06);border:1px solid var(--neon-blue);color:var(--neon-blue);font-size:0.75rem;padding:6px 14px;border-radius:20px;cursor:pointer;margin-left:auto;font-weight:bold;transition:0.3s;">⚙️ EDIT LINKS</button>
     </div>
 
     <div class="toolbar-wrap">
-      <div class="toolbar-actions">
-        <button onclick="exportToExcel()">📤 Export Excel</button>
-        <button onclick="importFromExcel()">📥 Import Excel</button>
-        <button onclick="loadFromSheets()">🔄 Reload From Sheets</button>
-        <button onclick="removeDuplicates()" style="border-color:var(--neon-green);color:var(--neon-green);">🧹 রিমুভ ডুপ্লিকেট্স</button>
-      </div>
-      <div class="tab-group">
-        <button class="tab-btn-pro active" onclick="switchTab('pw')">Passwords</button>
-        <button class="tab-btn-pro" onclick="switchTab('dm')">DM Barcodes</button>
-        <button class="tab-btn-pro" onclick="switchTab('import')">Import Codes</button>
-        <button class="tab-btn-pro" onclick="switchTab('links')">Links</button>
-        <button class="tab-btn-pro" id="admin-tab" onclick="switchTab('admin')" style="display:none;border-color:var(--neon-red);color:var(--neon-red);">Admin</button>
+      <div class="toolbar-actions-row">
+        <div class="toolbar-actions">
+          <button onclick="exportToExcel()">📤 Export Excel</button>
+          <button onclick="importFromExcel()">📥 Import Excel</button>
+          <button onclick="loadFromSheets()">🔄 Reload From Sheets</button>
+        </div>
       </div>
     </div>
 
     <div id="status-bar">
       <div id="status-text">⏳ System Ready</div>
+      <div class="tab-group">
+        <button class="tab-btn-pro active" onclick="switchTab('pw')">Passwords</button>
+        <button class="tab-btn-pro" onclick="switchTab('dm')">DM Barcodes</button>
+        <button class="tab-btn-pro" onclick="switchTab('import')">Import Codes</button>
+        <button class="tab-btn-pro" onclick="switchTab('links')">Links</button>
+      </div>
     </div>
   </div>
 
@@ -518,11 +535,11 @@ async function saveToSheets() {
     });
     const result = await res.json();
     if(result.status === 'ok') {
-      setStatus(`✅ ডাটা সফলভাবে শিটে সেভ হয়েছে।`);
+      setStatus(`✅ ডাটা সফলভাবে শিটে সেভ হয়েছে।`);
       showToast("System Synced!");
     }
   } catch(e) {
-    setStatus("❌ সেভ করতে সমস্যা হয়েছে।");
+    setStatus("❌ সেভ করতে সমস্যা হয়েছে।");
   }
 }
 
@@ -542,8 +559,8 @@ function renderTable() {
     if(currentTab === 'pw') {
       html += `
         <td class="fw-bold" data-label="Company Name" style="color:var(--neon-green);"><span class="cell-value">${r.company}</span></td>
-        <td data-label="Shj Code" style="color:var(--neon-green);"><span class="cell-value">${r.shj} <button class="copy-btn" onclick="copy('${r.shj}')">📋</button></span></td>
-        <td data-label="Username" style="color:var(--neon-green);"><span class="cell-value">${r.user} <button class="copy-btn" onclick="copy('${r.user}')">📋</button></span></td>
+        <td data-label="Shj Code" style="color:var(--neon-green);"><span class="cell-fixed"><span class="cell-text">${r.shj}</span><button class="copy-btn" onclick="copy('${r.shj}')">📋</button></span></td>
+        <td data-label="Username" style="color:var(--neon-green);"><span class="cell-fixed"><span class="cell-text">${r.user}</span><button class="copy-btn" onclick="copy('${r.user}')">📋</button></span></td>
         <td data-label="Password" style="color:var(--neon-green);"><span class="cell-value">${r.password} <button class="copy-btn" onclick="copy('${r.password}')">📋</button></span></td>
         <td data-label="Dubai Code / Note" style="color:var(--neon-green);"><span class="cell-value">${r.note} <button class="copy-btn" onclick="copy('${r.note}')">📋</button></span></td>
       `;
