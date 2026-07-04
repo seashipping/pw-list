@@ -3,8 +3,9 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
-<title>USER PW LIST V.1</title>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.min.js"></script>
+<title>USER PW LIST V.16</title>
+<!-- SheetJS library loaded with explicit script tag and fallback check -->
+<script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
 <style>
 *{box-sizing:border-box;margin:0;padding:0;}
 body{font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;background:#000;color:#fff;height:100vh;display:flex;flex-direction:column;overflow:hidden;}
@@ -28,7 +29,7 @@ header{background:#111;padding:15px 20px;border-bottom:3px solid #00d4ff;display
 .header-title .by{color:#00ffcc;font-size:0.85rem;font-weight:bold;background:rgba(0,255,204,0.1);padding:3px 12px;border-radius:15px;border:2px solid #00ffcc;text-shadow:0 0 8px #00ffcc;}
 .header-right{display:flex;align-items:center;gap:15px;}
 .company-badge{background:rgba(0,255,0,0.1);color:#00ff00;padding:8px 18px;border-radius:20px;font-weight:bold;border:2px solid #00ff00;font-size:0.9rem;box-shadow:0 0 10px rgba(0,255,0,0.2);}
-.btn-logout-pro{background:linear-gradient(90deg,#ff0055,#c0392b);color:#fff;border:none;padding:10px 20px;border-radius:25px;font-weight:bold;cursor:pointer;display:flex;align-items:center;gap:8px;transition:0.3s;}
+.btn-logout-pro{background:linear-gradient(90deg,#ff0055,#c0392b);color:#fff;border:none;padding:10px 20px;border-radius:25px;font-weight:bold;cursor:pointer;display:flex;align-items:center;gap:8px;}
 
 /* ── PINNED LINKS ── */
 .pinned-links{background:#000;padding:8px 20px;display:flex;gap:10px;align-items:center;border-bottom:1px solid #00d4ff33;overflow-x:auto;}
@@ -38,43 +39,32 @@ header{background:#111;padding:15px 20px;border-bottom:3px solid #00d4ff;display
 
 /* ── TOOLBAR ── */
 .toolbar{background:#000;padding:15px 20px;display:flex;gap:12px;align-items:center;flex-wrap:wrap;border-bottom:1px solid #00d4ff33;}
-.toolbar button{padding:10px 18px;border-radius:8px;border:2px solid #fff;background:#000;color:#fff;font-weight:bold;cursor:pointer;font-size:0.85rem;transition:0.3s;}
-.toolbar button:hover{background:#fff;color:#000;}
+.toolbar button{padding:10px 18px;border-radius:8px;border:2px solid #fff;background:#000;color:#fff;font-weight:bold;cursor:pointer;font-size:0.85rem;}
 
-/* ── TAB BUTTONS CENTERED ── */
+/* ── TAB BUTTONS ── */
 .tab-group{display:flex;gap:8px;margin:0 auto;}
-.tab-btn-pro{padding:10px 18px;border-radius:8px;border:2px solid #00d4ff;background:#000;color:#00d4ff;font-weight:bold;cursor:pointer;font-size:0.85rem;transition:0.3s;position:relative;}
+.tab-btn-pro{padding:10px 18px;border-radius:8px;border:2px solid #00d4ff;background:#000;color:#00d4ff;font-weight:bold;cursor:pointer;font-size:0.85rem;position:relative;}
 .tab-btn-pro.active{color:#fff;}
-.tab-btn-pro.active::after{content:'';position:absolute;bottom:-17px;left:0;width:100%;height:3px;background:#ff0000;box-shadow:0 0 10px #ff0000;animation:tabAnim 0.3s ease-out;}
-@keyframes tabAnim { from{width:0;left:50%;} to{width:100%;left:0;} }
+.tab-btn-pro.active::after{content:'';position:absolute;bottom:-17px;left:0;width:100%;height:3px;background:#ff0000;box-shadow:0 0 10px #ff0000;}
 
-/* ── SEARCH CONTAINER ── */
+/* ── SEARCH ── */
 .search-container{padding:20px;background:#000;display:flex;justify-content:center;align-items:center;gap:15px;}
-.btn-add-main{padding:12px 25px;background:#000;color:#00ffcc;border:2px solid #00ffcc;border-radius:30px;font-weight:bold;cursor:pointer;transition:0.3s;white-space:nowrap;}
-.btn-add-main:hover{background:#00ffcc;color:#000;box-shadow:0 0 15px #00ffcc;}
+.btn-add-main{padding:12px 25px;background:#000;color:#00ffcc;border:2px solid #00ffcc;border-radius:30px;font-weight:bold;cursor:pointer;}
 .search-wrapper{position:relative;width:100%;max-width:800px;}
-.search-wrapper input{width:100%;padding:15px 20px 15px 50px;border-radius:30px;border:2px solid #00d4ff;background:#111;color:#fff;font-size:1.1rem;outline:none;transition:0.3s;box-shadow:0 0 15px rgba(0,212,255,0.1);}
-.search-wrapper input:focus{border-color:#00ffcc;box-shadow:0 0 25px rgba(0,255,204,0.3);}
-.search-wrapper::before{content:'🔍';position:absolute;left:20px;top:50%;transform:translateY(-50%);font-size:1.2rem;opacity:0.7;}
-.btn-clear{background:#333;color:#fff;border:1px solid #555;padding:10px 20px;border-radius:20px;cursor:pointer;font-weight:bold;transition:0.3s;}
-
-/* ── STATUS ── */
-#status-bar{padding:10px 20px;background:#111;display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid #00d4ff22;}
-#status-text{color:#00d4ff;font-weight:bold;}
+.search-wrapper input{width:100%;padding:15px 20px 15px 50px;border-radius:30px;border:2px solid #00d4ff;background:#111;color:#fff;font-size:1.1rem;outline:none;}
+.btn-clear{background:#333;color:#fff;border:1px solid #555;padding:10px 20px;border-radius:20px;cursor:pointer;font-weight:bold;}
 
 /* ── TABLE ── */
 .table-container{flex:1;overflow:auto;padding:0 20px 20px;background:#000;}
 table{width:100%;border-collapse:collapse;background:#111;border-radius:10px;overflow:hidden;border:1px solid #333;table-layout:fixed;}
 th{background:#222;color:#00d4ff;padding:14px;text-align:left;font-size:0.85rem;border-bottom:2px solid #00d4ff;text-transform:uppercase;}
-td{padding:12px;border-bottom:1px solid #222;font-size:0.95rem;color:#eee;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;vertical-align:middle;}
+td{padding:12px;border-bottom:1px solid #222;font-size:0.95rem;color:#eee;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
 .cell-30{display:inline-block;width:250px;overflow:hidden;text-overflow:ellipsis;vertical-align:middle;}
 .cell-10{display:inline-block;width:120px;overflow:hidden;text-overflow:ellipsis;vertical-align:middle;}
-.copy-btn{background:transparent;border:1px solid #00d4ff;color:#00d4ff;padding:4px 8px;border-radius:5px;cursor:pointer;font-size:0.7rem;margin-left:5px;vertical-align:middle;}
-.copy-btn:hover{background:#00d4ff;color:#000;}
+.copy-btn{background:transparent;border:1px solid #00d4ff;color:#00d4ff;padding:4px 8px;border-radius:5px;cursor:pointer;font-size:0.7rem;margin-left:5px;}
 .edit-btn{background:#00d4ff;color:#000;border:none;padding:6px 12px;border-radius:5px;cursor:pointer;font-weight:bold;margin-right:5px;}
 .del-btn{background:#ff0055;color:#fff;border:none;padding:6px 12px;border-radius:5px;cursor:pointer;}
 .link-text{color:#00d4ff;text-decoration:none;font-weight:bold;}
-.link-text:hover{text-decoration:underline;}
 
 /* ── MODALS ── */
 .modal{display:none;position:fixed;inset:0;background:rgba(0,0,0,0.9);z-index:1000;align-items:center;justify-content:center;}
@@ -87,12 +77,13 @@ td{padding:12px;border-bottom:1px solid #222;font-size:0.95rem;color:#eee;overfl
 .btn-ok{background:#00ff88;color:#000;}
 .btn-cancel{background:#333;color:#fff;}
 
+#status-bar{padding:10px 20px;background:#111;display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid #00d4ff22;}
+#status-text{color:#00d4ff;font-weight:bold;}
 #toast{position:fixed;bottom:20px;right:20px;background:#00d4ff;color:#000;padding:15px 25px;border-radius:10px;display:none;z-index:2000;font-weight:bold;}
 </style>
 </head>
 <body>
 
-<!-- ══ LOGIN ══ -->
 <div id="login-screen">
   <div class="login-box">
     <h1>🔐 USER PW LIST V.1</h1>
@@ -116,7 +107,6 @@ td{padding:12px;border-bottom:1px solid #222;font-size:0.95rem;color:#eee;overfl
   </div>
 </div>
 
-<!-- ══ APP ══ -->
 <div id="app">
   <header>
     <div class="header-left">
@@ -134,14 +124,14 @@ td{padding:12px;border-bottom:1px solid #222;font-size:0.95rem;color:#eee;overfl
   <div class="pinned-links">
     <span>📌 QUICK LINKS:</span>
     <div id="pin-container" style="display:flex;gap:10px;"></div>
-    <button onclick="editPinnedLinks()" style="background:none;border:none;color:#555;font-size:0.7rem;cursor:pointer;margin-left:auto;white-space:nowrap;">⚙️ Edit Links</button>
+    <button onclick="editPinnedLinks()" style="background:none;border:none;color:#555;font-size:0.7rem;cursor:pointer;margin-left:auto;">⚙️ Edit</button>
   </div>
 
   <div class="toolbar">
     <button onclick="exportToExcel()">📤 Export</button>
     <button onclick="importFromExcel()">📥 Import</button>
     <button onclick="loadFromSheets()">🔄 Reload</button>
-    <button onclick="removeDuplicates()" style="border-color:#00ffcc;color:#00ffcc;">🧹 Remove Duplicates</button>
+    <button onclick="removeDuplicates()" style="border-color:#00ffcc;color:#00ffcc;">🧹 Clean</button>
     
     <div class="tab-group">
       <button class="tab-btn-pro active" onclick="switchTab('pw')">Passwords</button>
@@ -159,12 +149,11 @@ td{padding:12px;border-bottom:1px solid #222;font-size:0.95rem;color:#eee;overfl
   <div class="search-container">
     <button class="btn-add-main" onclick="openModal('add-modal')">➕ Add Entry</button>
     <div class="search-wrapper">
-      <input type="text" id="search-input" placeholder="Universal Search (Passwords, Links, Barcodes...)" oninput="renderTable()">
+      <input type="text" id="search-input" placeholder="Universal Search..." oninput="renderTable()">
     </div>
-    <button class="btn-clear" onclick="clearSearch()">Clear Text</button>
+    <button class="btn-clear" onclick="clearSearch()">Clear</button>
   </div>
 
-  <!-- TABLES -->
   <div id="pw-tab" class="table-container">
     <table>
       <colgroup><col style="width:50px"><col style="width:280px"><col style="width:150px"><col style="width:150px"><col style="width:150px"><col style="width:150px"><col style="width:120px"></colgroup>
@@ -176,14 +165,13 @@ td{padding:12px;border-bottom:1px solid #222;font-size:0.95rem;color:#eee;overfl
   <div id="dm-tab" class="table-container" style="display:none;">
     <table>
       <colgroup><col style="width:50px"><col style="width:200px"><col style="width:120px"><col style="width:120px"><col style="width:120px"><col style="width:180px"><col style="width:120px"></colgroup>
-      <thead><tr><th>#</th><th>Product Name</th><th>Size</th><th>Country</th><th>Brand</th><th>Barcode</th><th>Action</th></tr></thead>
+      <thead><tr><th>#</th><th>Product</th><th>Size</th><th>Country</th><th>Brand</th><th>Barcode</th><th>Action</th></tr></thead>
       <tbody id="dm-body"></tbody>
     </table>
   </div>
 
   <div id="import-tab" class="table-container" style="display:none;">
     <table>
-      <colgroup><col style="width:50px"><col style="width:250px"><col style="width:auto"><col style="width:120px"></colgroup>
       <thead><tr><th>#</th><th>Code</th><th>Description</th><th>Action</th></tr></thead>
       <tbody id="import-body"></tbody>
     </table>
@@ -191,44 +179,37 @@ td{padding:12px;border-bottom:1px solid #222;font-size:0.95rem;color:#eee;overfl
 
   <div id="links-tab" class="table-container" style="display:none;">
     <table>
-      <colgroup><col style="width:50px"><col style="width:300px"><col style="width:auto"><col style="width:120px"></colgroup>
       <thead><tr><th>#</th><th>Title</th><th>URL</th><th>Action</th></tr></thead>
       <tbody id="links-body"></tbody>
     </table>
   </div>
 
-  <div id="admin-section" class="table-container" style="display:none;flex-direction:column;gap:20px;">
-    <div style="background:#111;padding:20px;border-radius:10px;border:1px solid #333;">
-      <h3 style="color:#00d4ff;margin-bottom:15px;">👥 User Management</h3>
-      <div style="display:flex;gap:10px;flex-wrap:wrap;">
-        <input type="text" id="new-username" placeholder="Username" style="padding:10px;background:#000;border:1px solid #444;color:#fff;border-radius:5px;">
-        <input type="password" id="new-password" placeholder="Password" style="padding:10px;background:#000;border:1px solid #444;color:#fff;border-radius:5px;">
-        <select id="new-role" style="padding:10px;background:#000;border:1px solid #444;color:#fff;border-radius:5px;"><option value="user">User</option><option value="admin">Admin</option></select>
-        <button onclick="addNewUser()" style="padding:10px 20px;background:#00d4ff;color:#000;border:none;border-radius:5px;font-weight:bold;cursor:pointer;">Add User</button>
-      </div>
+  <div id="admin-section" class="table-container" style="display:none;">
+    <div style="background:#111;padding:20px;border-radius:10px;">
+      <h3 style="color:#00d4ff;">👥 User Management</h3>
       <div id="users-list" style="margin-top:20px;"></div>
-    </div>
-  </div>
-</div>
-
-<div id="pin-modal" class="modal">
-  <div class="modal-content" style="max-width:650px;">
-    <h3 style="color:#00ffcc;margin-bottom:15px;">⚙️ Edit Quick Links (Max 10)</h3>
-    <div id="pin-inputs" style="max-height:400px;overflow-y:auto;padding-right:10px;"></div>
-    <div class="modal-f">
-      <button class="btn-ok" onclick="savePinnedLinks()">💾 Save Links</button>
-      <button class="btn-cancel" onclick="closeModal('pin-modal')">Cancel</button>
     </div>
   </div>
 </div>
 
 <div id="add-modal" class="modal">
   <div class="modal-content">
-    <div id="modal-title" style="color:#00d4ff;font-size:1.2rem;font-weight:bold;margin-bottom:20px;">➕ Add New Entry</div>
+    <div id="modal-title" style="color:#00d4ff;font-size:1.2rem;font-weight:bold;margin-bottom:20px;">➕ Add Entry</div>
     <div id="add-form-fields"></div>
     <div class="modal-f">
-      <button class="btn-ok" id="modal-btn" onclick="addEntry()">💾 Save</button>
+      <button class="btn-ok" onclick="addEntry()">💾 Save</button>
       <button class="btn-cancel" onclick="closeModal('add-modal')">Cancel</button>
+    </div>
+  </div>
+</div>
+
+<div id="pin-modal" class="modal">
+  <div class="modal-content">
+    <h3 style="color:#00ffcc;margin-bottom:15px;">⚙️ Edit Quick Links</h3>
+    <div id="pin-inputs" style="max-height:400px;overflow-y:auto;"></div>
+    <div class="modal-f">
+      <button class="btn-ok" onclick="savePinnedLinks()">💾 Save</button>
+      <button class="btn-cancel" onclick="closeModal('pin-modal')">Cancel</button>
     </div>
   </div>
 </div>
@@ -242,18 +223,7 @@ let rows = { pw: [], dm: [], import: [], links: [] };
 let currentUser = null;
 let currentTab = 'pw';
 let editingIdx = -1;
-let pinnedLinks = [
-  { name: 'Google', url: 'https://www.google.com' },
-  { name: 'Gmail', url: 'https://mail.google.com' },
-  { name: 'WhatsApp', url: 'https://web.whatsapp.com' },
-  { name: 'Facebook', url: 'https://www.facebook.com' },
-  { name: 'YouTube', url: 'https://www.youtube.com' },
-  { name: 'ChatGPT', url: 'https://chat.openai.com' },
-  { name: 'Maps', url: 'https://maps.google.com' },
-  { name: 'Drive', url: 'https://drive.google.com' },
-  { name: 'Translate', url: 'https://translate.google.com' },
-  { name: 'LinkedIn', url: 'https://www.linkedin.com' }
-];
+let pinnedLinks = Array(10).fill({name:'', url:''});
 
 window.onload = () => {
   const savedUser = localStorage.getItem('tos_user');
@@ -266,42 +236,34 @@ window.onload = () => {
 
 function renderPinnedLinks() {
   const cont = document.getElementById('pin-container');
-  cont.innerHTML = pinnedLinks.map(p => `<a href="${p.url}" target="_blank" class="pin-btn">${p.name}</a>`).join('');
+  cont.innerHTML = pinnedLinks.filter(p => p.name && p.url).map(p => `<a href="${p.url}" target="_blank" class="pin-btn">${p.name}</a>`).join('');
 }
 
 function editPinnedLinks() {
   const cont = document.getElementById('pin-inputs');
-  cont.innerHTML = Array.from({length:10}).map((_, i) => {
-    const p = pinnedLinks[i] || {name:'', url:''};
-    return `
-      <div style="display:flex;gap:10px;margin-bottom:10px;">
-        <span style="color:#00d4ff;width:20px;">${i+1}</span>
-        <input type="text" placeholder="Name" value="${p.name}" id="pin-n-${i}" style="flex:1;padding:8px;background:#000;border:1px solid #444;color:#fff;border-radius:5px;">
-        <input type="text" placeholder="URL" value="${p.url}" id="pin-u-${i}" style="flex:2;padding:8px;background:#000;border:1px solid #444;color:#fff;border-radius:5px;">
-      </div>
-    `;
-  }).join('');
+  cont.innerHTML = pinnedLinks.map((p, i) => `
+    <div style="display:flex;gap:10px;margin-bottom:10px;">
+      <input type="text" placeholder="Name" value="${p.name}" id="pin-n-${i}" style="flex:1;padding:8px;background:#000;border:1px solid #444;color:#fff;">
+      <input type="text" placeholder="URL" value="${p.url}" id="pin-u-${i}" style="flex:2;padding:8px;background:#000;border:1px solid #444;color:#fff;">
+    </div>
+  `).join('');
   openModal('pin-modal');
 }
 
 function savePinnedLinks() {
-  let newPins = [];
-  for(let i=0; i<10; i++) {
-    const n = document.getElementById(`pin-n-${i}`).value.trim();
-    const u = document.getElementById(`pin-u-${i}`).value.trim();
-    if(n && u) newPins.push({name: n, url: u.startsWith('http') ? u : 'https://'+u});
-  }
-  pinnedLinks = newPins;
+  pinnedLinks = Array.from({length:10}).map((_, i) => ({
+    name: document.getElementById(`pin-n-${i}`).value.trim(),
+    url: document.getElementById(`pin-u-${i}`).value.trim()
+  }));
   localStorage.setItem('tos_pins', JSON.stringify(pinnedLinks));
   renderPinnedLinks();
   closeModal('pin-modal');
-  showToast("Pinned Links Updated!");
 }
 
 async function handleLogin() {
   const u = document.getElementById('l-user').value.trim();
   const p = document.getElementById('l-pass').value.trim();
-  if(!u || !p) return alert("Enter credentials");
+  if(!u || !p) return;
   
   document.getElementById('login-err').innerText = "⏳ Logging in...";
   try {
@@ -333,8 +295,8 @@ async function loadFromSheets() {
     if(data.status === 'ok') {
       rows = data;
       renderTable();
-      const total = rows.pw.length + rows.dm.length + rows.import.length + rows.links.length;
-      setStatus(`✅ মোট ${total} টি ডাটা, শিট থেকে লোড হয়েছে।`);
+      const total = rows[currentTab].length;
+      setStatus(`✅ মোট ${total} টি ডাটা লোড হয়েছে।`);
     }
   } catch(e) {
     setStatus("❌ লোড করতে সমস্যা হয়েছে।");
@@ -350,8 +312,7 @@ async function saveToSheets() {
     });
     const result = await res.json();
     if(result.status === 'ok') {
-      const total = rows[currentTab].length;
-      setStatus(`✅ মোট ${total} টি ডাটা, শিটে সেভ হয়েছে।`);
+      setStatus(`✅ ডাটা শিটে সেভ হয়েছে।`);
       showToast("System Synced!");
     }
   } catch(e) {
@@ -375,29 +336,20 @@ function renderTable() {
     if(currentTab === 'pw') {
       html += `
         <td><span class="cell-30">${r.company}</span></td>
-        <td><span class="cell-10">${r.shj}</span> <button class="copy-btn" onclick="copy('${r.shj}')">📋</button></td>
-        <td><span class="cell-10">${r.user}</span> <button class="copy-btn" onclick="copy('${r.user}')">📋</button></td>
-        <td><span class="cell-10">${r.password}</span> <button class="copy-btn" onclick="copy('${r.password}')">📋</button></td>
-        <td><span class="cell-10">${r.note}</span> <button class="copy-btn" onclick="copy('${r.note}')">📋</button></td>
+        <td>${r.shj} <button class="copy-btn" onclick="copy('${r.shj}')">📋</button></td>
+        <td>${r.user} <button class="copy-btn" onclick="copy('${r.user}')">📋</button></td>
+        <td>${r.password} <button class="copy-btn" onclick="copy('${r.password}')">📋</button></td>
+        <td>${r.note} <button class="copy-btn" onclick="copy('${r.note}')">📋</button></td>
       `;
     } else if(currentTab === 'dm') {
-      html += `
-        <td>${r.product}</td>
-        <td>${r.size}</td>
-        <td>${r.country}</td>
-        <td>${r.brand}</td>
-        <td>${r.barcode} <button class="copy-btn" onclick="copy('${r.barcode}')">📋</button></td>
-      `;
+      html += `<td>${r.product}</td><td>${r.size}</td><td>${r.country}</td><td>${r.brand}</td><td>${r.barcode} <button class="copy-btn" onclick="copy('${r.barcode}')">📋</button></td>`;
     } else if(currentTab === 'import') {
       html += `<td>${r.name}</td><td>${r.desc}</td>`;
     } else if(currentTab === 'links') {
-      html += `<td><span class="cell-30"><a href="${r.url}" target="_blank" class="link-text">${r.title}</a></span></td><td>${r.url} <button class="copy-btn" onclick="copy('${r.url}')">📋</button></td>`;
+      html += `<td><a href="${r.url}" target="_blank" class="link-text">${r.title}</a></td><td>${r.url}</td>`;
     }
     
-    html += `<td>
-      <button class="edit-btn" onclick="editEntryModal(${i})">✏️</button>
-      <button class="del-btn" onclick="deleteEntry(${i})">🗑️</button>
-    </td>`;
+    html += `<td><button class="edit-btn" onclick="editEntryModal(${i})">✏️</button><button class="del-btn" onclick="deleteEntry(${i})">🗑️</button></td>`;
     tr.innerHTML = html;
     body.appendChild(tr);
   });
@@ -405,40 +357,27 @@ function renderTable() {
 
 function openModal(id, isEdit = false) {
   editingIdx = isEdit ? editingIdx : -1;
-  document.getElementById('modal-title').innerText = isEdit ? "✏️ Edit Entry" : "➕ Add New Entry";
   const fields = document.getElementById('add-form-fields');
   fields.innerHTML = '';
   
   const config = {
-    pw: ['Company', 'Shj Code', 'User', 'Password', 'Dubai Code'],
-    dm: ['Product Name', 'Size', 'Country', 'Brand', 'Barcode'],
-    import: ['Code', 'Description'],
-    links: ['Title', 'URL']
+    pw: { labels: ['Company', 'Shj Code', 'User', 'Password', 'Dubai Code'], keys: ['company', 'shj', 'user', 'password', 'note'] },
+    dm: { labels: ['Product Name', 'Size', 'Country', 'Brand', 'Barcode'], keys: ['product', 'size', 'country', 'brand', 'barcode'] },
+    import: { labels: ['Code', 'Description'], keys: ['name', 'desc'] },
+    links: { labels: ['Title', 'URL'], keys: ['title', 'url'] }
   };
   
   const currentRows = rows[currentTab][editingIdx] || {};
-  const keys = {
-    pw: ['company', 'shj', 'user', 'password', 'note'],
-    dm: ['product', 'size', 'country', 'brand', 'barcode'],
-    import: ['name', 'desc'],
-    links: ['title', 'url']
-  };
-
-  config[currentTab].forEach((label, i) => {
-    const key = keys[currentTab][i];
-    fields.innerHTML += `
-      <div class="form-g">
-        <label>${label}</label>
-        <input type="text" id="f-${key}" value="${currentRows[key] || ''}">
-      </div>
-    `;
+  config[currentTab].labels.forEach((label, i) => {
+    const key = config[currentTab].keys[i];
+    fields.innerHTML += `<div class="form-g"><label>${label}</label><input type="text" id="f-${key}" value="${currentRows[key] || ''}"></div>`;
   });
   
   document.getElementById(id).style.display = 'flex';
 }
 
 async function addEntry() {
-  const keys = {
+  const config = {
     pw: ['company', 'shj', 'user', 'password', 'note'],
     dm: ['product', 'size', 'country', 'brand', 'barcode'],
     import: ['name', 'desc'],
@@ -446,16 +385,10 @@ async function addEntry() {
   };
   
   let newRow = {};
-  keys[currentTab].forEach(k => {
-    newRow[k] = document.getElementById(`f-${k}`).value.trim();
-  });
+  config[currentTab].forEach(k => { newRow[k] = document.getElementById(`f-${k}`).value.trim(); });
   
-  if(editingIdx > -1) {
-    rows[currentTab][editingIdx] = newRow;
-  } else {
-    // NEW ENTRY ADDS TO END (BOTTOM)
-    rows[currentTab].push(newRow);
-  }
+  if(editingIdx > -1) rows[currentTab][editingIdx] = newRow;
+  else rows[currentTab].push(newRow); // ADD TO BOTTOM
   
   closeModal('add-modal');
   renderTable();
@@ -463,7 +396,7 @@ async function addEntry() {
 }
 
 async function deleteEntry(i) {
-  if(confirm("Are you sure?")) {
+  if(confirm("Delete?")) {
     rows[currentTab].splice(i, 1);
     renderTable();
     await saveToSheets();
@@ -479,48 +412,27 @@ function switchTab(t) {
   currentTab = t;
   document.querySelectorAll('.tab-btn-pro').forEach(b => b.classList.remove('active'));
   event.target.classList.add('active');
-  
   document.querySelectorAll('.table-container').forEach(c => c.style.display = 'none');
-  if(t === 'admin') document.getElementById('admin-section').style.display = 'flex';
-  else document.getElementById(`${t}-tab`).style.display = 'block';
-  
+  document.getElementById(t === 'admin' ? 'admin-section' : `${t}-tab`).style.display = 'block';
   renderTable();
-}
-
-function removeDuplicates() {
-  const before = rows[currentTab].length;
-  const unique = [];
-  const seen = new Set();
-  
-  rows[currentTab].forEach(r => {
-    const str = JSON.stringify(r);
-    if(!seen.has(str)) {
-      seen.add(str);
-      unique.push(r);
-    }
-  });
-  
-  rows[currentTab] = unique;
-  renderTable();
-  const removed = before - unique.length;
-  showToast(`Removed ${removed} duplicates!`);
-  saveToSheets();
 }
 
 function exportToExcel() {
+  if (typeof XLSX === 'undefined') {
+    alert("XLSX Library is not loaded. Please check your internet connection.");
+    return;
+  }
   try {
     const ws = XLSX.utils.json_to_sheet(rows[currentTab]);
     const wb = XLSX.utils.book_new();
     XLSX.utils.book_append_sheet(wb, ws, currentTab);
-    XLSX.writeFile(wb, `TOS_${currentTab}_${new Date().toLocaleDateString()}.xlsx`);
+    XLSX.writeFile(wb, `TOS_${currentTab}.xlsx`);
   } catch(e) {
     alert("Export Error: " + e.message);
   }
 }
 
-function importFromExcel() {
-  document.getElementById('file-input').click();
-}
+function importFromExcel() { document.getElementById('file-input').click(); }
 
 function handleFileImport(e) {
   const file = e.target.files[0];
@@ -529,10 +441,8 @@ function handleFileImport(e) {
     const data = new Uint8Array(evt.target.result);
     const wb = XLSX.read(data, {type: 'array'});
     const ws = wb.Sheets[wb.SheetNames[0]];
-    const json = XLSX.utils.sheet_to_json(ws);
-    rows[currentTab] = json;
+    rows[currentTab] = XLSX.utils.sheet_to_json(ws);
     renderTable();
-    showToast("Import Successful!");
     await saveToSheets();
   };
   reader.readAsArrayBuffer(file);
@@ -543,9 +453,7 @@ function copy(txt) {
   showToast("Copied!");
 }
 
-function setStatus(txt) {
-  document.getElementById('status-text').innerText = txt;
-}
+function setStatus(txt) { document.getElementById('status-text').innerText = txt; }
 
 function showToast(msg) {
   const t = document.getElementById('toast');
@@ -554,9 +462,7 @@ function showToast(msg) {
   setTimeout(() => t.style.display = 'none', 2000);
 }
 
-function closeModal(id) {
-  document.getElementById(id).style.display = 'none';
-}
+function closeModal(id) { document.getElementById(id).style.display = 'none'; }
 
 function togglePass(id) {
   const x = document.getElementById(id);
@@ -572,7 +478,6 @@ function handleLogout() {
   currentUser = null;
   document.getElementById('app').style.display = 'none';
   document.getElementById('login-screen').style.display = 'flex';
-  document.getElementById('l-pass').value = '';
 }
 </script>
 </body>
