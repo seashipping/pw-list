@@ -636,10 +636,10 @@ function renderTable() {
     if(currentTab === 'pw') {
       html += `
         <td class="fw-bold" data-label="Company Name" style="color:var(--neon-green);"><span class="cell-value">${r.company}</span></td>
-        <td data-label="Shj Code" style="color:var(--neon-green);"><span class="cell-value"><span class="val-text">${r.shj}</span><button class="copy-btn" onclick="copy('${r.shj}')" title="কপি করুন">📋</button></span></td>
-        <td data-label="Username" style="color:var(--neon-green);"><span class="cell-value"><span class="val-text">${r.user}</span><button class="copy-btn" onclick="copy('${r.user}')" title="কপি করুন">📋</button></span></td>
-        <td data-label="Password" style="color:var(--neon-green);"><span class="cell-value"><span class="val-text">${r.password}</span><button class="copy-btn" onclick="copy('${r.password}')" title="কপি করুন">📋</button></span></td>
-        <td data-label="Dubai Code" style="color:var(--neon-green);"><span class="cell-value"><span class="val-text">${r.note}</span><button class="copy-btn" onclick="copy('${r.note}')" title="কপি করুন">📋</button></span></td>
+        <td data-label="Shj Code" style="color:var(--neon-green);"><span class="cell-value"><span class="val-text">${r.shj}</span><button class="copy-btn" onclick="copy('${r.shj}')" title="Copy Shj Code">📋</button></span></td>
+        <td data-label="Username" style="color:var(--neon-green);"><span class="cell-value"><span class="val-text">${r.user}</span><button class="copy-btn" onclick="copy('${r.user}')" title="Copy User">📋</button></span></td>
+        <td data-label="Password" style="color:var(--neon-green);"><span class="cell-value"><span class="val-text">${r.password}</span><button class="copy-btn" onclick="copy('${r.password}')" title="Copy PW">📋</button></span></td>
+        <td data-label="Dubai Code" style="color:var(--neon-green);"><span class="cell-value"><span class="val-text">${r.note}</span><button class="copy-btn" onclick="copy('${r.note}')" title="Copy Dubai Code">📋</button></span></td>
       `;
     } else if(currentTab === 'dm') {
       html += `
@@ -647,14 +647,14 @@ function renderTable() {
         <td class="text-center" data-label="Size"><span class="cell-value">${r.size}</span></td>
         <td data-label="Country"><span class="cell-value">${r.country}</span></td>
         <td data-label="Brand"><span class="cell-value">${r.brand}</span></td>
-        <td data-label="Barcode" style="color:var(--neon-blue);"><span class="cell-value"><span class="val-text">${r.barcode}</span><button class="copy-btn" onclick="copy('${r.barcode}')" title="কপি করুন">📋</button></span></td>
+        <td data-label="Barcode" style="color:var(--neon-blue);"><span class="cell-value"><span class="val-text">${r.barcode}</span><button class="copy-btn" onclick="copy('${r.barcode}')" title="Copy Barcode">📋</button></span></td>
       `;
     } else if(currentTab === 'import') {
       html += `<td class="fw-bold" data-label="Code" style="color:var(--neon-green);"><span class="cell-value">${r.name}</span></td><td data-label="Description"><span class="cell-value">${r.desc}</span></td>`;
     } else if(currentTab === 'links') {
       html += `
         <td data-label="Title / Site Name"><span class="cell-value"><span class="link-text" onclick="openLink('${r.url}')">${r.title}</span></span></td>
-        <td data-label="URL Address" style="font-size:0.8rem;color:var(--neon-blue);"><span class="cell-value"><span class="val-text">${r.url}</span><button class="copy-btn" onclick="copy('${r.url}')" title="কপি করুন">📋</button></span></td>
+        <td data-label="URL Address" style="font-size:0.8rem;color:var(--neon-blue);"><span class="cell-value"><span class="val-text">${r.url}</span><button class="copy-btn" onclick="copy('${r.url}')" title="Copy URL">📋</button></span></td>
       `;
     }
     
@@ -844,7 +844,7 @@ function copy(txt) {
     ta.select();
     try {
       document.execCommand('copy');
-      showToast("Copied to Clipboard!");
+      showToast("✅ কপি করা হয়েছে।");
     } catch(e) {
       showToast("Copy failed!");
     }
@@ -853,7 +853,7 @@ function copy(txt) {
 
   if (navigator.clipboard && navigator.clipboard.writeText) {
     navigator.clipboard.writeText(txt).then(() => {
-      showToast("Copied to Clipboard!");
+      showToast("✅ কপি করা হয়েছে।");
     }).catch(() => {
       fallbackCopy();
     });
