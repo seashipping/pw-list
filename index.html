@@ -131,8 +131,10 @@ tr:hover{background:rgba(255,255,255,0.03);}
 #doc-upload-status{font-size:0.8rem;color:var(--neon-blue);margin-top:6px;min-height:1em;}
 
 /* ── STATUS ── */
-#status-bar{padding:12px 25px;background:var(--panel-bg);display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid rgba(0,212,255,0.1);}
-#status-text{color:var(--neon-blue);font-weight:bold;font-size:0.9rem;}
+#status-bar{padding:12px 25px;background:var(--panel-bg);display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid rgba(0,212,255,0.1);flex-wrap:wrap;gap:8px;width:100%;box-sizing:border-box;}
+@media (max-width:768px){#status-bar{flex-direction:column;align-items:stretch;}#status-text,#status-extra{text-align:center;}}
+#status-text{color:var(--neon-blue);font-weight:bold;font-size:0.9rem;border:2px solid var(--neon-blue);border-radius:10px;padding:6px 14px;box-shadow:0 0 10px rgba(0,212,255,0.5),inset 0 0 8px rgba(0,212,255,0.15);max-width:100%;box-sizing:border-box;}
+#status-extra{color:#ffffff;font-weight:bold;font-size:0.85rem;letter-spacing:0.3px;border:2px solid var(--neon-green);border-radius:10px;padding:6px 14px;box-shadow:0 0 10px rgba(0,255,204,0.5),inset 0 0 8px rgba(0,255,204,0.15);max-width:100%;box-sizing:border-box;}
 
 /* ── MODALS ── */
 .modal{display:none;position:fixed;inset:0;background:rgba(0,0,0,0.9);z-index:1000;align-items:center;justify-content:center;backdrop-filter:blur(5px);overflow-y:auto;padding:20px 0;}
@@ -291,6 +293,7 @@ tr:hover{background:rgba(255,255,255,0.03);}
 
     <div id="status-bar">
       <div id="status-text">⏳ System Ready</div>
+      <div id="status-extra"></div>
     </div>
   </div>
 
@@ -814,6 +817,48 @@ async function saveToSheets() {
   }
 }
 
+// Extracts the trailing numeric part of a serial value like "SSL581" and
+// returns both the prefix and the number, keeping the number's original
+// digit-length so e.g. "SSL099" -> next "SSL100" stays sensible.
+function parseSerial(value) {
+  if (!value) return null;
+  const str = value.toString().trim();
+  const m = str.match(/^(.*?)(\d+)\s*$/);
+  if (!m) return null;
+  return { prefix: m[1], digits: m[2] };
+}
+
+// Looks at the BOE list and figures out the last used serial (SL NO) and
+// what the next one should be. Only relevant for the "SN of BOE Dubai" tab.
+function getBoeSerialInfo() {
+  const list = rows.boe || [];
+  let lastVal = '';
+  for (let i = list.length - 1; i >= 0; i--) {
+    if (list[i] && list[i].slno && list[i].slno.toString().trim() !== '') {
+      lastVal = list[i].slno.toString().trim();
+      break;
+    }
+  }
+  if (!lastVal) return null;
+  const parsed = parseSerial(lastVal);
+  if (!parsed) return null;
+  const nextNum = (parseInt(parsed.digits, 10) + 1).toString().padStart(parsed.digits.length, '0');
+  return { last: lastVal, next: parsed.prefix + nextNum };
+}
+
+// Refreshes the small "Last S/N # ... Next S/N # ..." indicator in the
+// status bar. Only shown while on the BOE tab.
+function updateSerialInfo() {
+  const extra = document.getElementById('status-extra');
+  if (!extra) return;
+  if (currentTab === 'boe') {
+    const info = getBoeSerialInfo();
+    extra.innerText = info ? `🔖 Last S/N # ${info.last}   Next S/N # ${info.next}` : '';
+  } else {
+    extra.innerText = '';
+  }
+}
+
 function renderTable() {
   const query = document.getElementById('search-input').value.toLowerCase();
   const body = document.getElementById(`${currentTab}-body`);
@@ -902,6 +947,8 @@ function renderTable() {
     tr.innerHTML = html;
     body.appendChild(tr);
   });
+
+  updateSerialInfo();
 }
 
 function copyAllRow(idx) {
@@ -946,9 +993,16 @@ function openModal(id, isEdit = false) {
   const currentRows = rows[currentTab][editingIdx] || {};
   config[currentTab].labels.forEach((label, i) => {
     const key = config[currentTab].keys[i];
+    let extraLabel = '';
+    if (currentTab === 'boe' && key === 'slno') {
+      const info = getBoeSerialInfo();
+      if (info) {
+        extraLabel = ` <span style="color:#ffffff;font-weight:normal;font-size:0.78rem;">(Last S/N # ${info.last}&nbsp;&nbsp; Next S/N # ${info.next})</span>`;
+      }
+    }
     fields.innerHTML += `
       <div class="form-g">
-        <label>${label}</label>
+        <label>${label}${extraLabel}</label>
         <input type="text" id="f-${key}" value="${currentRows[key] || ''}">
       </div>
     `;
@@ -971,6 +1025,30 @@ function openModal(id, isEdit = false) {
   
   document.getElementById('modal-delete-btn').style.display = isEdit ? 'block' : 'none';
   document.getElementById(id).style.display = 'flex';
+
+  attachEnterNavigation('add-form-fields', addEntry);
+}
+
+// Makes pressing Enter inside any text/password field of the given
+// container move focus to the next field, and on the last field trigger
+// the provided submit callback (so Enter on the final field saves, just
+// like clicking the Save button).
+function attachEnterNavigation(containerId, onSubmit) {
+  const container = document.getElementById(containerId);
+  if (!container) return;
+  const inputs = Array.from(container.querySelectorAll('input[type="text"], input[type="password"]'));
+  inputs.forEach((inp, idx) => {
+    inp.onkeydown = (e) => {
+      if (e.key === 'Enter') {
+        e.preventDefault();
+        if (idx < inputs.length - 1) {
+          inputs[idx + 1].focus();
+        } else {
+          onSubmit();
+        }
+      }
+    };
+  });
 }
 
 function removeDepositDocument() {
