@@ -159,6 +159,7 @@ tr:hover{background:rgba(255,255,255,0.03);}
 #calc-close-btn{background:none;border:1px solid var(--neon-red);color:var(--neon-red);cursor:pointer;font-size:0.9rem;padding:2px 9px;border-radius:4px;}
 #calc-close-btn:hover{background:rgba(255,0,85,0.15);}
 #calc-display{background:#000;color:#fff;font-size:1.8rem;font-weight:bold;text-align:right;padding:18px 16px;border-bottom:1px solid #222;overflow-x:auto;white-space:nowrap;}
+#calc-live-result{background:#000;color:var(--neon-green);font-size:1rem;font-weight:bold;text-align:right;padding:0 16px 10px;min-height:1.4em;overflow-x:auto;white-space:nowrap;}
 #calc-buttons{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;padding:14px;}
 #calc-buttons button{padding:14px 0;border-radius:10px;border:1px solid #444;background:#000;color:#fff;font-weight:bold;font-size:1rem;cursor:pointer;transition:0.2s;}
 #calc-buttons button:hover{background:#222;}
@@ -201,12 +202,12 @@ tr:hover{background:rgba(255,255,255,0.03);}
 /* ── HEADER / TOOLBAR STACKING (phones only) ── */
 @media (max-width:768px){
   header{padding:14px 16px;justify-content:center;text-align:center;}
-  .header-left,.header-right,#admin-top-bar,.header-changepw,.header-calc{width:100%;justify-content:center;}
+  .header-left,.header-right,#admin-top-bar,#admin-info-bar,.header-changepw,.header-calc{width:100%;justify-content:center;}
   .header-title{font-size:1rem;justify-content:center;}
   .company-badge{font-size:0.72rem;padding:6px 12px;text-align:center;}
   .btn-logout-pro{padding:8px 16px;font-size:0.85rem;}
   .header-changepw{order:1;padding:2px 0;}
-  #admin-top-bar{padding:2px 0;order:2;}
+  #admin-top-bar,#admin-info-bar{padding:2px 0;order:2;}
   .header-calc{padding:2px 0;order:2;}
   .header-right{order:3;}
   #admin-tab{padding:8px 24px;font-size:0.8rem;height:auto;}
@@ -272,6 +273,8 @@ tr:hover{background:rgba(255,255,255,0.03);}
       </div>
       <div id="admin-top-bar">
         <button class="tab-btn-pro" id="loginfo-tab" onclick="openLogInfoModal()" style="border-color:var(--neon-blue);color:var(--neon-blue);">📊 Log Info</button>
+      </div>
+      <div id="admin-info-bar" style="display:flex;align-items:center;justify-content:center;gap:12px;">
         <button class="tab-btn-pro" id="admin-tab" onclick="switchTab('admin')" style="border-color:var(--neon-red);color:var(--neon-red);"> Admin Info</button>
       </div>
       <div class="header-calc">
@@ -548,19 +551,21 @@ tr:hover{background:rgba(255,255,255,0.03);}
     <table>
       <colgroup>
         <col class="col-id">
-        <col style="width:220px">
-        <col style="width:150px">
-        <col style="width:150px">
-        <col style="width:150px">
+        <col style="width:200px">
+        <col style="width:140px">
+        <col style="width:140px">
+        <col style="width:140px">
+        <col style="width:140px">
         <col class="col-action">
       </colgroup>
       <thead>
         <tr>
           <th class="text-center">#</th>
           <th>Country</th>
-          <th>FOB Min (AED)</th>
-          <th>FOB Max (AED)</th>
-          <th>Rate/KG (AED)</th>
+          <th>FOB 40F (USD)</th>
+          <th>FOB 40F (USD)</th>
+          <th>FOB 20F (USD)</th>
+          <th>FOB 20F (USD)</th>
           <th class="text-center">Action</th>
         </tr>
       </thead>
@@ -686,7 +691,7 @@ tr:hover{background:rgba(255,255,255,0.03);}
       <div style="color:var(--neon-blue);font-weight:bold;margin-bottom:14px;">➕ Add New User</div>
       <div class="form-g"><label>Username</label><input type="text" id="nu-username" placeholder="Username" onkeydown="if(event.key==='Enter'){event.preventDefault(); document.getElementById('nu-password').focus();}"></div>
       <div class="form-g"><label>Password</label><input type="text" id="nu-password" placeholder="Password" onkeydown="if(event.key==='Enter'){event.preventDefault(); addUser();}"></div>
-      <button class="btn-ok" style="width:100%;" onclick="addUser()">💾 Add User</button>
+      <button class="btn-ok" style="width:100%;padding:16px;font-size:1.1rem;letter-spacing:0.5px;" onclick="addUser()">💾 Add User</button>
     </div>
   </div>
 </div>
@@ -712,6 +717,7 @@ tr:hover{background:rgba(255,255,255,0.03);}
     <button id="calc-close-btn" onclick="closeCalculator()">✕</button>
   </div>
   <div id="calc-display">0</div>
+  <div id="calc-live-result">&nbsp;</div>
   <div id="calc-buttons">
     <button onclick="calcInput('C')" class="calc-op calc-clear">C</button>
     <button onclick="calcBackspace()" class="calc-op">⌫</button>
@@ -973,6 +979,34 @@ function updateSerialInfo() {
   }
 }
 
+// FOB AED -> USD conversion helper (AED value x user-entered multiplier).
+function fobToUsd(aedVal, multiplier) {
+  const n = parseFloat(String(aedVal).replace(/[^0-9.\-]/g, ''));
+  const m = parseFloat(multiplier);
+  if (!Number.isFinite(n) || !Number.isFinite(m)) return '';
+  return (n * m).toLocaleString('en-US', { maximumFractionDigits: 2 }) + ' USD';
+}
+
+// Recomputes just the two USD cells for one FOB row as the multiplier
+// input is typed, so the result updates live without a full table re-render.
+function liveFobUpdate(idx) {
+  const row = rows.fob[idx];
+  if (!row) return;
+  const m40input = document.getElementById(`fob40mult-${idx}`);
+  const m20input = document.getElementById(`fob20mult-${idx}`);
+  const usd40El = document.getElementById(`fob40usd-${idx}`);
+  const usd20El = document.getElementById(`fob20usd-${idx}`);
+  if (m40input && usd40El) usd40El.innerText = fobToUsd(row.fobmin, m40input.value || 0);
+  if (m20input && usd20El) usd20El.innerText = fobToUsd(row.fobmax, m20input.value || 0);
+}
+
+// Persists the multiplier the user typed for a FOB row (called on blur/change).
+function updateFobMultiplier(idx, key, value) {
+  if (!rows.fob[idx]) return;
+  rows.fob[idx][key] = value;
+  saveToSheets();
+}
+
 function renderTable() {
   const query = document.getElementById('search-input').value.toLowerCase();
   const body = document.getElementById(`${currentTab}-body`);
@@ -1052,11 +1086,20 @@ function renderTable() {
         <td data-label="Status/Note"><span class="cell-value">${r.status}</span></td>
       `;
     } else if(currentTab === 'fob') {
+      const mult40 = (r.fob40mult !== undefined && r.fob40mult !== '') ? r.fob40mult : 5;
+      const mult20 = (r.fob20mult !== undefined && r.fob20mult !== '') ? r.fob20mult : 5;
+      const fob40usd = fobToUsd(r.fobmin, mult40);
+      const fob20usd = fobToUsd(r.fobmax, mult20);
       html += `
         <td class="fw-bold" data-label="Country" style="color:var(--neon-green);"><span class="cell-value">${r.country}</span></td>
-        <td data-label="FOB 20F (AED)"><span class="cell-value">${r.fobmin}</span></td>
-        <td data-label="FOB 40F (AED)"><span class="cell-value">${r.fobmax}</span></td>
-        <td data-label="Rate/KG (AED)" style="color:var(--neon-blue);"><span class="cell-value">${r.ratekg}</span></td>
+        <td data-label="FOB 40F (AED)"><span class="cell-value">${r.fobmin}
+          <input type="number" step="any" id="fob40mult-${idx}" value="${mult40}" title="গুনফল সংখ্যা (Multiplier)" oninput="liveFobUpdate(${idx})" onchange="updateFobMultiplier(${idx},'fob40mult',this.value)" style="width:58px;margin-left:6px;padding:6px 8px;background:#000;border:1px solid var(--neon-blue);border-radius:6px;color:#fff;font-size:0.85rem;flex-shrink:0;">
+        </span></td>
+        <td data-label="FOB 40F (USD)" style="color:var(--neon-blue);"><span class="cell-value" id="fob40usd-${idx}">${fob40usd}</span></td>
+        <td data-label="FOB 20F (AED)"><span class="cell-value">${r.fobmax}
+          <input type="number" step="any" id="fob20mult-${idx}" value="${mult20}" title="গুনফল সংখ্যা (Multiplier)" oninput="liveFobUpdate(${idx})" onchange="updateFobMultiplier(${idx},'fob20mult',this.value)" style="width:58px;margin-left:6px;padding:6px 8px;background:#000;border:1px solid var(--neon-blue);border-radius:6px;color:#fff;font-size:0.85rem;flex-shrink:0;">
+        </span></td>
+        <td data-label="FOB 20F (USD)" style="color:var(--neon-blue);"><span class="cell-value" id="fob20usd-${idx}">${fob20usd}</span></td>
       `;
     }
     
@@ -1075,6 +1118,21 @@ function renderTable() {
 function copyAllRow(idx) {
   const r = rows[currentTab][idx];
   if(!r) return;
+  if (currentTab === 'fob') {
+    const mult40 = (r.fob40mult !== undefined && r.fob40mult !== '') ? r.fob40mult : 5;
+    const mult20 = (r.fob20mult !== undefined && r.fob20mult !== '') ? r.fob20mult : 5;
+    const text = [
+      `Country: ${r.country || ''}`,
+      `FOB 40F (AED): ${r.fobmin || ''}`,
+      `FOB 40F Multiplier: ${mult40}`,
+      `FOB 40F (USD): ${fobToUsd(r.fobmin, mult40)}`,
+      `FOB 20F (AED): ${r.fobmax || ''}`,
+      `FOB 20F Multiplier: ${mult20}`,
+      `FOB 20F (USD): ${fobToUsd(r.fobmax, mult20)}`
+    ].join('\n');
+    copy(text);
+    return;
+  }
   const fieldMap = {
     pw: [['Company Name','company'],['Shj Code','shj'],['Username','user'],['Password','password'],['Dubai Code','note']],
     dm: [['Product Name','product'],['Size','size'],['Country','country'],['Brand','brand'],['Barcode','barcode']],
@@ -1083,7 +1141,7 @@ function copyAllRow(idx) {
     boe: [['SL NO','slno'],['TALAL','talal'],['IMP/EXP','impexp'],['Consignee','consignee'],['Imp Code','impcode'],['Shipping','shipping'],['Items','items'],['HS Code','hscode'],['Origin','origin'],['BL Number','blnumber'],['S.NO','sno'],['Container No','container'],['DO Last Dt','dolastdt'],['Bill','bill'],['BOE Date','boedate'],['BOE Sub Dt','boesubdt'],['Documents Received','docrecv'],['BOE','boeno'],['Custom Submission','customsub']],
     deposit: [['Date','ddate'],['BOE','boe'],['Company Name','company'],['BOE Date','boedate'],['SHJ/DXB','shjdxb'],['Status','status'],['Document Link','docurl']],
     handover: [['Date','hdate'],['Com Name','comname'],['Cont#/BOE #BL','contboe'],['Deposit/Chq Refund','depositrefund'],['Submitted Date','submitdate'],['Receiver Name','receiver'],['Status/Note','status']],
-    fob: [['Country','country'],['FOB Min (AED)','fobmin'],['FOB Max (AED)','fobmax'],['Rate/KG (AED)','ratekg']]
+    fob: [['Country','country'],['FOB 40F (AED)','fobmin'],['FOB 20F (AED)','fobmax']]
   };
   const fields = fieldMap[currentTab] || [];
   const text = fields.map(([label, key]) => `${label}: ${r[key] || ''}`).join('\n');
@@ -1110,7 +1168,7 @@ function openModal(id, isEdit = false) {
     boe: { labels: ['SL NO', 'TALAL', 'IMP/EXP', 'Consignee', 'Imp Code', 'Shipping', 'Items', 'HS Code', 'Origin', 'BL Number', 'S.NO', 'Container No', 'DO Last Dt', 'Bill', 'BOE Date', 'BOE Sub Dt', 'Documents Received', 'BOE', 'Custom Submission'], keys: ['slno', 'talal', 'impexp', 'consignee', 'impcode', 'shipping', 'items', 'hscode', 'origin', 'blnumber', 'sno', 'container', 'dolastdt', 'bill', 'boedate', 'boesubdt', 'docrecv', 'boeno', 'customsub'] },
     deposit: { labels: ['Date', 'BOE', 'Company Name', 'BOE Date', 'SHJ/DXB', 'Status'], keys: ['ddate', 'boe', 'company', 'boedate', 'shjdxb', 'status'] },
     handover: { labels: ['Date', 'Com Name', 'Cont#/BOE #BL', 'Deposit/Chq Refund', 'Submitted Date', 'Receiver Name', 'Status/Note'], keys: ['hdate', 'comname', 'contboe', 'depositrefund', 'submitdate', 'receiver', 'status'] },
-    fob: { labels: ['Country', 'FOB Min (AED)', 'FOB Max (AED)', 'Rate/KG (AED)'], keys: ['country', 'fobmin', 'fobmax', 'ratekg'] }
+    fob: { labels: ['Country', 'FOB 40F (AED)', 'FOB 20F (AED)'], keys: ['country', 'fobmin', 'fobmax'] }
   };
   
   const mandatoryKeys = { pw: ['company', 'user', 'password'] };
@@ -1197,7 +1255,7 @@ async function addEntry() {
     boe: ['slno', 'talal', 'impexp', 'consignee', 'impcode', 'shipping', 'items', 'hscode', 'origin', 'blnumber', 'sno', 'container', 'dolastdt', 'bill', 'boedate', 'boesubdt', 'docrecv', 'boeno', 'customsub'],
     deposit: ['ddate', 'boe', 'company', 'boedate', 'shjdxb', 'status'],
     handover: ['hdate', 'comname', 'contboe', 'depositrefund', 'submitdate', 'receiver', 'status'],
-    fob: ['country', 'fobmin', 'fobmax', 'ratekg']
+    fob: ['country', 'fobmin', 'fobmax']
   };
   
   let newRow = {};
@@ -1238,6 +1296,11 @@ async function addEntry() {
   }
   
   if(editingIdx > -1) {
+    if (currentTab === 'fob') {
+      const old = rows.fob[editingIdx] || {};
+      newRow.fob40mult = old.fob40mult;
+      newRow.fob20mult = old.fob20mult;
+    }
     rows[currentTab][editingIdx] = newRow;
   } else {
     rows[currentTab].push(newRow); // ADD TO BOTTOM
@@ -1550,7 +1613,7 @@ function maybeSeedFobData() {
   if ((rows.fob || []).length > 0) return;
   const confirmed = confirm("FOB Price SHJ ট্যাবে কোনো ডাটা নেই। রেফারেন্স হিসেবে ৩৯টি দেশের ডিফল্ট FOB প্রাইস লিস্ট যোগ করতে চান?");
   if (!confirmed) return;
-  rows.fob = FOB_SEED_DATA.map(([country, fobmin, fobmax, ratekg]) => ({ country, fobmin, fobmax, ratekg }));
+  rows.fob = FOB_SEED_DATA.map(([country, fobmin, fobmax]) => ({ country, fobmin, fobmax }));
   renderTable();
   saveToSheets();
   showToast("✅ FOB Price ডাটা যোগ হয়েছে!");
@@ -1597,17 +1660,68 @@ function closeCalculator() {
   document.getElementById('calculator-widget').style.display = 'none';
 }
 
+// Lets the calculator respond to physical/on-screen keyboard input whenever
+// it's open (numbers, + - * /, %, Enter/= , Backspace, Escape, and the . key).
+document.addEventListener('keydown', (e) => {
+  const w = document.getElementById('calculator-widget');
+  if (!w || w.style.display !== 'block') return;
+
+  const key = e.key;
+  if (/^[0-9]$/.test(key)) {
+    calcInput(key);
+    e.preventDefault();
+  } else if (['+', '-', '*', '/', '.'].includes(key)) {
+    calcInput(key);
+    e.preventDefault();
+  } else if (key === '%') {
+    calcInput('%');
+    e.preventDefault();
+  } else if (key === 'Enter' || key === '=') {
+    calcEquals();
+    e.preventDefault();
+  } else if (key === 'Backspace') {
+    calcBackspace();
+    e.preventDefault();
+  } else if (key === 'Escape') {
+    calcInput('C');
+    e.preventDefault();
+  } else if (key.toLowerCase() === 'c') {
+    calcInput('C');
+    e.preventDefault();
+  }
+});
+
 function calcInput(val) {
   const disp = document.getElementById('calc-display');
+  if (val === 'C') { calcExpr = ''; disp.innerText = '0'; updateLiveResult(); return; }
   if ('+-*/'.includes(val) && calcExpr === '' && val !== '-') return;
-  if (val === '%') { calcExpr += '/100'; disp.innerText = calcExpr; return; }
+  if (val === '%') { calcExpr += '/100'; disp.innerText = calcExpr; updateLiveResult(); return; }
   calcExpr += val;
   disp.innerText = calcExpr;
+  updateLiveResult();
 }
 
 function calcBackspace() {
   calcExpr = calcExpr.slice(0, -1);
   document.getElementById('calc-display').innerText = calcExpr || '0';
+  updateLiveResult();
+}
+
+// Shows a live "= result" preview under the main display as the expression
+// is typed, without needing to press "=". Trailing operators/decimal points
+// are trimmed so a still-incomplete expression (e.g. "2+") previews cleanly.
+function updateLiveResult() {
+  const liveEl = document.getElementById('calc-live-result');
+  if (!liveEl) return;
+  let expr = calcExpr.trim().replace(/[+\-*/.]+$/, '');
+  if (!expr || !/^[0-9+\-*/.() ]+$/.test(expr)) { liveEl.innerHTML = '&nbsp;'; return; }
+  try {
+    const result = Function('"use strict";return (' + expr + ')')();
+    if (!Number.isFinite(result)) { liveEl.innerHTML = '&nbsp;'; return; }
+    liveEl.innerText = '= ' + (+result.toFixed(8));
+  } catch (e) {
+    liveEl.innerHTML = '&nbsp;';
+  }
 }
 
 function calcEquals() {
@@ -1619,9 +1733,11 @@ function calcEquals() {
     const rounded = +result.toFixed(8);
     disp.innerText = rounded;
     calcExpr = String(rounded);
+    document.getElementById('calc-live-result').innerHTML = '&nbsp;';
   } catch (e) {
     disp.innerText = 'Error';
     calcExpr = '';
+    document.getElementById('calc-live-result').innerHTML = '&nbsp;';
   }
 }
 
@@ -1690,7 +1806,7 @@ function renderUsersTable() {
   cachedUsers.forEach((u, i) => {
     html += `<tr>
       <td class="fw-bold" style="color:var(--neon-green);">${u.username}</td>
-      <td><span class="cell-value"><span class="val-text" id="up-${i}">••••••</span>
+      <td><span class="cell-value" style="flex-wrap:wrap;"><span class="val-text" id="up-${i}" style="white-space:normal;overflow:visible;text-overflow:clip;word-break:break-all;">••••••</span>
         <button class="copy-btn" onclick="toggleUserPw(${i})" title="Show/Hide">👁️</button>
         <button class="copy-btn" onclick="copy('${u.password}')" title="Copy">📋</button></span></td>
       <td class="text-center"><button class="doc-remove-btn" onclick="deleteUser(${i})" title="Delete user">🗑️</button></td>
