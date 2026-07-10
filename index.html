@@ -131,6 +131,15 @@ tr:hover{background:rgba(255,255,255,0.03);}
 .doc-remove-btn:hover{background:var(--neon-red);color:#000;}
 #doc-upload-status{font-size:0.8rem;color:var(--neon-blue);margin-top:6px;min-height:1em;}
 
+/* Plain input box for the FOB multiplier — no up/down stepper arrows */
+.fob-mult-input::-webkit-outer-spin-button,
+.fob-mult-input::-webkit-inner-spin-button{-webkit-appearance:none;margin:0;}
+.fob-mult-input{-moz-appearance:textfield;appearance:textfield;}
+
+/* ── LOG INFO MODAL: never clip text, let table scroll horizontally instead ── */
+#login-summary-wrap table,#activity-log-wrap table{table-layout:auto;}
+#login-summary-wrap td,#login-summary-wrap th,#activity-log-wrap td,#activity-log-wrap th{white-space:normal;overflow:visible;text-overflow:unset;word-break:break-word;}
+
 /* ── STATUS ── */
 #status-bar{padding:12px 25px;background:var(--panel-bg);display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid rgba(0,212,255,0.1);flex-wrap:wrap;gap:8px;width:100%;box-sizing:border-box;}
 @media (max-width:768px){#status-bar{flex-direction:column;align-items:stretch;}#status-text,#status-extra{text-align:center;}}
@@ -562,9 +571,9 @@ tr:hover{background:rgba(255,255,255,0.03);}
         <tr>
           <th class="text-center">#</th>
           <th>Country</th>
+          <th>FOB 40F (AED)</th>
           <th>FOB 40F (USD)</th>
-          <th>FOB 40F (USD)</th>
-          <th>FOB 20F (USD)</th>
+          <th>FOB 20F (AED)</th>
           <th>FOB 20F (USD)</th>
           <th class="text-center">Action</th>
         </tr>
@@ -698,15 +707,15 @@ tr:hover{background:rgba(255,255,255,0.03);}
 
 <!-- LOG INFO MODAL (Admin only) -->
 <div id="loginfo-modal" class="modal">
-  <div class="modal-content" style="max-width:820px;">
+  <div class="modal-content" style="max-width:1150px;width:95%;">
     <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:20px;">
       <h3 style="color:var(--neon-blue);margin:0;display:flex;align-items:center;gap:10px;">📊 Login &amp; Activity Log</h3>
       <button onclick="closeModal('loginfo-modal')" style="background:none;border:1px solid var(--neon-red);color:var(--neon-red);cursor:pointer;font-size:1.2rem;padding:0 8px;border-radius:4px;">✕</button>
     </div>
     <div style="color:var(--neon-green);font-weight:bold;margin-bottom:10px;">👤 Login Summary — কে কতবার লগইন করেছে</div>
-    <div id="login-summary-wrap" style="max-height:220px;overflow-y:auto;margin-bottom:24px;"></div>
+    <div id="login-summary-wrap" style="max-height:220px;overflow-y:auto;overflow-x:auto;margin-bottom:24px;"></div>
     <div style="color:var(--neon-green);font-weight:bold;margin-bottom:10px;">🕒 Recent Activity — সাম্প্রতিক কার্যক্রম</div>
-    <div id="activity-log-wrap" style="max-height:280px;overflow-y:auto;"></div>
+    <div id="activity-log-wrap" style="max-height:280px;overflow-y:auto;overflow-x:auto;"></div>
   </div>
 </div>
 
@@ -1092,12 +1101,12 @@ function renderTable() {
       const fob20usd = fobToUsd(r.fobmax, mult20);
       html += `
         <td class="fw-bold" data-label="Country" style="color:var(--neon-green);"><span class="cell-value">${r.country}</span></td>
-        <td data-label="FOB 40F (AED)"><span class="cell-value">${r.fobmin}
-          <input type="number" step="any" id="fob40mult-${idx}" value="${mult40}" title="গুনফল সংখ্যা (Multiplier)" oninput="liveFobUpdate(${idx})" onchange="updateFobMultiplier(${idx},'fob40mult',this.value)" style="width:58px;margin-left:6px;padding:6px 8px;background:#000;border:1px solid var(--neon-blue);border-radius:6px;color:#fff;font-size:0.85rem;flex-shrink:0;">
+        <td data-label="FOB 40F (USD)"><span class="cell-value">${r.fobmin}
+          <input type="number" step="any" class="fob-mult-input" id="fob40mult-${idx}" value="${mult40}" title="গুনফল সংখ্যা (Multiplier)" oninput="liveFobUpdate(${idx})" onchange="updateFobMultiplier(${idx},'fob40mult',this.value)" style="width:58px;margin-left:6px;padding:6px 8px;background:#000;border:1px solid var(--neon-blue);border-radius:6px;color:#fff;font-size:0.85rem;flex-shrink:0;">
         </span></td>
         <td data-label="FOB 40F (USD)" style="color:var(--neon-blue);"><span class="cell-value" id="fob40usd-${idx}">${fob40usd}</span></td>
-        <td data-label="FOB 20F (AED)"><span class="cell-value">${r.fobmax}
-          <input type="number" step="any" id="fob20mult-${idx}" value="${mult20}" title="গুনফল সংখ্যা (Multiplier)" oninput="liveFobUpdate(${idx})" onchange="updateFobMultiplier(${idx},'fob20mult',this.value)" style="width:58px;margin-left:6px;padding:6px 8px;background:#000;border:1px solid var(--neon-blue);border-radius:6px;color:#fff;font-size:0.85rem;flex-shrink:0;">
+        <td data-label="FOB 20F (USD)"><span class="cell-value">${r.fobmax}
+          <input type="number" step="any" class="fob-mult-input" id="fob20mult-${idx}" value="${mult20}" title="গুনফল সংখ্যা (Multiplier)" oninput="liveFobUpdate(${idx})" onchange="updateFobMultiplier(${idx},'fob20mult',this.value)" style="width:58px;margin-left:6px;padding:6px 8px;background:#000;border:1px solid var(--neon-blue);border-radius:6px;color:#fff;font-size:0.85rem;flex-shrink:0;">
         </span></td>
         <td data-label="FOB 20F (USD)" style="color:var(--neon-blue);"><span class="cell-value" id="fob20usd-${idx}">${fob20usd}</span></td>
       `;
