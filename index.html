@@ -131,11 +131,6 @@ tr:hover{background:rgba(255,255,255,0.03);}
 .doc-remove-btn:hover{background:var(--neon-red);color:#000;}
 #doc-upload-status{font-size:0.8rem;color:var(--neon-blue);margin-top:6px;min-height:1em;}
 
-/* Plain input box for the FOB multiplier — no up/down stepper arrows */
-.fob-mult-input::-webkit-outer-spin-button,
-.fob-mult-input::-webkit-inner-spin-button{-webkit-appearance:none;margin:0;}
-.fob-mult-input{-moz-appearance:textfield;appearance:textfield;}
-
 /* ── LOG INFO MODAL: never clip text, let table scroll horizontally instead ── */
 #login-summary-wrap table,#activity-log-wrap table{table-layout:auto;}
 #login-summary-wrap td,#login-summary-wrap th,#activity-log-wrap td,#activity-log-wrap th{white-space:normal;overflow:visible;text-overflow:unset;word-break:break-word;}
@@ -560,11 +555,9 @@ tr:hover{background:rgba(255,255,255,0.03);}
     <table>
       <colgroup>
         <col class="col-id">
-        <col style="width:200px">
-        <col style="width:140px">
-        <col style="width:140px">
-        <col style="width:140px">
-        <col style="width:140px">
+        <col style="width:220px">
+        <col style="width:180px">
+        <col style="width:180px">
         <col class="col-action">
       </colgroup>
       <thead>
@@ -572,9 +565,7 @@ tr:hover{background:rgba(255,255,255,0.03);}
           <th class="text-center">#</th>
           <th>Country</th>
           <th>FOB 40F (AED)</th>
-          <th>FOB 40F (USD)</th>
           <th>FOB 20F (AED)</th>
-          <th>FOB 20F (USD)</th>
           <th class="text-center">Action</th>
         </tr>
       </thead>
@@ -988,34 +979,6 @@ function updateSerialInfo() {
   }
 }
 
-// FOB AED -> USD conversion helper (AED value x user-entered multiplier).
-function fobToUsd(aedVal, multiplier) {
-  const n = parseFloat(String(aedVal).replace(/[^0-9.\-]/g, ''));
-  const m = parseFloat(multiplier);
-  if (!Number.isFinite(n) || !Number.isFinite(m)) return '';
-  return (n * m).toLocaleString('en-US', { maximumFractionDigits: 2 }) + ' USD';
-}
-
-// Recomputes just the two USD cells for one FOB row as the multiplier
-// input is typed, so the result updates live without a full table re-render.
-function liveFobUpdate(idx) {
-  const row = rows.fob[idx];
-  if (!row) return;
-  const m40input = document.getElementById(`fob40mult-${idx}`);
-  const m20input = document.getElementById(`fob20mult-${idx}`);
-  const usd40El = document.getElementById(`fob40usd-${idx}`);
-  const usd20El = document.getElementById(`fob20usd-${idx}`);
-  if (m40input && usd40El) usd40El.innerText = fobToUsd(row.fobmin, m40input.value || 0);
-  if (m20input && usd20El) usd20El.innerText = fobToUsd(row.fobmax, m20input.value || 0);
-}
-
-// Persists the multiplier the user typed for a FOB row (called on blur/change).
-function updateFobMultiplier(idx, key, value) {
-  if (!rows.fob[idx]) return;
-  rows.fob[idx][key] = value;
-  saveToSheets();
-}
-
 function renderTable() {
   const query = document.getElementById('search-input').value.toLowerCase();
   const body = document.getElementById(`${currentTab}-body`);
@@ -1095,20 +1058,10 @@ function renderTable() {
         <td data-label="Status/Note"><span class="cell-value">${r.status}</span></td>
       `;
     } else if(currentTab === 'fob') {
-      const mult40 = (r.fob40mult !== undefined && r.fob40mult !== '') ? r.fob40mult : 5;
-      const mult20 = (r.fob20mult !== undefined && r.fob20mult !== '') ? r.fob20mult : 5;
-      const fob40usd = fobToUsd(r.fobmin, mult40);
-      const fob20usd = fobToUsd(r.fobmax, mult20);
       html += `
         <td class="fw-bold" data-label="Country" style="color:var(--neon-green);"><span class="cell-value">${r.country}</span></td>
-        <td data-label="FOB 40F (USD)"><span class="cell-value">${r.fobmin}
-          <input type="number" step="any" class="fob-mult-input" id="fob40mult-${idx}" value="${mult40}" title="গুনফল সংখ্যা (Multiplier)" oninput="liveFobUpdate(${idx})" onchange="updateFobMultiplier(${idx},'fob40mult',this.value)" style="width:58px;margin-left:6px;padding:6px 8px;background:#000;border:1px solid var(--neon-blue);border-radius:6px;color:#fff;font-size:0.85rem;flex-shrink:0;">
-        </span></td>
-        <td data-label="FOB 40F (USD)" style="color:var(--neon-blue);"><span class="cell-value" id="fob40usd-${idx}">${fob40usd}</span></td>
-        <td data-label="FOB 20F (USD)"><span class="cell-value">${r.fobmax}
-          <input type="number" step="any" class="fob-mult-input" id="fob20mult-${idx}" value="${mult20}" title="গুনফল সংখ্যা (Multiplier)" oninput="liveFobUpdate(${idx})" onchange="updateFobMultiplier(${idx},'fob20mult',this.value)" style="width:58px;margin-left:6px;padding:6px 8px;background:#000;border:1px solid var(--neon-blue);border-radius:6px;color:#fff;font-size:0.85rem;flex-shrink:0;">
-        </span></td>
-        <td data-label="FOB 20F (USD)" style="color:var(--neon-blue);"><span class="cell-value" id="fob20usd-${idx}">${fob20usd}</span></td>
+        <td data-label="FOB 40F (AED)" style="color:var(--neon-blue);"><span class="cell-value">${r.fobmin}</span></td>
+        <td data-label="FOB 20F (AED)" style="color:var(--neon-blue);"><span class="cell-value">${r.fobmax}</span></td>
       `;
     }
     
@@ -1127,21 +1080,6 @@ function renderTable() {
 function copyAllRow(idx) {
   const r = rows[currentTab][idx];
   if(!r) return;
-  if (currentTab === 'fob') {
-    const mult40 = (r.fob40mult !== undefined && r.fob40mult !== '') ? r.fob40mult : 5;
-    const mult20 = (r.fob20mult !== undefined && r.fob20mult !== '') ? r.fob20mult : 5;
-    const text = [
-      `Country: ${r.country || ''}`,
-      `FOB 40F (AED): ${r.fobmin || ''}`,
-      `FOB 40F Multiplier: ${mult40}`,
-      `FOB 40F (USD): ${fobToUsd(r.fobmin, mult40)}`,
-      `FOB 20F (AED): ${r.fobmax || ''}`,
-      `FOB 20F Multiplier: ${mult20}`,
-      `FOB 20F (USD): ${fobToUsd(r.fobmax, mult20)}`
-    ].join('\n');
-    copy(text);
-    return;
-  }
   const fieldMap = {
     pw: [['Company Name','company'],['Shj Code','shj'],['Username','user'],['Password','password'],['Dubai Code','note']],
     dm: [['Product Name','product'],['Size','size'],['Country','country'],['Brand','brand'],['Barcode','barcode']],
@@ -1305,11 +1243,6 @@ async function addEntry() {
   }
   
   if(editingIdx > -1) {
-    if (currentTab === 'fob') {
-      const old = rows.fob[editingIdx] || {};
-      newRow.fob40mult = old.fob40mult;
-      newRow.fob20mult = old.fob20mult;
-    }
     rows[currentTab][editingIdx] = newRow;
   } else {
     rows[currentTab].push(newRow); // ADD TO BOTTOM
