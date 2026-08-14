@@ -319,6 +319,7 @@ tr:hover{background:rgba(255,255,255,0.03);}
         <button class="tab-btn-pro" onclick="switchTab('deposit')">Duty Deposit</button>
         <button class="tab-btn-pro" onclick="switchTab('handover')">Handover Doc</button>
         <button class="tab-btn-pro" onclick="switchTab('fob')">FOB Price SHJ</button>
+        <button class="tab-btn-pro" onclick="switchTab('hscode')">HS Code</button>
       </div>
     </div>
 
@@ -573,6 +574,31 @@ tr:hover{background:rgba(255,255,255,0.03);}
     </table>
   </div>
 
+  <!-- HS CODE TABLE -->
+  <div id="hscode-tab" class="table-container" style="display:none;">
+    <table>
+      <colgroup>
+        <col class="col-id">
+        <col style="width:150px">
+        <col style="width:250px">
+        <col style="width:140px">
+        <col style="width:auto">
+        <col class="col-action">
+      </colgroup>
+      <thead>
+        <tr>
+          <th class="text-center">#</th>
+          <th>HS Code</th>
+          <th>Item Name</th>
+          <th>Dxb / Shj</th>
+          <th>Description As Per System</th>
+          <th class="text-center">Action</th>
+        </tr>
+      </thead>
+      <tbody id="hscode-body"></tbody>
+    </table>
+  </div>
+
   <!-- ADMIN SECTION (Modal) -->
   <div id="admin-section" class="modal">
     <div class="modal-content" style="max-width:800px;">
@@ -747,7 +773,7 @@ tr:hover{background:rgba(255,255,255,0.03);}
 // IMPORTANT: Update this URL if you create a new deployment
 const API_URL = "https://script.google.com/macros/s/AKfycbxEhryOuOCVELJ_JDNSXuT4Lrfh1aNcMTWJ51qETzk6cNwkZWHh13LT5hTRPHZACK62jQ/exec";
 
-let rows = { pw: [], dm: [], import: [], links: [], boe: [], deposit: [], handover: [], fob: [] };
+let rows = { pw: [], dm: [], import: [], links: [], boe: [], deposit: [], handover: [], fob: [], hscode: [] };
 let currentUser = null;
 let currentTab = 'pw';
 let editingIdx = -1;
@@ -1063,6 +1089,13 @@ function renderTable() {
         <td data-label="FOB 40F (AED)" style="color:var(--neon-blue);"><span class="cell-value">${r.fobmin}</span></td>
         <td data-label="FOB 20F (AED)" style="color:var(--neon-blue);"><span class="cell-value">${r.fobmax}</span></td>
       `;
+    } else if(currentTab === 'hscode') {
+      html += `
+        <td class="fw-bold" data-label="HS Code" style="color:var(--neon-green);"><span class="cell-value"><span class="val-text">${r.hscode}</span><button class="copy-btn" onclick="copy('${r.hscode}')" title="Copy HS Code">📋</button></span></td>
+        <td data-label="Item Name"><span class="cell-value">${r.itemname}</span></td>
+        <td data-label="Dxb / Shj"><span class="cell-value">${r.dxbshj}</span></td>
+        <td data-label="Description As Per System"><span class="cell-value"><span class="val-text">${r.desc}</span></span></td>
+      `;
     }
     
     html += `<td class="col-action" data-label="Action">
@@ -1088,7 +1121,8 @@ function copyAllRow(idx) {
     boe: [['SL NO','slno'],['TALAL','talal'],['IMP/EXP','impexp'],['Consignee','consignee'],['Imp Code','impcode'],['Shipping','shipping'],['Items','items'],['HS Code','hscode'],['Origin','origin'],['BL Number','blnumber'],['S.NO','sno'],['Container No','container'],['DO Last Dt','dolastdt'],['Bill','bill'],['BOE Date','boedate'],['BOE Sub Dt','boesubdt'],['Documents Received','docrecv'],['BOE','boeno'],['Custom Submission','customsub']],
     deposit: [['Date','ddate'],['BOE','boe'],['Company Name','company'],['BOE Date','boedate'],['SHJ/DXB','shjdxb'],['Status','status'],['Document Link','docurl']],
     handover: [['Date','hdate'],['Com Name','comname'],['Cont#/BOE #BL','contboe'],['Deposit/Chq Refund','depositrefund'],['Submitted Date','submitdate'],['Receiver Name','receiver'],['Status/Note','status']],
-    fob: [['Country','country'],['FOB 40F (AED)','fobmin'],['FOB 20F (AED)','fobmax']]
+    fob: [['Country','country'],['FOB 40F (AED)','fobmin'],['FOB 20F (AED)','fobmax']],
+    hscode: [['HS Code','hscode'],['Item Name','itemname'],['Dxb / Shj','dxbshj'],['Description As Per System','desc']]
   };
   const fields = fieldMap[currentTab] || [];
   const text = fields.map(([label, key]) => `${label}: ${r[key] || ''}`).join('\n');
@@ -1115,7 +1149,8 @@ function openModal(id, isEdit = false) {
     boe: { labels: ['SL NO', 'TALAL', 'IMP/EXP', 'Consignee', 'Imp Code', 'Shipping', 'Items', 'HS Code', 'Origin', 'BL Number', 'S.NO', 'Container No', 'DO Last Dt', 'Bill', 'BOE Date', 'BOE Sub Dt', 'Documents Received', 'BOE', 'Custom Submission'], keys: ['slno', 'talal', 'impexp', 'consignee', 'impcode', 'shipping', 'items', 'hscode', 'origin', 'blnumber', 'sno', 'container', 'dolastdt', 'bill', 'boedate', 'boesubdt', 'docrecv', 'boeno', 'customsub'] },
     deposit: { labels: ['Date', 'BOE', 'Company Name', 'BOE Date', 'SHJ/DXB', 'Status'], keys: ['ddate', 'boe', 'company', 'boedate', 'shjdxb', 'status'] },
     handover: { labels: ['Date', 'Com Name', 'Cont#/BOE #BL', 'Deposit/Chq Refund', 'Submitted Date', 'Receiver Name', 'Status/Note'], keys: ['hdate', 'comname', 'contboe', 'depositrefund', 'submitdate', 'receiver', 'status'] },
-    fob: { labels: ['Country', 'FOB 40F (AED)', 'FOB 20F (AED)'], keys: ['country', 'fobmin', 'fobmax'] }
+    fob: { labels: ['Country', 'FOB 40F (AED)', 'FOB 20F (AED)'], keys: ['country', 'fobmin', 'fobmax'] },
+    hscode: { labels: ['HS Code', 'Item Name', 'Dxb / Shj', 'Description As Per System'], keys: ['hscode', 'itemname', 'dxbshj', 'desc'] }
   };
   
   const mandatoryKeys = { pw: ['company', 'user', 'password'] };
@@ -1202,7 +1237,8 @@ async function addEntry() {
     boe: ['slno', 'talal', 'impexp', 'consignee', 'impcode', 'shipping', 'items', 'hscode', 'origin', 'blnumber', 'sno', 'container', 'dolastdt', 'bill', 'boedate', 'boesubdt', 'docrecv', 'boeno', 'customsub'],
     deposit: ['ddate', 'boe', 'company', 'boedate', 'shjdxb', 'status'],
     handover: ['hdate', 'comname', 'contboe', 'depositrefund', 'submitdate', 'receiver', 'status'],
-    fob: ['country', 'fobmin', 'fobmax']
+    fob: ['country', 'fobmin', 'fobmax'],
+    hscode: ['hscode', 'itemname', 'dxbshj', 'desc']
   };
   
   let newRow = {};
